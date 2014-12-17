@@ -25,6 +25,10 @@ However, linking a test server will help to not have to copy/paste files over an
 In order for all of these helpers to be truly helpful, there are certain criteria your test server has to adhere to.
 
 * The test servers must be located on the same drive as the plugins directory.
+    * The reason for this is that creating symbolic links for files (not directories) requires the file to be on the same drive as the linked file.
+    * If any of your plugins contains one of the following, trying to create a symbolic link will not work:
+        * ..\addons\source-python\data\<<1>plugin_name>.ini
+        * ..\resource\source-python\translations\<<1>plugin_name>.ini
 * Each server's main folder must be named the same as the [GAME_NAME](http://wiki.sourcepython.com/pages/core#GAME_NAME) value.
     * For example, cstrike should be in:
         * <<1>SERVERSTARTDIR>\cstrike\
