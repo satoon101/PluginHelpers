@@ -1,26 +1,39 @@
 @echo off
 
 
-:: =================== ::
-:: >> CONFIGURATION >> ::
-:: =================== ::
-
-
-:: Set to the directory where the server's are located
-set SERVERSTARTDIR=D:\Servers
-
-
-:: ==================== ::
-:: END OF CONFIGURATION ::
-:: ==================== ::
-
-
 :: Set the start directory for later reference
-set STARTDIR=%CD%
+set STARTDIR="%CD%"
 
 
 :: Allow the use of delayed expansion
 setlocal EnableDelayedExpansion
+
+
+:: Has the config.ini file been created?
+if not exist %STARTDIR%\config.ini (
+
+    :: Print a message that the user needs to create the config.ini file
+    echo Please execute the config.bat file to create the configurations before proceeding.
+    pause
+    exit
+)
+
+
+:: Get all configuration values
+for /f "eol=# delims=" %%a in (config.ini) do (
+    set "%%a"
+)
+
+
+:: Was the SERVERSTARTDIR variable created?
+if not defined SERVERSTARTDIR (
+
+    :: Print a message about the config issue
+    echo Something is wrong with your config.ini file.
+    echo Please delete your config.ini and re-execute the config.bat.
+    pause
+    exit
+)
 
 
 :: A function to choose the server

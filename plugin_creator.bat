@@ -56,7 +56,7 @@ setlocal EnableDelayedExpansion
     @echo """""" >> __init__.py
 
     :: Create the info.py file
-    @echo # ../%PLUGIN_NAME%/info.py >> info.py
+    @echo # ../%PLUGIN_NAME%/info.py>> info.py
     @echo >> info.py
     @echo # =============================================================================>> info.py
     @echo #>> info.py
