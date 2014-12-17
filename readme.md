@@ -39,7 +39,7 @@ In order for all of these helpers to be truly helpful, there are certain criteri
 ## Available helpers
 
 ### PluginCreater
-The plugin_creator.bat file, along with the plugin_creator.py file, is used to create a plugin based on the name provided.
+The plugin_creater.bat file, along with the plugin_creater.py file, is used to create a plugin based on the name provided.
 
 ### PluginChecker
 The plugin_checker.bat file, along with the .pylintrc file, is used to perform standards checks (like PEP8 and PEP257) on the chosen plugin.
