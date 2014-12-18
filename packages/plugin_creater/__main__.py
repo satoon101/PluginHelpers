@@ -1,28 +1,45 @@
+# ../plugin_creater/__main__.py
+
+""""""
+
+# =============================================================================
+# >> IMPORTS
+# =============================================================================
+# Python Imports
+#   OptParse
 from optparse import OptionParser
+
+# Site-Package Imports
+#   Path
 from path import Path
 
 
-STARTDIR = Path(__file__).parent
+# =============================================================================
+# >> GLOBAL VARIABLES
+# =============================================================================
+# Get the directory to create plugins in
+STARTDIR = Path(__file__).parent.parent
 
-
+# Create the options
 option_parser = OptionParser()
 
+# Create the 'name' option
 option_parser.add_option(
     '-n', '--name', default=None, help='The name of the plugin')
 
+# Create the 'config' option
 option_parser.add_option(
     '-c', '--config', default=None, help='Add config directory')
 
+# Create the 'data' option
 option_parser.add_option(
     '-d', '--data', default=None, help='Add data file or directory')
 
+# Create the 'translations' option
 option_parser.add_option(
     '-t', '--translations', default=None,
     help='Add translation file or directory')
 
-from sys import argv
-
-print(argv)
 
 def main():
     """"""
