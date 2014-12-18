@@ -11,7 +11,10 @@ option_parser.add_option(
     '-n', '--name', default=None, help='The name of the plugin')
 
 option_parser.add_option(
-    '-c', '--config', default=None, help='Add config file or directory')
+    '-c', '--config', default=None, help='Add config directory')
+
+option_parser.add_option(
+    '-d', '--data', default=None, help='Add data file or directory')
 
 option_parser.add_option(
     '-t', '--translation', default=None,
@@ -22,6 +25,9 @@ def main():
     """"""
     # 
     options, args = option_parser.parse_args()
+
+    print(options)
+    print(args)
 
     # 
     plugin_name = options['name']
@@ -40,16 +46,16 @@ def main():
         return
 
     # 
-    if options['config'] == 'file':
+    #if options['config'] == 'file':
 
     # 
-    elif options['config'] == 'directory':
+    #elif options['config'] == 'directory':
 
     # 
-    if options['translation'] == 'file':
+    #if options['translation'] == 'file':
 
     # 
-    elif options['translation'] == 'directory':
+    #elif options['translation'] == 'directory':
 
 
 if __name__ == '__main__':

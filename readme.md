@@ -22,7 +22,7 @@ RELEASEDIR="C:\Releases"
 ## Setup
 The PluginCreater, PluginChecker, and PluginReleaser will function just fine without having a test server linked.
 However, linking a test server will help to not have to copy/paste files over and over when you make changes.
-In order for all of these helpers to be truly helpful, there are certain criteria your test server has to adhere to.
+In order for all of these helpers to be truly helpful, there are certain criteria your test setup has to adhere to.
 
 * The test servers must be located on the same drive as the plugins directory.
     * The reason for this is that creating symbolic links for files (not directories) requires the file to be on the same drive as the linked file.
@@ -34,6 +34,8 @@ In order for all of these helpers to be truly helpful, there are certain criteri
         * <<1>SERVERSTARTDIR>\cstrike\
     * where Source.Python is installed at:
         * <<1>SERVERSTARTDIR>\cstrike\cstrike\addons\source-python\
+* [Python3.4](https://www.python.org/downloads/) or newer needs to be installed and it's path added to the Path environment variable.
+* The [path.py](https://github.com/jaraco/path.py) package needs to be installed in your Python installation.
 
 <br>
 ## Available helpers

@@ -251,14 +251,3 @@ if not defined SERVERSTARTDIR (
 
     )
     pause
-
-
-:: ======================================== ::
-:: >> Create a symbolic link to a folder >> ::
-:: ======================================== ::
-:: mklink /J link_directory directory_to_link
-
-:: ====================================== ::
-:: >> Create a symbolic link to a file >> ::
-:: ====================================== ::
-:: mklink /H link_file file_to_link
