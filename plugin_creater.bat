@@ -199,7 +199,7 @@ setlocal EnableDelayedExpansion
 :CallPython
 
     :: Create the plugin
-    python packages\plugin_creater --name=%PLUGIN_NAME%%ARGUMENT_STRING%
+    python %STARTDIR%\packages\plugin_creater --name=%PLUGIN_NAME%%ARGUMENT_STRING%
 
     :: Print message that the plugin was created
     echo Plugin "%PLUGIN_NAME%" created successfully.
