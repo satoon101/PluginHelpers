@@ -1,4 +1,4 @@
-# ../plugin_releaser/__main__.py
+# ../plugin_releaser/options.py
 
 """"""
 
@@ -6,21 +6,16 @@
 # >> IMPORTS
 # =============================================================================
 # Python Imports
-import sys
-
-# Site-Package Imports
-#   Path
-from path import Path
-
-# Add the package path to sys.path
-sys.path.append(Path(__file__).parent.parent)
-
-# Package Imports
-from plugin_releaser import main
+#   OptParse
+from optparse import OptionParser
 
 
 # =============================================================================
-# >> CALL MAIN
+# >> GLOBAL VARIABLES
 # =============================================================================
-if __name__ == '__main__':
-    main()
+# Create the options
+option_parser = OptionParser()
+
+# Create the 'name' option
+option_parser.add_option(
+    '-n', '--name', default=None, help='The name of the plugin')
