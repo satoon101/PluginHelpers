@@ -35,6 +35,7 @@ In order for all of these helpers to be truly helpful, there are certain criteri
     * where Source.Python is installed at:
         * <<1>SERVERSTARTDIR>\cstrike\cstrike\addons\source-python\
 * [Python3.4](https://www.python.org/downloads/) or newer needs to be installed and it's path added to the Path environment variable.
+* The [configobj](https://github.com/DiffSK/configobj) package needs to be installed in your Python installation.
 * The [path.py](https://github.com/jaraco/path.py) package needs to be installed in your Python installation.
 
 <br>
