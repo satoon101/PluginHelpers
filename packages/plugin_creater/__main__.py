@@ -17,9 +17,12 @@ option_parser.add_option(
     '-d', '--data', default=None, help='Add data file or directory')
 
 option_parser.add_option(
-    '-t', '--translation', default=None,
+    '-t', '--translations', default=None,
     help='Add translation file or directory')
 
+from sys import argv
+
+print(argv)
 
 def main():
     """"""
@@ -30,7 +33,12 @@ def main():
     print(args)
 
     # 
-    plugin_name = options['name']
+    plugin_name = args[0]
+
+    print(plugin_name)
+    print(options.config)
+    print(options.data)
+    print(options.translations)
 
     # 
     if plugin_name is None:
@@ -46,16 +54,19 @@ def main():
         return
 
     # 
-    #if options['config'] == 'file':
+    #if options['config'] == 'True':
 
     # 
-    #elif options['config'] == 'directory':
+    #if options.data == 'file':
 
     # 
-    #if options['translation'] == 'file':
+    #elif options.data == 'directory':
 
     # 
-    #elif options['translation'] == 'directory':
+    #if options.translation == 'file':
+
+    # 
+    #elif options.translation == 'directory':
 
 
 if __name__ == '__main__':

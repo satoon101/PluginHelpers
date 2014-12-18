@@ -30,7 +30,7 @@ setlocal EnableDelayedExpansion
     ) else (
 
         :: Create the argument string
-        set ARGUMENT_STRING=""
+        set ARGUMENT_STRING=
 
         :: Ask if a cfg directory should be included
         goto :CreateCfg
@@ -91,7 +91,11 @@ setlocal EnableDelayedExpansion
     if %choice% == 2 set result=False
 
     :: Determine what to do with the result
-    if %result% == True set ARGUMENT_STRING=%ARGUMENT_STRING% --config
+    if %result% == True (
+
+        set ARGUMENT_STRING=%ARGUMENT_STRING% --config=True
+    )
+
     if %result% == None (
         goto :CreateCfg
 
@@ -124,17 +128,23 @@ setlocal EnableDelayedExpansion
 
     :: Get the result
     if %choice% == 0 set result=False
-    if %choice% == 1 set result=" --data=directory"
-    if %choice% == 2 set result=" --data=file"
+    if %choice% == 1 (
+
+        set result=True
+        set ARGUMENT_STRING=%ARGUMENT_STRING% --data=directory
+    )
+
+    if %choice% == 2 (
+
+        set result=True
+        set ARGUMENT_STRING=%ARGUMENT_STRING% --data=file
+    )
 
     :: Was the result invalid?
     if %result% == None (
         goto :CreateData
 
     ) else (
-
-        :: Should a directory or file be added?
-        if %result% NEQ False set ARGUMENT_STRING=%ARGUMENT_STRING%%result%
 
         :: Ask about translations
         goto :CreateTranslations
@@ -162,17 +172,23 @@ setlocal EnableDelayedExpansion
 
     :: Get the result
     if %choice% == 0 set result=False
-    if %choice% == 1 set result=" --translations=directory"
-    if %choice% == 2 set result=" --translations=file"
+    if %choice% == 1 (
+
+        set result=True
+        set ARGUMENT_STRING=%ARGUMENT_STRING% --translations=directory
+    )
+
+    if %choice% == 2 (
+
+        set result=True
+        set ARGUMENT_STRING=%ARGUMENT_STRING% --translations=file
+)
 
     :: Was the result invalid?
     if %result% == None (
         goto :CreateTranslations
 
     ) else (
-
-        :: Should a directory or file be added?
-        if %result% NEQ False set ARGUMENT_STRING=%ARGUMENT_STRING%%result%
 
         :: Ask about translations
         goto :CallPython
