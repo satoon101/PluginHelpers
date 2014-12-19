@@ -18,6 +18,13 @@ if not exist %STARTDIR%\config.ini (
     echo.
     @echo # Set to the directory where your releases should be placed.>> config.ini
     @echo RELEASEDIR="C:\Releases">> config.ini
+    @echo.>> config.ini
+
+    :: Create the Author variable
+    echo.
+    @echo # Set to your nickname.>> config.ini
+    @echo # This value is used to assign the author variable when creating a plugin.>> config.ini
+    @echo AUTHOR="">> config.ini
     pause
 
 ) else (

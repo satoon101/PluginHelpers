@@ -73,7 +73,7 @@ setlocal EnableDelayedExpansion
 
     :: Ask if the cfg directory should be added
     cls
-    echo Should a ..\cfg\source-python\%PLUGIN_NAME% be added?
+    echo Should a ..\cfg\source-python\%PLUGIN_NAME% directory be added?
 
     :: Print the choices
     echo.
@@ -146,7 +146,121 @@ setlocal EnableDelayedExpansion
 
     ) else (
 
-        :: Ask about translations
+        :: Ask about events
+        goto :CreateEvents
+    )
+
+
+::
+:CreateEvents
+
+    :: Ask if the events directory should be added
+    cls
+    echo Should a ..\resource\source-python\events\source-python\%PLUGIN_NAME% directory be added?
+
+    :: Print the choices
+    echo.
+    echo     (1) Yes
+    echo     (2) No
+
+    :: Request a choice
+    set /p choice=
+
+    :: Set a base value for the result
+    set result=None
+
+    :: Get the result
+    if %choice% == 1 set result=True
+    if %choice% == 2 set result=False
+
+    :: Determine what to do with the result
+    if %result% == True (
+
+        set ARGUMENT_STRING=%ARGUMENT_STRING% --events=True
+    )
+
+    if %result% == None (
+        goto :CreateEvents
+
+    ) else (
+
+        :: Ask about logs
+        goto :CreateLogs
+    )
+
+
+::
+:CreateLogs
+
+    :: Ask if the logs directory should be added
+    cls
+    echo Should a ..\logs\source-python\%PLUGIN_NAME% directory be added?
+
+    :: Print the choices
+    echo.
+    echo     (1) Yes
+    echo     (2) No
+
+    :: Request a choice
+    set /p choice=
+
+    :: Set a base value for the result
+    set result=None
+
+    :: Get the result
+    if %choice% == 1 set result=True
+    if %choice% == 2 set result=False
+
+    :: Determine what to do with the result
+    if %result% == True (
+
+        set ARGUMENT_STRING=%ARGUMENT_STRING% --logs=True
+    )
+
+    if %result% == None (
+        goto :CreateLogs
+
+    ) else (
+
+        :: Ask about data
+        goto :CreateSound
+    )
+
+
+::
+:CreateSound
+
+    :: Ask if the sound directory should be added
+    cls
+    echo Should a ..\sound\source-python\%PLUGIN_NAME% directory be added?
+
+    :: Print the choices
+    echo.
+    echo     (1) Yes
+    echo     (2) No
+
+    :: Request a choice
+    set /p choice=
+
+    :: Set a base value for the result
+    set result=None
+
+    :: Get the result
+    if %choice% == 1 set result=True
+    if %choice% == 2 set result=False
+
+    :: Determine what to do with the result
+    if %result% == True (
+
+        set ARGUMENT_STRING=%ARGUMENT_STRING% --sound=True
+    )
+
+    if %result% == None (
+        goto :CreateSound
+
+    ) else (
+
+        :: Ask about data
         goto :CreateTranslations
     )
 
@@ -156,7 +270,7 @@ setlocal EnableDelayedExpansion
 
     :: Ask if the translations directory or file should be added
     cls
-    echo Should an ..\translations\%PLUGIN_NAME% directory or ..\translations\%PLUGIN_NAME%.ini file be added?
+    echo Should an ..\resource\source-python\translations\%PLUGIN_NAME% directory or ..\resource\source-python\translations\%PLUGIN_NAME%.ini file be added?
 
     :: Print the choices
     echo.
@@ -200,8 +314,5 @@ setlocal EnableDelayedExpansion
 
     :: Create the plugin
     python %STARTDIR%\packages\plugin_creater --name=%PLUGIN_NAME%%ARGUMENT_STRING%
-
-    :: Print message that the plugin was created
-    echo Plugin "%PLUGIN_NAME%" created successfully.
 
     pause

@@ -96,11 +96,20 @@ if not defined SERVERSTARTDIR (
     :: Get the server's plugins directory
     set SERVERPLUGINDIR=%SERVERDIR%\addons\source-python\plugins
 
+    :: Get the server's cfg directory
+    set SERVERCFGDIR=%SERVERDIR%\cfg\source-python
+
     :: Get the server's data directory
     set SERVERDATADIR=%SERVERDIR%\addons\source-python\data\plugins
 
-    :: Get the server's cfg directory
-    set SERVERCFGDIR=%SERVERDIR%\cfg\source-python
+    :: Get the server's events directory
+    set SERVEREVENTSDIR=%SERVERDIR%\resource\source-python\events
+
+    :: Get the server's logs directory
+    set SERVERLOGSDIR=%SERVERDIR%\logs\source-python
+
+    :: Get the server's sounds directory
+    set SERVERSOUNDDIR=%SERVERDIR%\sound\source-python
 
     :: Get the server's translations directory
     set SERVERTRANSLATIONSDIR=%SERVERDIR%\resource\source-python\translations
@@ -126,6 +135,28 @@ if not defined SERVERSTARTDIR (
                 :: Create the symbolic link to the directory
                 mklink /J %SERVERPLUGINDIR%\%%~ni %STARTDIR%\%%~ni\addons\source-python\plugins\%%~ni
                 echo.
+            )
+
+
+            :: Does the plugin's cfg directory exist?
+            if exist %STARTDIR%\%%~ni\cfg\source-python\%%~ni (
+
+                :: Is the cfg directory already linked?
+                if exist %SERVERCFGDIR%\%%~ni (
+
+                    :: Print a message to notify the cfg directory is already linked
+                    echo     Cfg directory already linked.
+
+                ) else (
+
+                    :: Print a message to notify the cfg directory is being linked
+                    echo     Linking cfg directory.
+
+                    echo.
+                    :: Create the symbolic link to the directory
+                    mklink /J %SERVERCFGDIR%\%%~ni %STARTDIR%\%%~ni\cfg\source-python\%%~ni
+                    echo.
+                )
             )
 
 
@@ -173,23 +204,67 @@ if not defined SERVERSTARTDIR (
             )
 
 
-            :: Does the plugin's cfg directory exist?
-            if exist %STARTDIR%\%%~ni\cfg\%%~ni (
+            :: Does the plugin's events directory exist?
+            if exist %STARTDIR%\%%~ni\resource\source-python\events\%%~ni (
 
-                :: Is the cfg directory already linked?
-                if exist %SERVERCFGDIR%\%%~ni (
+                :: Is the events directory already linked?
+                if exist %SERVEREVENTSDIR%\%%~ni (
 
-                    :: Print a message to notify the cfg directory is already linked
-                    echo     Cfg directory already linked.
+                    :: Print a message to notify the events directory is already linked
+                    echo     Events directory already linked.
 
                 ) else (
 
-                    :: Print a message to notify the cfg directory is being linked
-                    echo     Linking cfg directory.
+                    :: Print a message to notify the events directory is being linked
+                    echo     Linking events directory.
 
                     echo.
                     :: Create the symbolic link to the directory
-                    mklink /J %SERVERCFGDIR%\%%~ni %STARTDIR%\%%~ni\cfg\%%~ni
+                    mklink /J %SERVEREVENTSDIR%\%%~ni %STARTDIR%\%%~ni\resource\source-python\events\%%~ni
+                    echo.
+                )
+            )
+
+
+            :: Does the plugin's logs directory exist?
+            if exist %STARTDIR%\%%~ni\logs\source-python\%%~ni (
+
+                :: Is the logs directory already linked?
+                if exist %SERVERLOGSDIR%\%%~ni (
+
+                    :: Print a message to notify the logs directory is already linked
+                    echo     Logs directory already linked.
+
+                ) else (
+
+                    :: Print a message to notify the logs directory is being linked
+                    echo     Linking logs directory.
+
+                    echo.
+                    :: Create the symbolic link to the directory
+                    mklink /J %SERVERLOGSDIR%\%%~ni %STARTDIR%\%%~ni\logs\source-python\%%~ni
+                    echo.
+                )
+            )
+
+
+            :: Does the plugin's sound directory exist?
+            if exist %STARTDIR%\%%~ni\sound\source-python\%%~ni (
+
+                :: Is the sound directory already linked?
+                if exist %SERVERSOUNDDIR%\%%~ni (
+
+                    :: Print a message to notify the sound directory is already linked
+                    echo     Sound directory already linked.
+
+                ) else (
+
+                    :: Print a message to notify the sound directory is being linked
+                    echo     Linking sound directory.
+
+                    echo.
+                    :: Create the symbolic link to the directory
+                    mklink /J %SERVERSOUNDDIR%\%%~ni %STARTDIR%\%%~ni\sound\source-python\%%~ni
                     echo.
                 )
             )

@@ -1,4 +1,4 @@
-# ../plugin_releaser/__main__.py
+# ../plugin_releaser/__init__.py
 
 """"""
 
@@ -18,6 +18,8 @@ from configobj import ConfigObjError
 from path import Path
 
 # Package Imports
+from plugin_releaser.paths import CONFIG_FILE
+from plugin_releaser.paths import STARTDIR
 from plugin_releaser.paths import allowed_filetypes
 from plugin_releaser.paths import exception_filetypes
 from plugin_releaser.paths import other_filetypes
@@ -38,34 +40,30 @@ def main():
         return
 
     # 
-    startdir = Path(__file__).parent.parent.parent
-
-    # 
-    config_file = startdir.joinpath('config.ini')
-
-    # 
-    if not config_file.isfile():
-        print('config.ini file not found.')
-        return
-
-    # 
-    plugin_path = startdir.joinpath(options.name)
-
-    # 
-    if not plugin_path.isdir():
-        print('Plugin "{0}" not found.'.format(options.name))
+    if not CONFIG_FILE.isfile():
+        print('config.ini file not found, please run config.bat.')
         return
 
     try:
 
-        release_path = ConfigObj(config_file)['RELEASEDIR']
+        release_path = ConfigObj(CONFIG_FILE)['RELEASEDIR']
 
     except KeyError:
         print('No release path found in config.ini.')
+        print('Please delete config.ini and re-run config.bat.')
         return
 
     except ConfigObjError:
-        print('config.ini has errors, please remove and re-run config.bat')
+        print('config.ini has errors.')
+        print('Please delete config.ini and re-run config.bat.')
+        return
+
+    # 
+    plugin_path = STARTDIR.joinpath(options.name)
+
+    # 
+    if not plugin_path.isdir():
+        print('Plugin "{0}" not found.'.format(options.name))
         return
 
     version = get_version(plugin_path.joinpath(
