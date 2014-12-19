@@ -56,23 +56,24 @@ In order for all of these helpers to be truly helpful, there are certain criteri
         * [pyflakes](https://pypi.python.org/pypi/pyflakes)
         * [pylint](https://pypi.python.org/pypi/pylint)
 
-Just use the command prompt (open as administrator) to input the following commands.
-```winbatch
+    * Just use the command prompt (open as administrator) to input the following commands.
+        ```winbatch
 pip install --upgrade configobj
 pip install --upgrade path.py
 pip install --upgrade pep8
 pip install --upgrade pep257
 pip install --upgrade pyflakes
 pip install --upgrade pylint
-```
+        ```
 
-The reason why Python3.4 is required, and not an earlier version, is because 'pip' comes with it and future versions.
+    * The reason why Python3.4 is required, and not an earlier version, is because 'pip' comes with it and future versions.
 
-If you get the following error, you need to re-install Python and make sure to set the "Add python.exe to Path" setting to be installed.
-```winbatch
+    * If you get the following error, you need to re-install Python and make sure to set the "Add python.exe to Path" setting to be installed.
+
+        ```winbatch
 'pip' is not recognized as an internal or external command,
 operable program or batch file.
-```
+        ```
 
 <br>
 ## Available helpers
