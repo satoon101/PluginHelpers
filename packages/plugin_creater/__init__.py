@@ -30,27 +30,24 @@ def main():
     # 
     options, args = option_parser.parse_args()
 
-    print(options)
-    print(args)
-
-    print(options.name)
-    print(options.config)
-    print(options.data)
-    print(options.events)
-    print(options.logs)
-    print(options.sound)
-    print(options.translations)
-
     # 
     if options.name is None:
         print('No plugin name provided.')
         return
 
     # 
-    PLUGINDIR = STARTDIR.joinpath(options.name)
+    if not options.name.replace('_', '').isalnum():
+        print('Invalid plugin name.')
+        print(
+            'Plugin name must only contain ' +
+            'alpha-numeric values and underscores.')
+        return
 
     # 
-    if PLUGINDIR.isdir():
+    plugin_base_path = STARTDIR.joinpath(options.name)
+
+    # 
+    if plugin_base_path.isdir():
         print('Plugin already exists.')
         return
 
@@ -73,49 +70,96 @@ def main():
         print('Please delete config.ini and re-run config.bat.')
         return
 
-    PLUGIN_BASE_PATH = PLUGINDIR.joinpath('addons', 'source-python', 'plugins')
+    plugin_home_path = plugin_base_path.joinpath(
+        'addons', 'source-python', 'plugins')
 
-    PLUGIN_PATH = PLUGIN_BASE_PATH.joinpath(options.name)
+    plugin_path = plugin_home_path.joinpath(options.name)
 
-    PLUGIN_PATH.makedirs()
+    plugin_path.makedirs()
 
-    with PLUGIN_PATH.joinpath('__init__.py').open('w') as open_file:
+    with plugin_path.joinpath('__init__.py').open('w') as open_file:
 
-        write_top_lines(open_file, PLUGIN_BASE_PATH)
+        write_top_lines(open_file, plugin_home_path)
 
-    with PLUGIN_PATH.joinpath(options.name + '.py').open('w') as open_file:
+    with plugin_path.joinpath(options.name + '.py').open('w') as open_file:
 
-        write_top_lines(open_file, PLUGIN_BASE_PATH)
+        write_top_lines(open_file, plugin_home_path)
 
-    with PLUGIN_PATH.joinpath('info.py').open('w') as open_file:
+    with plugin_path.joinpath('info.py').open('w') as open_file:
 
-        write_top_lines(open_file, PLUGIN_BASE_PATH)
+        write_top_lines(open_file, plugin_home_path)
 
         write_info(open_file, options.name, author)
 
     # 
-    #if options.config == 'True':
+    if options.config == 'True':
+
+        config_path = plugin_base_path.joinpath(
+            'cfg', 'source-python', options.name)
+
+        config_path.makedirs()
+
+        config_path.joinpath('readme.md').touch()
 
     # 
-    #if options.data == 'file':
+    if options.data == 'file':
+
+        data_path = plugin_base_path.joinpath(
+            'addons', 'source-python', 'data', 'plugins')
+
+        data_path.makedirs()
+
+        data_path.joinpath(options.name + '.ini').touch()
 
     # 
-    #elif options.data == 'directory':
+    elif options.data == 'directory':
+
+        plugin_base_path.joinpath(
+            'addons', 'source-python', 'data',
+            'plugins', options.name).makedirs()
 
     # 
-    #if options.events == 'True':
+    if options.events == 'True':
+
+        events_path = plugin_base_path.joinpath(
+            'resource', 'source-python', 'events', options.name)
+
+        events_path.makedirs()
+
+        events_path.joinpath('readme.md').touch()
 
     # 
-    #if options.logs == 'True':
+    if options.logs == 'True':
+
+        logs_path = plugin_base_path.joinpath(
+            'logs', 'source-python', options.name)
+
+        logs_path.makedirs()
+
+        logs_path.joinpath('readme.md').touch()
 
     # 
-    #if options.sound == 'True':
+    if options.sound == 'True':
+
+        plugin_base_path.joinpath(
+            'sound', 'source-python', options.name).makedirs()
 
     # 
-    #if options.translation == 'file':
+    if options.translations == 'file':
+
+        translations_path = plugin_base_path.joinpath(
+            'resource', 'source-python', 'translations')
+
+        translations_path.makedirs()
+
+        translations_path.joinpath(options.name + '.ini').touch()
 
     # 
-    #elif options.translation == 'directory':
+    elif options.translations == 'directory':
+
+        plugin_base_path.joinpath(
+            'resource', 'source-python',
+            'translations', options.name).makedirs()
 
 
 def write_top_lines(open_file, path):

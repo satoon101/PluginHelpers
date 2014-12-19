@@ -313,6 +313,6 @@ setlocal EnableDelayedExpansion
 :CallPython
 
     :: Create the plugin
-    python %STARTDIR%\packages\plugin_creater --name=%PLUGIN_NAME%%ARGUMENT_STRING%
+    python %STARTDIR%\packages\plugin_creater --name="%PLUGIN_NAME%"%ARGUMENT_STRING%
 
     pause
