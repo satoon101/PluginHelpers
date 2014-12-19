@@ -40,8 +40,36 @@ In order for all of these helpers to be truly helpful, there are certain criteri
     * where Source.Python is installed at:
         * &lt;SERVERSTARTDIR&gt;\cstrike\cstrike\addons\source-python\
 * [Python3.4](https://www.python.org/downloads/) or newer needs to be installed and it's path added to the Path environment variable.
-* The [configobj](https://github.com/DiffSK/configobj) package needs to be installed in your Python installation.
-* The [path.py](https://github.com/jaraco/path.py) package needs to be installed in your Python installation.
+    * Make sure when you are installing Python that you set the "Add python.exe to Path" setting to be installed.
+You will also need certain Python packages installed.
+
+Both the plugin_creater and plugin_releaser scripts use the following packages:
+* [configobj](https://github.com/DiffSK/configobj)
+* [path.py](https://github.com/jaraco/path.py)
+
+The plugin_checker script uses the following packages:
+* [pep8](https://pypi.python.org/pypi/pep8)
+* [pep257](https://pypi.python.org/pypi/pep257)
+* [pyflakes](https://pypi.python.org/pypi/pyflakes)
+* [pylint](https://pypi.python.org/pypi/pylint)
+
+Just use the command prompt (open as administrator) to input the following commands.
+```winbatch
+pip install --upgrade configobj
+pip install --upgrade path.py
+pip install --upgrade pep8
+pip install --upgrade pep257
+pip install --upgrade pyflakes
+pip install --upgrade pylint
+```
+
+The reason why Python3.4 is required, and not an earlier version, is because 'pip' comes with it and future versions.
+
+If you get the following error, you need to re-install Python and make sure to set the "Add python.exe to Path" setting to be installed.
+```winbatch
+'pip' is not recognized as an internal or external command,
+operable program or batch file.
+```
 
 <br>
 ## Available helpers
