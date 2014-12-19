@@ -76,10 +76,11 @@ Once you have created your plugin, and gotten it to a point where you think it s
 Before you release your plugin, you should run the plugin_checker.bat to find and fix any standards issues.  You could have done this prior to linking, as well, but just be sure to use it prior to releasing.
 
 The plugin_checker allows you to select which plugin to check.  Once you have chosen the plugin, it will run the following checkers:
-*[pep8](https://pypi.python.org/pypi/pep8)
-*[pep257](https://pypi.python.org/pypi/pep257)
-*[pyflakes](https://pypi.python.org/pypi/pyflakes)
-*[pylint](https://pypi.python.org/pypi/pylint)
+
+* [pep8](https://pypi.python.org/pypi/pep8)
+* [pep257](https://pypi.python.org/pypi/pep257)
+* [pyflakes](https://pypi.python.org/pypi/pyflakes)
+* [pylint](https://pypi.python.org/pypi/pylint)
 
 ### PluginReleaser
 Now that you have tested your plugin on a server and run the standards checks, it is time to create release.
