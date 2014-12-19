@@ -1,21 +1,21 @@
 # ../plugin_releaser/options.py
 
-""""""
+"""Creates the options used by plugin_releaser."""
 
 # =============================================================================
 # >> IMPORTS
 # =============================================================================
 # Python Imports
-#   OptParse
-from optparse import OptionParser
+#   ArgParse
+from argparse import ArgumentParser
 
 
 # =============================================================================
 # >> GLOBAL VARIABLES
 # =============================================================================
 # Create the options
-option_parser = OptionParser()
+option_parser = ArgumentParser()
 
 # Create the 'name' option
-option_parser.add_option(
-    '-n', '--name', default=None, help='The name of the plugin')
+option_parser.add_argument(
+    '--name', dest='plugin_name', help='The name of the plugin.')

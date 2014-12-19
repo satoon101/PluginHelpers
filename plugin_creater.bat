@@ -100,7 +100,7 @@ setlocal EnableDelayedExpansion
     :: Determine what to do with the result
     if %result% == True (
 
-        set ARGUMENT_STRING=%ARGUMENT_STRING% --config=True
+        set ARGUMENT_STRING=%ARGUMENT_STRING% --config
     )
 
     if %result% == None (
@@ -183,7 +183,7 @@ setlocal EnableDelayedExpansion
     :: Determine what to do with the result
     if %result% == True (
 
-        set ARGUMENT_STRING=%ARGUMENT_STRING% --events=True
+        set ARGUMENT_STRING=%ARGUMENT_STRING% --events
     )
 
     if %result% == None (
@@ -221,7 +221,7 @@ setlocal EnableDelayedExpansion
     :: Determine what to do with the result
     if %result% == True (
 
-        set ARGUMENT_STRING=%ARGUMENT_STRING% --logs=True
+        set ARGUMENT_STRING=%ARGUMENT_STRING% --logs
     )
 
     if %result% == None (
@@ -259,7 +259,7 @@ setlocal EnableDelayedExpansion
     :: Determine what to do with the result
     if %result% == True (
 
-        set ARGUMENT_STRING=%ARGUMENT_STRING% --sound=True
+        set ARGUMENT_STRING=%ARGUMENT_STRING% --sound
     )
 
     if %result% == None (

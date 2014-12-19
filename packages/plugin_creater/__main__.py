@@ -16,7 +16,7 @@ from path import Path
 sys.path.append(Path(__file__).parent.parent)
 
 # Package Imports
-from plugin_creater import main
+from plugin_creater import create_plugin
 from plugin_creater.options import option_parser
 
 
@@ -26,7 +26,7 @@ from plugin_creater.options import option_parser
 if __name__ == '__main__':
 
     # Get the options used
-    kwargs, args = option_parser.parse_args()
+    options = option_parser.parse_args()
 
-    # Call main with the options
-    main(*args, **kwargs)
+    # Call create_plugin with the options
+    create_plugin(**vars(options))

@@ -18,7 +18,7 @@ from plugin_creater.paths import STARTDIR
 # =============================================================================
 # >> FUNCTIONS
 # =============================================================================
-def main(
+def create_plugin(
         plugin_name=None, config=None, data=None, events=None,
         logs=None, sound=None, translations=None):
     """Verify the plugin name and create its base directories/files."""

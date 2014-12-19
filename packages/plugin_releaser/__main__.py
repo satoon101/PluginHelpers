@@ -1,6 +1,6 @@
 # ../plugin_releaser/__main__.py
 
-""""""
+"""Used by Python to call plugin_releaser from the command line."""
 
 # =============================================================================
 # >> IMPORTS
@@ -16,11 +16,17 @@ from path import Path
 sys.path.append(Path(__file__).parent.parent)
 
 # Package Imports
-from plugin_releaser import main
+from plugin_releaser import create_release
+from plugin_releaser.options import option_parser
 
 
 # =============================================================================
 # >> CALL MAIN
 # =============================================================================
 if __name__ == '__main__':
-    main()
+
+    # Get the options used
+    options = option_parser.parse_args()
+
+    # Call create_release with the options
+    create_release(**vars(options))
