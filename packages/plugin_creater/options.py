@@ -1,6 +1,6 @@
 # ../plugin_creater/options.py
 
-""""""
+"""Creates the options used by plugin_creater."""
 
 # =============================================================================
 # >> IMPORTS

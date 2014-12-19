@@ -1,6 +1,6 @@
 # ../plugin_creater/__main__.py
 
-""""""
+"""Used by Python to call plugin_creater from the command line."""
 
 # =============================================================================
 # >> IMPORTS
@@ -17,10 +17,16 @@ sys.path.append(Path(__file__).parent.parent)
 
 # Package Imports
 from plugin_creater import main
+from plugin_creater.options import option_parser
 
 
 # =============================================================================
 # >> CALL MAIN
 # =============================================================================
 if __name__ == '__main__':
-    main()
+
+    # Get the options used
+    kwargs, args = option_parser.parse_args()
+
+    # Call main with the options
+    main(*args, **kwargs)
