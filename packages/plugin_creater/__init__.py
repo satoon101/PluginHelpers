@@ -78,16 +78,16 @@ def create_plugin(
 
     # Create the __init__.py
     with plugin_path.joinpath('__init__.py').open('w') as open_file:
-        write_top_lines(open_file, plugin_home_path)
+        _write_top_lines(open_file, plugin_home_path)
 
     # Create the <plugin_name>.py
     with plugin_path.joinpath(plugin_name + '.py').open('w') as open_file:
-        write_top_lines(open_file, plugin_home_path)
+        _write_top_lines(open_file, plugin_home_path)
 
     # Create the info.py
     with plugin_path.joinpath('info.py').open('w') as open_file:
-        write_top_lines(open_file, plugin_home_path)
-        write_info(open_file, plugin_name, author)
+        _write_top_lines(open_file, plugin_home_path)
+        _write_info(open_file, plugin_name, author)
 
     # Should a cfg directory be created?
     if config == 'True':
@@ -178,13 +178,13 @@ def create_plugin(
             'translations', plugin_name).makedirs()
 
 
-def write_top_lines(open_file, path):
+def _write_top_lines(open_file, path):
     """Write the header of the file."""
     open_file.write('# ..{0}\n\n"""."""\n\n'.format(
         open_file.name.split(path, 1)[1].replace('\\', '/')))
 
 
-def write_info(open_file, plugin_name, author):
+def _write_info(open_file, plugin_name, author):
     """Write the info.py file."""
     # Write the import section header
     separator = '# {0}\n'.format('=' * 77)

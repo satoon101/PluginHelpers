@@ -8,20 +8,39 @@ PluginHelpers is a set of tools to be used with [Source.Python](https://github.c
 The first thing you need to do is execute the config.bat file to create the config.ini file.
 The current configuration values are:
 ```ini
-# Set to the directory that your server's are located in.
-SERVERSTARTDIR="C:\Servers"
-
-# Set to the directory where your releases should be placed.
-RELEASEDIR="C:\Releases"
+# ======================= #
+# PLUGIN CREATER SETTINGS #
+# ======================= #
 
 # Set to your nickname.
 # This value is used to assign the author variable when creating a plugin.
 AUTHOR=""
+
+# Set to "hg" or "git" if plugins created by plugin_creater
+#   are going to use one of the two version control systems.
+REPOTYPE=""
+
+
+# ====================== #
+# PLUGIN LINKER SETTINGS #
+# ====================== #
+
+# Set to the directory that your server's are located in.
+SERVERSTARTDIR="C:\Servers"
+
+
+# ======================== #
+# PLUGIN RELEASER SETTINGS #
+# ======================== #
+
+# Set to the directory where your releases should be placed.
+RELEASEDIR="C:\Releases"
 ```
 
-* SERVERSTARTDIR is used by the PluginLinker to know what directory your server's are located in.
-* RELEASEDIR is used by the PluginReleaser to know where to copy your plugin releases to.
 * AUTHOR is used by the PluginCreater to know what value to put as info.author for the plugin.
+* REPOTYPE is used by the PluginCreater to know whether to create the .gitignore / .gitattributes or .hgignore files.
+* RELEASEDIR is used by the PluginReleaser to know where to copy your plugin releases to.
+* SERVERSTARTDIR is used by the PluginLinker to know what directory your server's are located in.
 
 <br>
 ## Setup
