@@ -34,24 +34,27 @@ In order for all of these helpers to be truly helpful, there are certain criteri
     * If any of your plugins contains one of the following, trying to create a symbolic link will not work:
         * ..\addons\source-python\data\\&lt;plugin_name&gt;.ini
         * ..\resource\source-python\translations\\&lt;plugin_name&gt;.ini
+
 * Each server's main folder must be named the same as the [GAME_NAME](http://wiki.sourcepython.com/pages/core#GAME_NAME) value.
     * For example, cstrike should be in:
         * &lt;SERVERSTARTDIR&gt;\cstrike\
     * where Source.Python is installed at:
         * &lt;SERVERSTARTDIR&gt;\cstrike\cstrike\addons\source-python\
+
 * [Python3.4](https://www.python.org/downloads/) or newer needs to be installed and it's path added to the Path environment variable.
     * Make sure when you are installing Python that you set the "Add python.exe to Path" setting to be installed.
-You will also need certain Python packages installed.
 
-Both the plugin_creater and plugin_releaser scripts use the following packages:
-* [configobj](https://github.com/DiffSK/configobj)
-* [path.py](https://github.com/jaraco/path.py)
+* You will also need certain Python packages installed.
 
-The plugin_checker script uses the following packages:
-* [pep8](https://pypi.python.org/pypi/pep8)
-* [pep257](https://pypi.python.org/pypi/pep257)
-* [pyflakes](https://pypi.python.org/pypi/pyflakes)
-* [pylint](https://pypi.python.org/pypi/pylint)
+    * Both the plugin_creater and plugin_releaser scripts use the following packages:
+        * [configobj](https://github.com/DiffSK/configobj)
+        * [path.py](https://github.com/jaraco/path.py)
+
+    * The plugin_checker script uses the following packages:
+        * [pep8](https://pypi.python.org/pypi/pep8)
+        * [pep257](https://pypi.python.org/pypi/pep257)
+        * [pyflakes](https://pypi.python.org/pypi/pyflakes)
+        * [pylint](https://pypi.python.org/pypi/pylint)
 
 Just use the command prompt (open as administrator) to input the following commands.
 ```winbatch
