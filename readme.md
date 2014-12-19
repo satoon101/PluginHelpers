@@ -32,8 +32,8 @@ In order for all of these helpers to be truly helpful, there are certain criteri
 * The test servers must be located on the same drive as the plugins directory.
     * The reason for this is that creating symbolic links for files (not directories) requires the file to be on the same drive as the linked file.
     * If any of your plugins contains one of the following, trying to create a symbolic link will not work:
-        * ..\addons\source-python\data\&lt;plugin_name&gt;.ini
-        * ..\resource\source-python\translations\&lt;plugin_name&gt;.ini
+        * ..\addons\source-python\data\\&lt;plugin_name&gt;.ini
+        * ..\resource\source-python\translations\\&lt;plugin_name&gt;.ini
 * Each server's main folder must be named the same as the [GAME_NAME](http://wiki.sourcepython.com/pages/core#GAME_NAME) value.
     * For example, cstrike should be in:
         * &lt;SERVERSTARTDIR&gt;\cstrike\
@@ -88,4 +88,4 @@ Just run the plugin_releaser.bat file and select the plugin you wish to release.
 
 All releases will be created in the directory you assigned RELEASEDIR to in your config.ini file.
 
-The directory structure used by plugin_releaser is &lt;RELEASEDIR&gt;\&lt;plugin_name&gt;\&lt;plugin_name&gt;_v&lt;plugin_version&gt;.zip
+The directory structure used by plugin_releaser is &lt;RELEASEDIR&gt;\\&lt;plugin_name&gt;\\&lt;plugin_name&gt;_v&lt;plugin_version&gt;.zip
