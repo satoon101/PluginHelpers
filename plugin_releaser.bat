@@ -53,6 +53,7 @@ if not defined RELEASEDIR (
     :: Loop through all plugins
     for /D %%i in (*.*) do (
 
+        :: Skip the 'packages' directory
         if %%i NEQ packages (
 
             :: Increment the counter

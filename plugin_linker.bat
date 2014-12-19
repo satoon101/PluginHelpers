@@ -117,212 +117,215 @@ if not defined SERVERSTARTDIR (
     :: Loop through all plugins
     for /D %%i in (*.*) do (
 
-        :: Does the plugin's plugin directory exist?
-        if exist %STARTDIR%\%%~ni\addons\source-python\plugins\%%~ni (
+        :: Skip the 'packages' directory
+        if %%i NEQ packages (
 
-            :: Print a message the the plugin is being linked
-            echo %%~ni is being linked to %SERVER_NAME%.
+            :: Does the plugin's plugin directory exist?
+            if exist %STARTDIR%\%%~ni\addons\source-python\plugins\%%~ni (
 
-            :: Is the plugin already linked?
-            if exist %SERVERPLUGINDIR%\%%~ni (
+                :: Print a message the the plugin is being linked
+                echo %%~ni is being linked to %SERVER_NAME%.
 
-                :: Print a message to notify the plugin is already linked
-                echo     Plugin already linked.
+                :: Is the plugin already linked?
+                if exist %SERVERPLUGINDIR%\%%~ni (
 
-            ) else (
-
-                echo.
-                :: Create the symbolic link to the directory
-                mklink /J %SERVERPLUGINDIR%\%%~ni %STARTDIR%\%%~ni\addons\source-python\plugins\%%~ni
-                echo.
-            )
-
-
-            :: Does the plugin's cfg directory exist?
-            if exist %STARTDIR%\%%~ni\cfg\source-python\%%~ni (
-
-                :: Is the cfg directory already linked?
-                if exist %SERVERCFGDIR%\%%~ni (
-
-                    :: Print a message to notify the cfg directory is already linked
-                    echo     Cfg directory already linked.
+                    :: Print a message to notify the plugin is already linked
+                    echo     Plugin already linked.
 
                 ) else (
 
-                    :: Print a message to notify the cfg directory is being linked
-                    echo     Linking cfg directory.
-
                     echo.
+                    :: Create the symbolic link to the directory
+                    mklink /J %SERVERPLUGINDIR%\%%~ni %STARTDIR%\%%~ni\addons\source-python\plugins\%%~ni
+                    echo.
+                )
+
+
+                :: Does the plugin's cfg directory exist?
+                if exist %STARTDIR%\%%~ni\cfg\source-python\%%~ni (
+
+                    :: Is the cfg directory already linked?
+                    if exist %SERVERCFGDIR%\%%~ni (
+
+                        :: Print a message to notify the cfg directory is already linked
+                        echo     Cfg directory already linked.
+
+                    ) else (
+
+                        :: Print a message to notify the cfg directory is being linked
+                        echo     Linking cfg directory.
+
+                        echo.
                     :: Create the symbolic link to the directory
                     mklink /J %SERVERCFGDIR%\%%~ni %STARTDIR%\%%~ni\cfg\source-python\%%~ni
                     echo.
+                    )
                 )
+
+
+                :: Does the plugin's data directory exist?
+                if exist %STARTDIR%\%%~ni\addons\source-python\data\plugins\%%~ni (
+
+                    :: Is the data directory already linked?
+                    if exist %SERVERDATADIR%\%%~ni (
+
+                        :: Print a message to notify the data directory is already linked
+                        echo     Data directory already linked.
+
+                    ) else (
+
+                        :: Print a message to notify the data directory is being linked
+                        echo     Linking data directory.
+
+                        echo.
+                        :: Create the symbolic link to the directory
+                        mklink /J %SERVERDATADIR%\%%~ni %STARTDIR%\%%~ni\addons\source-python\data\plugins\%%~ni
+                        echo.
+                    )
+                )
+
+
+                :: Does the plugin's data file exist?
+                if exist %STARTDIR%\%%~ni\addons\source-python\data\plugins\%%~ni.ini (
+
+                    :: Is the data file already linked?
+                    if exist %SERVERDATADIR%\%%~ni.ini (
+
+                        :: Print a message to notify the data file is already linked
+                        echo     Data file already linked.
+
+                    ) else (
+
+                        :: Print a message to notify the data file is being linked
+                        echo     Linking data file.
+
+                        echo.
+                        :: Create the symbolic link to the file
+                        mklink /H %SERVERDATADIR%\%%~ni.ini %STARTDIR%\%%~ni\addons\source-python\data\plugins\%%~ni.ini
+                        echo.
+                    )
+                )
+
+
+                :: Does the plugin's events directory exist?
+                if exist %STARTDIR%\%%~ni\resource\source-python\events\%%~ni (
+
+                    :: Is the events directory already linked?
+                    if exist %SERVEREVENTSDIR%\%%~ni (
+
+                        :: Print a message to notify the events directory is already linked
+                        echo     Events directory already linked.
+
+                    ) else (
+
+                        :: Print a message to notify the events directory is being linked
+                        echo     Linking events directory.
+
+                        echo.
+                        :: Create the symbolic link to the directory
+                        mklink /J %SERVEREVENTSDIR%\%%~ni %STARTDIR%\%%~ni\resource\source-python\events\%%~ni
+                        echo.
+                    )
+                )
+
+
+                :: Does the plugin's logs directory exist?
+                if exist %STARTDIR%\%%~ni\logs\source-python\%%~ni (
+
+                    :: Is the logs directory already linked?
+                    if exist %SERVERLOGSDIR%\%%~ni (
+
+                        :: Print a message to notify the logs directory is already linked
+                        echo     Logs directory already linked.
+
+                    ) else (
+
+                        :: Print a message to notify the logs directory is being linked
+                        echo     Linking logs directory.
+
+                        echo.
+                        :: Create the symbolic link to the directory
+                        mklink /J %SERVERLOGSDIR%\%%~ni %STARTDIR%\%%~ni\logs\source-python\%%~ni
+                        echo.
+                    )
+                )
+
+
+                :: Does the plugin's sound directory exist?
+                if exist %STARTDIR%\%%~ni\sound\source-python\%%~ni (
+
+                    :: Is the sound directory already linked?
+                    if exist %SERVERSOUNDDIR%\%%~ni (
+
+                        :: Print a message to notify the sound directory is already linked
+                        echo     Sound directory already linked.
+
+                    ) else (
+
+                        :: Print a message to notify the sound directory is being linked
+                        echo     Linking sound directory.
+
+                        echo.
+                        :: Create the symbolic link to the directory
+                        mklink /J %SERVERSOUNDDIR%\%%~ni %STARTDIR%\%%~ni\sound\source-python\%%~ni
+                        echo.
+                    )
+                )
+
+
+                :: Does the plugin's translations directory exist?
+                if exist %STARTDIR%\%%~ni\resource\source-python\translations\%%~ni (
+
+                    :: Is the translations directory already linked?
+                    if exist %SERVERTRANSLATIONSDIR%\%%~ni (
+
+                        :: Print a message to notify the translations directory is already linked
+                        echo     Translations directory already linked.
+
+                    ) else (
+
+                        :: Print a message to notify the translations directory is being linked
+                        echo     Linking translations directory.
+
+                        echo.
+                        :: Create the symbolic link to the directory
+                        mklink /J %SERVERTRANSLATIONSDIR%\%%~ni %STARTDIR%\%%~ni\resource\source-python\translations\%%~ni
+                        echo.
+                    )
+                )
+
+
+                :: Does the plugin's translations file exist?
+                if exist %STARTDIR%\%%~ni\resource\source-python\translations\%%~ni.ini (
+
+                    :: Is the translations file already linked?
+                    if exist %SERVERTRANSLATIONSDIR%\%%~ni.ini (
+
+                        :: Print a message to notify the translations file is already linked
+                        echo     Translations file already linked.
+
+                    ) else (
+
+                        :: Print a message to notify the translations file is being linked
+                        echo     Linking translations file.
+
+                        echo.
+                        :: Create the symbolic link to the file
+                        mklink /H %SERVERTRANSLATIONSDIR%\%%~ni.ini %STARTDIR%\%%~ni\resource\source-python\translations\%%~ni.ini
+                        echo.
+                    )
+                )
+
+            ) else (
+
+                :: Print a message the the plugin cannot be linked
+                echo %%~ni cannot be linked.
+
             )
 
-
-            :: Does the plugin's data directory exist?
-            if exist %STARTDIR%\%%~ni\addons\source-python\data\plugins\%%~ni (
-
-                :: Is the data directory already linked?
-                if exist %SERVERDATADIR%\%%~ni (
-
-                    :: Print a message to notify the data directory is already linked
-                    echo     Data directory already linked.
-
-                ) else (
-
-                    :: Print a message to notify the data directory is being linked
-                    echo     Linking data directory.
-
-                    echo.
-                    :: Create the symbolic link to the directory
-                    mklink /J %SERVERDATADIR%\%%~ni %STARTDIR%\%%~ni\addons\source-python\data\plugins\%%~ni
-                    echo.
-                )
-            )
-
-
-            :: Does the plugin's data file exist?
-            if exist %STARTDIR%\%%~ni\addons\source-python\data\plugins\%%~ni.ini (
-
-                :: Is the data file already linked?
-                if exist %SERVERDATADIR%\%%~ni.ini (
-
-                    :: Print a message to notify the data file is already linked
-                    echo     Data file already linked.
-
-                ) else (
-
-                    :: Print a message to notify the data file is being linked
-                    echo     Linking data file.
-
-                    echo.
-                    :: Create the symbolic link to the file
-                    mklink /H %SERVERDATADIR%\%%~ni.ini %STARTDIR%\%%~ni\addons\source-python\data\plugins\%%~ni.ini
-                    echo.
-                )
-            )
-
-
-            :: Does the plugin's events directory exist?
-            if exist %STARTDIR%\%%~ni\resource\source-python\events\%%~ni (
-
-                :: Is the events directory already linked?
-                if exist %SERVEREVENTSDIR%\%%~ni (
-
-                    :: Print a message to notify the events directory is already linked
-                    echo     Events directory already linked.
-
-                ) else (
-
-                    :: Print a message to notify the events directory is being linked
-                    echo     Linking events directory.
-
-                    echo.
-                    :: Create the symbolic link to the directory
-                    mklink /J %SERVEREVENTSDIR%\%%~ni %STARTDIR%\%%~ni\resource\source-python\events\%%~ni
-                    echo.
-                )
-            )
-
-
-            :: Does the plugin's logs directory exist?
-            if exist %STARTDIR%\%%~ni\logs\source-python\%%~ni (
-
-                :: Is the logs directory already linked?
-                if exist %SERVERLOGSDIR%\%%~ni (
-
-                    :: Print a message to notify the logs directory is already linked
-                    echo     Logs directory already linked.
-
-                ) else (
-
-                    :: Print a message to notify the logs directory is being linked
-                    echo     Linking logs directory.
-
-                    echo.
-                    :: Create the symbolic link to the directory
-                    mklink /J %SERVERLOGSDIR%\%%~ni %STARTDIR%\%%~ni\logs\source-python\%%~ni
-                    echo.
-                )
-            )
-
-
-            :: Does the plugin's sound directory exist?
-            if exist %STARTDIR%\%%~ni\sound\source-python\%%~ni (
-
-                :: Is the sound directory already linked?
-                if exist %SERVERSOUNDDIR%\%%~ni (
-
-                    :: Print a message to notify the sound directory is already linked
-                    echo     Sound directory already linked.
-
-                ) else (
-
-                    :: Print a message to notify the sound directory is being linked
-                    echo     Linking sound directory.
-
-                    echo.
-                    :: Create the symbolic link to the directory
-                    mklink /J %SERVERSOUNDDIR%\%%~ni %STARTDIR%\%%~ni\sound\source-python\%%~ni
-                    echo.
-                )
-            )
-
-
-            :: Does the plugin's translations directory exist?
-            if exist %STARTDIR%\%%~ni\resource\source-python\translations\%%~ni (
-
-                :: Is the translations directory already linked?
-                if exist %SERVERTRANSLATIONSDIR%\%%~ni (
-
-                    :: Print a message to notify the translations directory is already linked
-                    echo     Translations directory already linked.
-
-                ) else (
-
-                    :: Print a message to notify the translations directory is being linked
-                    echo     Linking translations directory.
-
-                    echo.
-                    :: Create the symbolic link to the directory
-                    mklink /J %SERVERTRANSLATIONSDIR%\%%~ni %STARTDIR%\%%~ni\resource\source-python\translations\%%~ni
-                    echo.
-                )
-            )
-
-
-            :: Does the plugin's translations file exist?
-            if exist %STARTDIR%\%%~ni\resource\source-python\translations\%%~ni.ini (
-
-                :: Is the translations file already linked?
-                if exist %SERVERTRANSLATIONSDIR%\%%~ni.ini (
-
-                    :: Print a message to notify the translations file is already linked
-                    echo     Translations file already linked.
-
-                ) else (
-
-                    :: Print a message to notify the translations file is being linked
-                    echo     Linking translations file.
-
-                    echo.
-                    :: Create the symbolic link to the file
-                    mklink /H %SERVERTRANSLATIONSDIR%\%%~ni.ini %STARTDIR%\%%~ni\resource\source-python\translations\%%~ni.ini
-                    echo.
-                )
-            )
-
-        ) else (
-
-            :: Print a message the the plugin cannot be linked
-            echo %%~ni cannot be linked.
+            :: Print a blank line between plugins
+            echo.
 
         )
-
-        :: Print a blank line between plugins
-        echo.
-
-
     )
     pause

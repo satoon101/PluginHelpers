@@ -24,11 +24,15 @@ setlocal EnableDelayedExpansion
     :: Loop through all plugins
     for /D %%i in (*.*) do (
 
-        :: Increment the counter
-        set /a num+=1
+        :: Skip the 'packages' directory
+        if %%i NEQ packages (
 
-        :: Set the current option to the current branch
-        set option_!num!=%%~ni
+            :: Increment the counter
+            set /a num+=1
+
+            :: Set the current option to the current branch
+            set option_!num!=%%~ni
+        )
     )
 
     :: Loop through the options
