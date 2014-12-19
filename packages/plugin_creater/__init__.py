@@ -48,11 +48,23 @@ def create_plugin(
         print('config.ini file not found, please run config.bat.')
         return
 
+    # Use try/except to get the config.ini instance
+    try:
+
+        # Get the config.ini instance
+        config_obj = ConfigObj(CONFIG_FILE)
+
+    # Was there an error in the config.ini?
+    except ConfigObjError:
+        print('config.ini has errors.')
+        print('Please delete config.ini and re-run config.bat.')
+        return
+
     # Use try/except to retrieve the author name
     try:
 
         # Get the author name to use
-        author = ConfigObj(CONFIG_FILE)['AUTHOR']
+        author = config_obj['AUTHOR']
 
     # Was 'AUTHOR' not found in the config.ini?
     except KeyError:
@@ -60,9 +72,15 @@ def create_plugin(
         print('Please delete config.ini and re-run config.bat.')
         return
 
-    # Was there an error in the config.ini?
-    except ConfigObjError:
-        print('config.ini has errors.')
+    # Use try/except to retrieve the repo type
+    try:
+
+        # Get the repo type to use
+        repo_type = config_obj['REPOTYPE']
+
+    # Was 'REPOTYPE' not found in the config.ini?
+    except KeyError:
+        print('No repository type found in config.ini.')
         print('Please delete config.ini and re-run config.bat.')
         return
 
@@ -176,6 +194,32 @@ def create_plugin(
         plugin_base_path.joinpath(
             'resource', 'source-python',
             'translations', plugin_name).makedirs()
+
+    # Should .gitignore and .gitattributes be created?
+    if repo_type == 'git':
+
+        # Create the .gitignore and .gitattributes
+        with plugin_base_path.joinpath('.gitignore').open('w') as open_file:
+            open_file.write('__pycache__/\n')
+        with plugin_base_path.joinpath(
+                '.gitattributes').open('w') as open_file:
+            open_file.write(
+                '# Set default behaviour, in case users ' +
+                "don't have core.autocrlf set.\n")
+            open_file.write(
+                '# Adding * text=auto causes Git to autodetect ' +
+                'text files and normalise their\n')
+            open_file.write(
+                '# line endings to LF when they are ' +
+                'checked into your repository.\n')
+            open_file.write('* text=auto\n')
+
+    # Should .hgignore be created?
+    elif repo_type == 'hg':
+
+        # Create the .hgignore
+        with plugin_base_path.joinpath('.hgignore').open('w') as open_file:
+            open_file.write('__pycache__/\n')
 
 
 def _write_top_lines(open_file, path):
