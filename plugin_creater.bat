@@ -21,23 +21,30 @@ setlocal EnableDelayedExpansion
     :: Request input
     set /p PLUGIN_NAME=
 
+    set "var="&for /f "delims=0123456789_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" %%i in ("%PLUGIN_NAME%") do set var=%%i
+    if defined var (
+
+        echo Invalid plugin name "%PLUGIN_NAME%"
+        goto :CreateAnother
+
+    )
+
     :: Does the plugin already exist?
     if exist %STARTDIR%/%PLUGIN_NAME% (
 
         :: Notify that the plugin already exists
         echo Plugin "%PLUGIN_NAME%" already exists.
 
-    ) else (
+        :: Ask to create another plugin
+        goto :CreateAnother
 
-        :: Create the argument string
-        set ARGUMENT_STRING=
-
-        :: Ask if a cfg directory should be included
-        goto :CreateCfg
     )
 
-    :: Ask to create another plugin
-    goto :CreateAnother
+    :: Create the argument string
+    set ARGUMENT_STRING=
+
+    :: Ask if a cfg directory should be included
+    goto :CreateCfg
 
 
 :: A place to ask to create a plugin
