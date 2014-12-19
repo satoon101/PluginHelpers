@@ -67,6 +67,7 @@ After you have completed the setup portion, you will want to create a plugin.
 Execute the plugin_creater.bat and answer the questions that follow.
 
 For the 'name' of the plugin, only alpha-numeric values, as well as underscores, are allowed.
+
 If you choose to create a cfg, events, or logs directory, an empty readme.md file will be created as a place-holder.
 
 ### PluginLinker
@@ -90,3 +91,7 @@ Just run the plugin_releaser.bat file and select the plugin you wish to release.
 All releases will be created in the directory you assigned RELEASEDIR to in your config.ini file.
 
 The directory structure used by plugin_releaser is &lt;RELEASEDIR&gt;\\&lt;plugin_name&gt;\\&lt;plugin_name&gt;_v&lt;plugin_version&gt;.zip
+
+So, if you are creating a release for a plugin called 'test' and the current version is 1.1, it will be saved as:
+
+* &lt;RELEASEDIR&gt;\test\test_v1.1.zip
