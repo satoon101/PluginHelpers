@@ -55,6 +55,20 @@ if not exist %STARTDIR%\config.ini (
     echo.
     @echo # Set to the directory where your releases should be placed.>> config.ini
     @echo RELEASEDIR="C:\Releases">> config.ini
+    @echo.>> config.ini
+    @echo.>> config.ini
+
+    :: Create the SPLinker header
+    echo.
+    @echo # ================== #>>config.ini
+    @echo # SP LINKER SETTINGS #>>config.ini    
+    @echo # ================== #>>config.ini
+    @echo.>> config.ini
+
+    :: Create the Source.Python repository directory variable
+    echo.
+    @echo # Set to the directory where Source.Python's repository is located.>>config.ini
+    @echo SOURCEPYTHONDIR="C:\Projects\Source.Python">>config.ini
     pause
 
 ) else (
