@@ -1,4 +1,3 @@
-*/
-config.ini
-!packages/
+/*
+!plugin_helpers/
 __pycache__
