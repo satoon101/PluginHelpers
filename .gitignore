@@ -1,3 +1,5 @@
 /*
 !plugin_helpers/
 __pycache__
+!*.sh
+!*.bat
