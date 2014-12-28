@@ -96,31 +96,48 @@ def create_release(plugin_name=None):
     # Create the zip file
     with ZipFile(zip_path, 'w', ZIP_DEFLATED) as zip_file:
 
-        # 
+        # Loop through all allowed directories
         for allowed_path in allowed_filetypes:
 
-            # 
+            # Get the full path to the directory
             check_path = plugin_path.joinpath(*allowed_path.split('/'))
 
-            # 
+            # Does the directory exist?
             if not check_path.isdir():
                 continue
 
-            # 
-            for file in find_files(check_path.files(
-                    '{0}.*'.format(plugin_name)), allowed_path):
+            # Loop through all files with the plugin's name
+            for file in find_files(check_path.files('{0}.*'.format(
+                    plugin_name)), allowed_path, allowed_filetypes):
 
-                # 
-                add_file(zip_file, file, check_path, plugin_path)
+                # Add the file to the zip
+                add_file(zip_file, file, plugin_path)
 
-            # 
+            # Loop through all files within the plugin's directory
             for file in find_files(check_path.joinpath(
-                    plugin_name).walkfiles(), allowed_path):
+                    plugin_name).walkfiles(), allowed_path, allowed_filetypes):
 
-                # 
-                add_file(zip_file, file, check_path, plugin_path)
+                # Add the file to the zip
+                add_file(zip_file, file, plugin_path)
 
-    # 
+        # Loop through all other allowed directories
+        for allowed_path in other_filetypes:
+
+            # Get the full path to the directory
+            check_path = plugin_path.joinpath(*allowed_path.split('/'))
+
+            # Does the directory exist?
+            if not check_path.isdir():
+                continue
+
+            # Loop through all files in the directory
+            for file in find_files(
+                    check_path.walkfiles(), allowed_path, other_filetypes):
+
+                # Add the file to the zip
+                add_file(zip_file, file, plugin_path)
+
+    # Print a message that everything was successful
     print('Successfully created {0} version {1} release:'.format(
         plugin_name, version))
     print('\t"{0}"'.format(zip_path))
@@ -149,7 +166,7 @@ def get_version(plugin_path):
     return None
 
 
-def find_files(generator, allowed_path):
+def find_files(generator, allowed_path, allowed_dictionary):
     """Yield files that should be added to the zip."""
     # Suppress FileNotFoundError in case the
     #    plugin specific directory does not exist.
@@ -159,7 +176,7 @@ def find_files(generator, allowed_path):
         for file in generator:
 
             # Is the current file not allowed?
-            if not file.ext[1:] in allowed_filetypes[allowed_path]:
+            if not file.ext[1:] in allowed_dictionary[allowed_path]:
                 continue
 
             # Does the given directory have exceptions?
@@ -181,7 +198,7 @@ def find_files(generator, allowed_path):
                 yield file
 
 
-def add_file(zip_file, file, check_path, plugin_path):
+def add_file(zip_file, file, plugin_path):
     """Add the given file and all parent directories to the zip."""
     # Write the file to the zip
     zip_file.write(file, file.replace(plugin_path, ''))
@@ -194,7 +211,7 @@ def add_file(zip_file, file, check_path, plugin_path):
 
         # Is the current directory not yet included in the zip?
         current = parent.replace(plugin_path, '')[1:].replace('\\', '/') + '/'
-        if not current in zip_file.namelist():
+        if current not in zip_file.namelist():
 
             # Add the parent directory to the zip
             zip_file.write(parent, current)
