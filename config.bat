@@ -6,8 +6,10 @@ set STARTDIR="%CD%"
 :: Does the config file already exist?
 if not exist %STARTDIR%\config.ini (
 
+    echo Creating config.ini file.  Set values to your specifications.
+
     :: Copy the default config
-    copy packages\config-defaults.ini config.ini
+    copy packages\windows-defaults.ini config.ini
     pause
 
 ) else (
