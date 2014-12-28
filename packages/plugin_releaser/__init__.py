@@ -6,6 +6,8 @@
 # >> IMPORTS
 # =============================================================================
 # Python Imports
+#   Contextlib
+from contextlib import suppress
 #   Zipfile
 from zipfile import ZIP_DEFLATED
 from zipfile import ZipFile
@@ -23,7 +25,6 @@ from plugin_releaser.paths import STARTDIR
 from plugin_releaser.paths import allowed_filetypes
 from plugin_releaser.paths import exception_filetypes
 from plugin_releaser.paths import other_filetypes
-from plugin_releaser.options import option_parser
 
 
 # =============================================================================
@@ -93,10 +94,36 @@ def create_release(plugin_name=None):
         return
 
     # Create the zip file
-    #with ZipFile(zip_path, 'w', ZIP_DEFLATED) as zip_file:
+    with ZipFile(zip_path, 'w', ZIP_DEFLATED) as zip_file:
 
-    # Loop through plugin specific directories
-    #for allowed_path in allowed_filetypes:
+        # 
+        for allowed_path in allowed_filetypes:
+
+            # 
+            check_path = plugin_path.joinpath(*allowed_path.split('/'))
+
+            # 
+            if not check_path.isdir():
+                continue
+
+            # 
+            for file in find_files(check_path.files(
+                    '{0}.*'.format(plugin_name)), allowed_path):
+
+                # 
+                add_file(zip_file, file, check_path, plugin_path)
+
+            # 
+            for file in find_files(check_path.joinpath(
+                    plugin_name).walkfiles(), allowed_path):
+
+                # 
+                add_file(zip_file, file, check_path, plugin_path)
+
+    # 
+    print('Successfully created {0} version {1} release:'.format(
+        plugin_name, version))
+    print('\t"{0}"'.format(zip_path))
 
 
 def get_version(plugin_path):
@@ -120,3 +147,57 @@ def get_version(plugin_path):
 
     # If no version information was found, simply return None
     return None
+
+
+def find_files(generator, allowed_path):
+    """Yield files that should be added to the zip."""
+    # Suppress FileNotFoundError in case the
+    #    plugin specific directory does not exist.
+    with suppress(FileNotFoundError):
+
+        # Loop through the files from the given generator
+        for file in generator:
+
+            # Is the current file not allowed?
+            if not file.ext[1:] in allowed_filetypes[allowed_path]:
+                continue
+
+            # Does the given directory have exceptions?
+            if allowed_path in exception_filetypes:
+
+                # Loop through the directory's exceptions
+                for exception in exception_filetypes[allowed_path]:
+
+                    # Is this file not allowed?
+                    if exception in file.name:
+                        break
+
+                # Is the file not an exception?
+                else:
+                    yield file
+
+            # Is the file allowed?
+            else:
+                yield file
+
+
+def add_file(zip_file, file, check_path, plugin_path):
+    """Add the given file and all parent directories to the zip."""
+    # Write the file to the zip
+    zip_file.write(file, file.replace(plugin_path, ''))
+
+    # Get the file's parent directory
+    parent = file.parent
+
+    # Get all parent directories to add to the zip
+    while plugin_path != parent:
+
+        # Is the current directory not yet included in the zip?
+        current = parent.replace(plugin_path, '')[1:].replace('\\', '/') + '/'
+        if not current in zip_file.namelist():
+
+            # Add the parent directory to the zip
+            zip_file.write(parent, current)
+
+        # Get the parent's parent
+        parent = parent.parent
