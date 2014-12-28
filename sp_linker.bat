@@ -138,28 +138,37 @@ set DIRECTORIES[4]="sound"
 :: A place to link Source.Python to a server
 :LinkServer
 
+    :: Store the server's directory
+    set SERVERDIR=%SERVERSTARTDIR%\%1\%1
+
     :: Loop through all directories to link
     for /F "tokens=2 delims==" %%s in ('set DIRECTORIES[') do (
 
         :: Create the base directory if it doesn't exist
-        if not exist %SERVERSTARTDIR%\%1\%1\%%~ns (
+        if not exist %SERVERDIR%\%%~ns (
 
-            mkdir %SERVERSTARTDIR%\%1\%1\%%~ns
+            mkdir %SERVERDIR%\%%~ns
         )
 
         :: Does the source-python directory exist in the base directory?
-        if exist %SERVERSTARTDIR%\%1\%1\%%~ns\source-python (
+        if exist %SERVERDIR%\%%~ns\source-python (
 
-            echo Cannot link %SERVERSTARTDIR%\%1\%1\%%~ns\source-python, directory already exists.
+            echo Cannot link %SERVERDIR%\%%~ns\source-python, directory already exists.
 
         ) else (
 
             echo.
-            mklink /J %SERVERSTARTDIR%\%1\%1\%%~ns\source-python %SOURCEPYTHONDIR%\%%~ns\source-python
+            mklink /J %SERVERDIR%\%%~ns\source-python %SOURCEPYTHONDIR%\%%~ns\source-python
             echo.
 
         )
 
+    )
+
+    :: Copy the .vdf loader if it doesn't already exist
+    if not exist %SERVERDIR%\addons\source-python.vdf (
+
+        copy %SOURCEPYTHONDIR%\addons\source-python.vdf %SERVERDIR%\addons\source-python.vdf
     )
 
     goto :eof
