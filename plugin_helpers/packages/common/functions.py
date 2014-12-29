@@ -25,7 +25,7 @@ def clear_screen():
     system('cls' if PLATFORM == 'windows' else 'clear')
 
 
-def get_plugin(suffix):
+def get_plugin(suffix, allow_all=True):
     """Return a plugin by name to do something with."""
     # Clear the screen
     clear_screen()
@@ -43,8 +43,9 @@ def get_plugin(suffix):
         # Add the current plugin
         message += '\t({0}) {1}\n'.format(number, plugin)
 
-    # Add ALL to the list
-    message += '\t({0}) ALL\n'.format(len(plugin_list) + 1)
+    # Add ALL to the list if it needs to be
+    if allow_all:
+        message += '\t({0}) ALL\n'.format(len(plugin_list) + 1)
 
     # Ask which plugin to do something with
     value = input(message + '\n').strip()
@@ -68,13 +69,13 @@ def get_plugin(suffix):
             return plugin_list[value - 1]
 
         # Was ALL's choice given?
-        if value == len(plugin_list) + 1:
+        if value == len(plugin_list) + 1 and allow_all:
 
             # Return ALL
             return 'ALL'
 
     # If no valid choice was given, try again
-    return get_plugin(suffix)
+    return get_plugin(suffix, allow_all)
 
 
 def get_server(suffix):
