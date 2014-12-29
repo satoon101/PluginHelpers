@@ -11,7 +11,7 @@ else
 fi
 
 # Loop through all files to link
-for filename in $STARTDIR/plugin_helpers/$DIRECTORY/*; do
+for filename in ./plugin_helpers/$DIRECTORY/*; do
 
     # Skip "config.ini" as that needs to not be linked
     if [ "$(basename "$filename")" != config.ini ]; then
@@ -20,7 +20,7 @@ for filename in $STARTDIR/plugin_helpers/$DIRECTORY/*; do
         if [ ! -f "$STARTDIR/$(basename "$filename")" ]; then
 
             # Create the link
-            ln $filename $STARTDIR/$(basename "$filename")
+            ln $filename "$STARTDIR/$(basename "$filename")"
 
         fi
     fi

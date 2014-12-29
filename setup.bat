@@ -21,7 +21,7 @@ echo.
 echo.
 
 :: Loop through all hooks
-for %%i in (%STARTDIR%\plugin_helpers\hooks\*.*) do (
+for %%i in (.\plugin_helpers\hooks\*.*) do (
 
     :: Does the hook's link exist?
     if not exist %STARTDIR%\.git\hooks\%%~ni (
