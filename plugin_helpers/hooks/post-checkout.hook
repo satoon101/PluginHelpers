@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
 
-echo Checkout
-
+echo Checkout Test
