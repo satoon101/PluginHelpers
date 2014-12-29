@@ -22,17 +22,11 @@ from path import Path
 # Store the platform
 PLATFORM = system().lower()
 
-# Store the package directory
-PACKAGE_DIR = Path(__file__).parent.parent.parent
-
 # Store the main directory
-START_DIR = PACKAGE_DIR.parent
-
-# Store the config file location
-CONFIG_FILE = START_DIR.joinpath('config.ini')
+START_DIR = Path(__file__).parent.parent.parent.parent
 
 # Get the configuration
-config_obj = ConfigObj(CONFIG_FILE)
+config_obj = ConfigObj(START_DIR.joinpath('config.ini'))
 
 # Get a list of all plugins
 plugin_list = [
