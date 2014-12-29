@@ -34,7 +34,7 @@ echo Checking packages with PyLint:
 echo =====================================
 echo.
 
-python -m pylint --rcfile ../.pylintrc %STARTDIR%\packages --const-rgx="(([A-Z_][A-Z0-9_]*)|([a-z_][a-z0-9_]*)|(__.*__))$" --msg-template="{msg_id}:{line:3d},{column:2d}: {msg} ({symbol})"
+python -m pylint --rcfile .pylintrc %STARTDIR%\packages --const-rgx="(([A-Z_][A-Z0-9_]*)|([a-z_][a-z0-9_]*)|(__.*__))$" --msg-template="{msg_id}:{line:3d},{column:2d}: {msg} ({symbol})"
 
 echo.
 echo.

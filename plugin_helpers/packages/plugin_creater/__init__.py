@@ -44,21 +44,12 @@ def create_plugin(
         # Get the author name to use
         author = config_obj['AUTHOR']
 
-    # Was 'AUTHOR' not found in the config.ini?
-    except KeyError:
-        print('No author found in config.ini.')
-        print('Please delete config.ini and re-run config.bat.')
-        return
-
-    # Use try/except to retrieve the repo type
-    try:
-
         # Get the repo type to use
         repo_type = config_obj['REPOTYPE']
 
-    # Was 'REPOTYPE' not found in the config.ini?
-    except KeyError:
-        print('No repository type found in config.ini.')
+    # Was one of the keys not found in the config.ini?
+    except KeyError as key:
+        print('No "{0}" found in config.ini.'.format(key))
         print('Please delete config.ini and re-run config.bat.')
         return
 
@@ -88,99 +79,94 @@ def create_plugin(
     # Should a cfg directory be created?
     if config:
 
-        # Get the cfg path
-        config_path = plugin_base_path.joinpath(
-            'cfg', 'source-python', plugin_name)
-
         # Create the cfg directory
-        config_path.makedirs()
-
-        # Create the cfg readme placeholder
-        config_path.joinpath('readme.md').touch()
+        _create_directory(
+            plugin_base_path, 'cfg', 'source-python',
+            plugin_name, filename='readme.md')
 
     # Should a data file be created?
     if data == 'file':
 
-        # Get the data path
-        data_path = plugin_base_path.joinpath(
-            'addons', 'source-python', 'data', 'plugins')
-
-        # Create the data directory
-        data_path.makedirs()
-
         # Create the data file
-        data_path.joinpath(plugin_name + '.ini').touch()
+        _create_directory(
+            plugin_base_path, 'addons', 'source-python',
+            'data', 'plugins', filename=plugin_name + '.ini')
 
     # Should a data directory be created?
     elif data == 'directory':
 
         # Create the data directory
-        plugin_base_path.joinpath(
-            'addons', 'source-python', 'data',
-            'plugins', plugin_name).makedirs()
+        _create_directory(
+            plugin_base_path, 'addons', 'source-python',
+            'data', 'plugins', plugin_name)
 
     # Should a events directory be created?
     if events:
 
-        # Get the events path
-        events_path = plugin_base_path.joinpath(
-            'resource', 'source-python', 'events', plugin_name)
-
         # Create the events directory
-        events_path.makedirs()
-
-        # Create the events readme placeholder
-        events_path.joinpath('readme.md').touch()
+        _create_directory(
+            plugin_base_path, 'resource', 'source-python',
+            'events', plugin_name, filename='readme.md')
 
     # Should a logs directory be created?
     if logs:
 
-        # Get the logs path
-        logs_path = plugin_base_path.joinpath(
-            'logs', 'source-python', plugin_name)
-
         # Create the logs directory
-        logs_path.makedirs()
-
-        # Create the logs readme placeholder
-        logs_path.joinpath('readme.md').touch()
+        _create_directory(
+            plugin_base_path, 'logs', 'source-python',
+            plugin_name, filename='readme.md')
 
     # Should a sound directory be created?
     if sound:
 
         # Create the sound directory
-        plugin_base_path.joinpath(
-            'sound', 'source-python', plugin_name).makedirs()
+        _create_directory(
+            plugin_base_path, 'sound', 'source-python', plugin_name)
 
     # Should a translations file be created?
     if translations == 'file':
 
-        # Get the translations path
-        translations_path = plugin_base_path.joinpath(
-            'resource', 'source-python', 'translations')
-
-        # Create the translations directory
-        translations_path.makedirs()
-
         # Create the translations file
-        translations_path.joinpath(plugin_name + '.ini').touch()
+        _create_directory(
+            plugin_base_path, 'resource', 'source-python',
+            'translations', filename=plugin_name + '.ini')
 
     # Should a translations directory be created?
     elif translations == 'directory':
 
         # Create the translations directory
-        plugin_base_path.joinpath(
-            'resource', 'source-python',
-            'translations', plugin_name).makedirs()
+        _create_directory(
+            plugin_base_path, 'resource', 'source-python',
+            'translations', plugin_name)
 
+    # Create the repo specific files
+    _create_repo(repo_type, plugin_base_path)
+
+
+def _create_directory(base_path, *args, filename=None):
+    """Create the directory using the given arguments."""
+    # Get the path to create
+    current_path = base_path.joinpath(*args)
+
+    # Create the directory
+    current_path.makedirs()
+
+    # Was a filename given?
+    if filename is not None:
+
+        # Create the file
+        current_path.joinpath(filename).touch()
+
+
+def _create_repo(repo_type, base_path):
+    """Create repo specific ignore/attributes files."""
     # Should .gitignore and .gitattributes be created?
     if repo_type == 'git':
 
         # Create the .gitignore and .gitattributes
-        with plugin_base_path.joinpath('.gitignore').open('w') as open_file:
+        with base_path.joinpath('.gitignore').open('w') as open_file:
             open_file.write('__pycache__/\n')
-        with plugin_base_path.joinpath(
-                '.gitattributes').open('w') as open_file:
+        with base_path.joinpath('.gitattributes').open('w') as open_file:
             open_file.write(
                 '# Set default behaviour, in case users ' +
                 "don't have core.autocrlf set.\n")
@@ -196,7 +182,7 @@ def create_plugin(
     elif repo_type == 'hg':
 
         # Create the .hgignore
-        with plugin_base_path.joinpath('.hgignore').open('w') as open_file:
+        with base_path.joinpath('.hgignore').open('w') as open_file:
             open_file.write('__pycache__/\n')
 
 

@@ -57,7 +57,7 @@ def create_release(plugin_name=None):
         return
 
     # Get the plugin's current version
-    version = get_version(plugin_path.joinpath(
+    version = _get_version(plugin_path.joinpath(
         'addons', 'source-python', 'plugins', plugin_name))
 
     # Was no version information found?
@@ -65,16 +65,8 @@ def create_release(plugin_name=None):
         print('No version found.')
         return
 
-    # Get the directory to save the release in
-    save_path = Path(release_path).joinpath(plugin_name)
-
-    # Create the directory if it doesn't exist
-    if not save_path.isdir():
-        save_path.makedirs()
-
-    # Get the full path to the release zip file
-    zip_path = save_path.joinpath(
-        '{0} - v{1}.zip'.format(plugin_name, version))
+    # Get the zip file location
+    zip_path = _get_zip_path(release_path, plugin_name, version)
 
     # Does the release already exist?
     if zip_path.isfile():
@@ -95,18 +87,18 @@ def create_release(plugin_name=None):
                 continue
 
             # Loop through all files with the plugin's name
-            for file in find_files(check_path.files('{0}.*'.format(
+            for file in _find_files(check_path.files('{0}.*'.format(
                     plugin_name)), allowed_path, allowed_filetypes):
 
                 # Add the file to the zip
-                add_file(zip_file, file, plugin_path)
+                _add_file(zip_file, file, plugin_path)
 
             # Loop through all files within the plugin's directory
-            for file in find_files(check_path.joinpath(
+            for file in _find_files(check_path.joinpath(
                     plugin_name).walkfiles(), allowed_path, allowed_filetypes):
 
                 # Add the file to the zip
-                add_file(zip_file, file, plugin_path)
+                _add_file(zip_file, file, plugin_path)
 
         # Loop through all other allowed directories
         for allowed_path in other_filetypes:
@@ -119,11 +111,11 @@ def create_release(plugin_name=None):
                 continue
 
             # Loop through all files in the directory
-            for file in find_files(
+            for file in _find_files(
                     check_path.walkfiles(), allowed_path, other_filetypes):
 
                 # Add the file to the zip
-                add_file(zip_file, file, plugin_path)
+                _add_file(zip_file, file, plugin_path)
 
     # Print a message that everything was successful
     print('Successfully created {0} version {1} release:'.format(
@@ -131,7 +123,7 @@ def create_release(plugin_name=None):
     print('\t"{0}"\n\n'.format(zip_path))
 
 
-def get_version(plugin_path):
+def _get_version(plugin_path):
     """Return the version for the plugin."""
     # Loop through all Python files for the plugin
     for file in plugin_path.files('*.py'):
@@ -154,7 +146,21 @@ def get_version(plugin_path):
     return None
 
 
-def find_files(generator, allowed_path, allowed_dictionary):
+def _get_zip_path(release_path, plugin_name, version):
+    """Return the zip file location."""
+    # Get the directory to save the release in
+    save_path = Path(release_path).joinpath(plugin_name)
+
+    # Create the directory if it doesn't exist
+    if not save_path.isdir():
+        save_path.makedirs()
+
+    # Return the full path to the release zip file
+    return save_path.joinpath(
+        '{0} - v{1}.zip'.format(plugin_name, version))
+
+
+def _find_files(generator, allowed_path, allowed_dictionary):
     """Yield files that should be added to the zip."""
     # Suppress FileNotFoundError in case the
     #    plugin specific directory does not exist.
@@ -186,7 +192,7 @@ def find_files(generator, allowed_path, allowed_dictionary):
                 yield file
 
 
-def add_file(zip_file, file, plugin_path):
+def _add_file(zip_file, file, plugin_path):
     """Add the given file and all parent directories to the zip."""
     # Write the file to the zip
     zip_file.write(file, file.replace(plugin_path, ''))
