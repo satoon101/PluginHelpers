@@ -35,7 +35,7 @@ _directory_or_file = {
 # =============================================================================
 # >> FUNCTIONS
 # =============================================================================
-def get_plugin_name():
+def _get_plugin_name():
     """Return a new plugin name."""
     # Clear the screen
     clear_screen()
@@ -48,7 +48,7 @@ def get_plugin_name():
     if not name.replace('_', '').isalnum():
 
         # Try to get a new plugin name
-        return ask_retry(
+        return _ask_retry(
             'Invalid characters used in plugin name "{0}".\n'.format(
                 name) + 'Only alpha-numeric and underscores allowed.')
 
@@ -56,14 +56,14 @@ def get_plugin_name():
     if name in plugin_list:
 
         # Try to get a new plugin name
-        return ask_retry(
+        return _ask_retry(
             'Plugin name "{0}" already exists.'.format(name))
 
     # Return the plugin name
     return name
 
 
-def ask_retry(reason):
+def _ask_retry(reason):
     """Ask if another plugin name should be given."""
     # Clear the screen
     clear_screen()
@@ -77,19 +77,19 @@ def ask_retry(reason):
     if value not in _boolean_values:
 
         # Try again
-        return ask_retry(reason)
+        return _ask_retry(reason)
 
     # Was Yes selected?
     if _boolean_values[value]:
 
         # Try to get another plugin name
-        return get_plugin_name()
+        return _get_plugin_name()
 
     # Simply return None to not get a plugin name
     return None
 
 
-def get_directory(name):
+def _get_directory(name):
     """Return whether or not to create the given directory."""
     # Clear the screen
     clear_screen()
@@ -103,13 +103,13 @@ def get_directory(name):
     if value not in _boolean_values:
 
         # Try again
-        return get_directory(name)
+        return _get_directory(name)
 
     # Return the value
     return _boolean_values[value]
 
 
-def get_directory_or_file(name):
+def _get_directory_or_file(name):
     """Return whether to create the given directory or file."""
     # Clear the screen
     clear_screen()
@@ -123,7 +123,7 @@ def get_directory_or_file(name):
     if value not in _directory_or_file:
 
         # Try again
-        get_directory_or_file(name)
+        _get_directory_or_file(name)
 
     # Return the value
     return _directory_or_file[value]
@@ -135,28 +135,28 @@ def get_directory_or_file(name):
 if __name__ == '__main__':
 
     # Get the plugin name to use
-    plugin_name = get_plugin_name()
+    plugin_name = _get_plugin_name()
 
     # Was a valid plugin name given?
     if plugin_name is not None:
 
         # Get the config value
-        config = get_directory('config')
+        config = _get_directory('config')
 
         # Get the data value
-        data = get_directory_or_file('data')
+        data = _get_directory_or_file('data')
 
         # Get the events value
-        events = get_directory('events')
+        events = _get_directory('events')
 
         # Get the logs value
-        logs = get_directory('logs')
+        logs = _get_directory('logs')
 
         # Get the sound value
-        sound = get_directory('sound')
+        sound = _get_directory('sound')
 
         # Get the translations value
-        translations = get_directory_or_file('translations')
+        translations = _get_directory_or_file('translations')
 
         # Call create_plugin with the options
         create_plugin(

@@ -19,22 +19,22 @@ from plugin_linker import link_plugin
 # =============================================================================
 # >> FUNCTIONS
 # =============================================================================
-def _link_server(server, plugin):
+def _link_server(server_name, plugin_name):
     """Link the server with the plugin."""
     # Was ALL selected for the plugin?
-    if plugin == 'ALL':
+    if plugin_name == 'ALL':
 
         # Loop through each plugin
-        for plugin in plugin_list:
+        for plugin_name in plugin_list:
 
             # Link the plugin
-            link_plugin(server, plugin)
+            link_plugin(server_name, plugin_name)
 
     # Otherwise
     else:
 
         # Link the plugin
-        link_plugin(server, plugin)
+        link_plugin(server_name, plugin_name)
 
 
 # =============================================================================
@@ -43,34 +43,34 @@ def _link_server(server, plugin):
 if __name__ == '__main__':
 
     # Get the plugin to link
-    plugin_name = get_plugin('link')
+    plugin = get_plugin('link')
 
     # Was a valid plugin chosen?
-    if plugin_name is not None:
+    if plugin is not None:
 
         # Clear the screen
         clear_screen()
 
         # Get the server to link
-        server_name = get_server()
+        server = get_server()
 
         # Was a valid server chosen?
-        if server_name is not None:
+        if server is not None:
 
             # Clear the screen
             clear_screen()
 
             # Was ALL selected for the server?
-            if server_name == 'ALL':
+            if server == 'ALL':
 
                 # Loop through each server
-                for server_name in server_list:
+                for server in server_list:
 
                     # Link the server to the plugin
-                    _link_server(server_name, plugin_name)
+                    _link_server(server, plugin)
 
             # Otherwise
             else:
 
                 # Link the server to the plugin
-                _link_server(server_name, plugin_name)
+                _link_server(server, plugin)
