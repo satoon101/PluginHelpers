@@ -23,7 +23,7 @@ if not exist %STARTDIR%\config.ini (
 
     :: Print a message that the user needs to create the config.ini file
     echo No config.ini file found.
-    echo Please execute the config.bat file to create the config.ini before proceeding.
+    echo Please execute the setup.bat file to create the config.ini before proceeding.
     pause
     exit
 )
@@ -40,7 +40,7 @@ if not defined PYTHONEXE (
 
     :: Print a message about the config issue
     echo Something is wrong with your config.ini file.
-    echo Please delete your config.ini file and re-execute config.bat.
+    echo Please delete your config.ini file and re-execute setup.bat.
     pause
     exit
 )
