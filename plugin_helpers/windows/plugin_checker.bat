@@ -1,15 +1,5 @@
 @echo off
 
-:: Execute the configuration
-call exec_config
-
-:: Did the configuration encounter no error?
-if %errorlevel% == 0 (
-
-    :: Call the plugin checker
-    setlocal
-    set PYTHONPATH=%PACKAGEDIR%
-    %PYTHONEXE% %STARTDIR%\plugin_helpers\packages\plugin_checker
-    endlocal
-)
+:: Execute the plugin_checker
+call call_python plugin_checker
 pause

@@ -3,15 +3,12 @@
 :: Store the current directory for later use
 set STARTDIR="%CD%"
 
-:: Store the package directory
-set PACKAGEDIR=./plugin_helpers/packages/
-
 :: Does the config.ini file exist?
 if not exist %STARTDIR%\config.ini (
 
     echo No config.ini file found.
     echo Please execute the setup.bat file to create the config.ini before proceeding.
-    exit /b 1
+    exit
 )
 
 :: Get all the configuration values
@@ -25,5 +22,11 @@ if not defined PYTHONEXE (
 
     echo Something is wrong with your config.ini file.
     echo Please delete your config.ini file and re-execute setup.bat.
-    exit /b 1
+    exit
 )
+
+:: Call the given package
+setlocal
+set PYTHONPATH=.\plugin_helpers\packages
+%PYTHONEXE% %STARTDIR%\plugin_helpers\packages\%1
+endlocal
