@@ -39,3 +39,6 @@ SERVER_DIR = Path(config_obj['SERVERSTARTDIR'])
 # Get a list of all servers
 server_list = [
     x.namebase for x in SERVER_DIR.dirs() if x.namebase != 'steamcmd']
+
+# Store the Source.Python repository directory
+SOURCE_PYTHON_DIR = Path(config_obj['SOURCEPYTHONDIR'])

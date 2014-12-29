@@ -11,6 +11,7 @@ from path import Path
 
 # Common Imports
 from common.constants import SERVER_DIR
+from common.constants import SOURCE_PYTHON_DIR
 from common.constants import config_obj
 from common.constants import server_list
 from common.functions import link_directory
@@ -19,12 +20,10 @@ from common.functions import link_directory
 # =============================================================================
 # >> GLOBAL VARIABLES
 # =============================================================================
-# Get the Source.Python repo directory
-_SP_DIR = Path(config_obj['SOURCEPYTHONDIR'])
-
 # Get the directories to link
 _sp_directories = [
-    x.namebase for x in _SP_DIR.dirs() if x.namebase not in ('src', '.git')]
+    x.namebase for x in SOURCE_PYTHON_DIR.dirs()
+    if x.namebase not in ('src', '.git')]
 
 
 # =============================================================================
@@ -64,11 +63,11 @@ def link_server(server_name):
             continue
 
         # Link the directory
-        link_directory(_SP_DIR.joinpath(dir_name, 'source-python'), sp_dir)
+        link_directory(SOURCE_PYTHON_DIR.joinpath(dir_name, 'source-python'), sp_dir)
 
     # Get the .vdf's path
     vdf = server_path.joinpath('addons', 'source-python.vdf')
 
     # Copy the .vdf if it needs copied
     if not vdf.isfile():
-        _SP_DIR.joinpath('addons', 'source-python.vdf').copy(vdf)
+        SOURCE_PYTHON_DIR.joinpath('addons', 'source-python.vdf').copy(vdf)
