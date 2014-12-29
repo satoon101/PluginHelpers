@@ -30,4 +30,10 @@ for %%i in (%STARTDIR%\plugin_helpers\hooks\*.*) do (
     )
 )
 
+:: Get the current git branch
+for /f %%a in ('git rev-parse --abbrev-ref HEAD') do set CURRENT_BRANCH=%%a
+
+:: Force a checkout to execute the checkout hook
+git checkout %CURRENT_BRANCH%
+
 pause
