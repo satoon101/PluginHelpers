@@ -23,10 +23,10 @@ from path import Path
 PLATFORM = system().lower()
 
 # Store the package directory
-PACKAGE_DIR = Path(__file__).parent.parent
+PACKAGE_DIR = Path(__file__).parent.parent.parent
 
 # Store the main directory
-START_DIR = PACKAGE_DIR.parent.parent
+START_DIR = PACKAGE_DIR.parent
 
 # Store the config file location
 CONFIG_FILE = START_DIR.joinpath('config.ini')

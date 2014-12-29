@@ -6,6 +6,8 @@
 # >> IMPORTS
 # =============================================================================
 # Python Imports
+#   Contextlib
+from contextlib import suppress
 #   OS
 from os import system
 
@@ -54,13 +56,16 @@ def get_plugin(suffix):
         return value
 
     # Was an integer given?
-    if isinstance(value, int):
+    with suppress(ValueError):
+
+        # Typecast the value
+        value = int(value)
 
         # Was the value a valid plugin choice?
         if value <= len(plugin_list):
 
             # Return the plugin by index
-            return plugin_list[value]
+            return plugin_list[value - 1]
 
         # Was ALL's choice given?
         if value == len(plugin_list) + 1:
