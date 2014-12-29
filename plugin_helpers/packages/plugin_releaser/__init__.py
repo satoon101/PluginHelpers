@@ -13,15 +13,14 @@ from zipfile import ZIP_DEFLATED
 from zipfile import ZipFile
 
 # Site-Package Imports
-#   Configobj
-from configobj import ConfigObj
-from configobj import ConfigObjError
 #   Path
 from path import Path
 
+# Common Imports
+from common.constants import START_DIR
+from common.constants import config_obj
+
 # Package Imports
-from plugin_releaser.paths import CONFIG_FILE
-from plugin_releaser.paths import STARTDIR
 from plugin_releaser.paths import allowed_filetypes
 from plugin_releaser.paths import exception_filetypes
 from plugin_releaser.paths import other_filetypes
@@ -37,16 +36,11 @@ def create_release(plugin_name=None):
         print('No plugin name provided.')
         return
 
-    # Does the config file exist?
-    if not CONFIG_FILE.isfile():
-        print('config.ini file not found, please run config.bat.')
-        return
-
     # Use try/except to retrieve the release directory
     try:
 
         # Get the release directory
-        release_path = ConfigObj(CONFIG_FILE)['RELEASEDIR']
+        release_path = config_obj['RELEASEDIR']
 
     # Was 'RELEASEDIR' not found in the config.ini?
     except KeyError:
@@ -54,14 +48,8 @@ def create_release(plugin_name=None):
         print('Please delete config.ini and re-run config.bat.')
         return
 
-    # Was there an error in the config.ini?
-    except ConfigObjError:
-        print('config.ini has errors.')
-        print('Please delete config.ini and re-run config.bat.')
-        return
-
     # Get the plugin's base path
-    plugin_path = STARTDIR.joinpath(plugin_name)
+    plugin_path = START_DIR.joinpath(plugin_name)
 
     # Does the plugin not exist?
     if not plugin_path.isdir():

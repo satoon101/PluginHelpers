@@ -3,22 +3,8 @@
 """Stores paths used by plugin_releaser."""
 
 # =============================================================================
-# >> IMPORTS
-# =============================================================================
-# Site-Package Imports
-#   Path
-from path import Path
-
-
-# =============================================================================
 # >> GLOBAL VARIABLES
 # =============================================================================
-# Store the base directory to get plugin files from
-STARTDIR = Path(__file__).parent.parent.parent
-
-# Store the config file path
-CONFIG_FILE = STARTDIR.joinpath('config.ini')
-
 # Store all allowed readable data file types
 _readable_data = [
     'ini',
