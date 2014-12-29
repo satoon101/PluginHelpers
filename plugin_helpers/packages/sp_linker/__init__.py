@@ -25,7 +25,7 @@ _sp_directories = [
 # >> FUNCTIONS
 # =============================================================================
 def link_server(server_name):
-    """Link Source.Python to the given server."""
+    """Link Source.Python's repository to the given server."""
     # Was an invalid server name given?
     if server_name not in server_list:
         print('Invalid server name "{0}".'.format(server_name))

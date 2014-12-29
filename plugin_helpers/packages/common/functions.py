@@ -144,7 +144,7 @@ def link_directory(src, dest):
     else:
 
         # Link using Linux format
-        pass
+        system('ln -s {0} {1}'.format(src, dest))
 
 
 def link_file(src, dest):
@@ -159,4 +159,4 @@ def link_file(src, dest):
     else:
 
         # Link using Linux format
-        pass
+        system('ln {0} {1}'.format(src, dest))
