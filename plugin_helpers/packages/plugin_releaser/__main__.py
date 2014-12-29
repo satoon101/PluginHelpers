@@ -5,18 +5,7 @@
 # =============================================================================
 # >> IMPORTS
 # =============================================================================
-# Python Imports
-import sys
-
-# Site-Package Imports
-#   Path
-from path import Path
-
-# Add the package path to sys.path
-sys.path.append(Path(__file__).parent.parent)
-
 # Common Imports
-from common.constants import plugin_list
 from common.functions import clear_screen
 from common.functions import get_plugin
 
@@ -34,6 +23,9 @@ if __name__ == '__main__':
 
     # Was a valid plugin chosen?
     if plugin_name is not None:
+
+        # Clear the screen
+        clear_screen()
 
         # Create a release for the chosen plugin
         create_release(plugin_name)

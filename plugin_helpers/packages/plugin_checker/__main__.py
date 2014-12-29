@@ -5,16 +5,6 @@
 # =============================================================================
 # >> IMPORTS
 # =============================================================================
-# Python Imports
-import sys
-
-# Site-Package Imports
-#   Path
-from path import Path
-
-# Add the package path to sys.path
-sys.path.append(Path(__file__).parent.parent)
-
 # Common Imports
 from common.constants import plugin_list
 from common.functions import clear_screen

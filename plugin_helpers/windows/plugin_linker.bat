@@ -7,6 +7,9 @@ call exec_config
 if %errorlevel% == 0 (
 
     :: Call the plugin linker
+    setlocal
+    set PYTHONPATH=%PACKAGEDIR%
     %PYTHONEXE% %STARTDIR%\plugin_helpers\packages\plugin_linker
+    endlocal
 )
 pause

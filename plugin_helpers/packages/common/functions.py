@@ -32,6 +32,7 @@ def get_plugin(suffix, allow_all=True):
 
     # Are there any plugins?
     if not plugin_list:
+        print('There are no plugins to {0}.'.format(suffix))
         return None
 
     # Get the question to ask
@@ -78,17 +79,18 @@ def get_plugin(suffix, allow_all=True):
     return get_plugin(suffix, allow_all)
 
 
-def get_server(suffix):
+def get_server():
     """Return a server to do something with."""
     # Clear the screen
     clear_screen()
 
     # Are there any servers?
     if not server_list:
+        print('There are no servers to link.')
         return None
 
     # Get the question to ask
-    message = 'Which server would you like to {0}?\n\n'.format(suffix)
+    message = 'Which server would you like to link?\n\n'
 
     # Loop through each server
     for number, server in enumerate(server_list, 1):
@@ -124,4 +126,4 @@ def get_server(suffix):
             return 'ALL'
 
     # If no valid choice was given, try again
-    return get_server(suffix)
+    return get_server()

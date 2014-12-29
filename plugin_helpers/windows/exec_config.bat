@@ -1,7 +1,10 @@
 @echo off
 
 :: Store the current directory for later use
-set STARTDIR="%CD%"
+set STARTDIR=%CD%
+
+:: Store the package directory
+set PACKAGEDIR=%STARTDIR%/plugin_helpers/packages/
 
 :: Does the config.ini file exist?
 if not exist %STARTDIR%\config.ini (

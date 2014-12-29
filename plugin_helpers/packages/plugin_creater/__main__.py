@@ -5,16 +5,6 @@
 # =============================================================================
 # >> IMPORTS
 # =============================================================================
-# Python Imports
-import sys
-
-# Site-Package Imports
-#   Path
-from path import Path
-
-# Add the package path to sys.path
-sys.path.append(Path(__file__).parent.parent)
-
 # Common Imports
 from common.constants import plugin_list
 from common.functions import clear_screen
@@ -51,26 +41,26 @@ def get_plugin_name():
     clear_screen()
 
     # Ask for a valid plugin name
-    plugin_name = input(
+    name = input(
         'What is the name of the plugin that should be created?\n\n')
 
     # Is the plugin name invalid?
-    if not plugin_name.replace('_', '').isalnum():
+    if not name.replace('_', '').isalnum():
 
         # Try to get a new plugin name
         return ask_retry(
             'Invalid characters used in plugin name "{0}".\n'.format(
-            plugin_name) + 'Only alpha-numeric and underscores allowed.')
+                name) + 'Only alpha-numeric and underscores allowed.')
 
     # Does the plugin already exist?
-    if plugin_name in plugin_list:
+    if name in plugin_list:
 
         # Try to get a new plugin name
         return ask_retry(
-            'Plugin name "{0}" already exists.'.format(plugin_name))
+            'Plugin name "{0}" already exists.'.format(name))
 
     # Return the plugin name
-    return plugin_name
+    return name
 
 
 def ask_retry(reason):
@@ -79,7 +69,8 @@ def ask_retry(reason):
     clear_screen()
 
     # Get whether to retry or not
-    value = input(reason + '\n\n' + 'Do you want to try again?\n\n' +
+    value = input(
+        reason + '\n\n' + 'Do you want to try again?\n\n' +
         '\t(1) Yes\n\t(2) No\n\n').lower()
 
     # Was the retry value invalid?
@@ -106,7 +97,7 @@ def get_directory(name):
     # Get whether the directory should be added
     value = input(
         'Do you want to include a {0} directory?\n\n'.format(
-        name) + '\t(1) Yes\n\t(2) No\n\n').lower()
+            name) + '\t(1) Yes\n\t(2) No\n\n').lower()
 
     # Was the given value invalid?
     if value not in _boolean_values:

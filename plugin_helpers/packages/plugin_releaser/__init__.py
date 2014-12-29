@@ -128,7 +128,7 @@ def create_release(plugin_name=None):
     # Print a message that everything was successful
     print('Successfully created {0} version {1} release:'.format(
         plugin_name, version))
-    print('\t"{0}"'.format(zip_path))
+    print('\t"{0}"\n\n'.format(zip_path))
 
 
 def get_version(plugin_path):
