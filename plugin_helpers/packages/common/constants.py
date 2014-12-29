@@ -31,7 +31,7 @@ config_obj = ConfigObj(START_DIR.joinpath('config.ini'))
 # Get a list of all plugins
 plugin_list = [
     x.namebase for x in START_DIR.dirs()
-    if x not in ('plugin_helpers', '.git')]
+    if x.namebase not in ('plugin_helpers', '.git')]
 
 # Store the server directory
 SERVER_DIR = Path(config_obj['SERVERSTARTDIR'])
