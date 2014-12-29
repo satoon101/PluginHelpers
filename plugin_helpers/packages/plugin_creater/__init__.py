@@ -14,7 +14,7 @@ from common.constants import config_obj
 # >> FUNCTIONS
 # =============================================================================
 def create_plugin(
-        plugin_name=None, config=False, data=None, events=False,
+        plugin_name, config=False, data=None, events=False,
         logs=False, sound=False, translations=None):
     """Verify the plugin name and create its base directories/files."""
     # Was no plugin name provided?
