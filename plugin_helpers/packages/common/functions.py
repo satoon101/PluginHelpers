@@ -111,13 +111,16 @@ def get_server():
         return value
 
     # Was an integer given?
-    if isinstance(value, int):
+    with suppress(ValueError):
+
+        # Typecast the value
+        value = int(value)
 
         # Was the value a valid server choice?
         if value <= len(server_list):
 
             # Return the server by index
-            return server_list[value]
+            return server_list[value - 1]
 
         # Was ALL's choice given?
         if value == len(server_list) + 1:
@@ -127,3 +130,33 @@ def get_server():
 
     # If no valid choice was given, try again
     return get_server()
+
+
+def link_directory(src, dest):
+    """Create a symbolic link for the given source at the given destination."""
+    # Is this a Windows OS?
+    if PLATFORM == 'windows':
+
+        # Link using Windows format
+        system('mklink /J {0} {1}'.format(dest, src))
+
+    # Is this a Linux OS?
+    else:
+
+        # Link using Linux format
+        pass
+
+
+def link_file(src, dest):
+    """Create a hard link for the given source at the given destination."""
+    # Is this a Windows OS?
+    if PLATFORM == 'windows':
+
+        # Link using Windows format
+        system('mklink /H {0} {1}'.format(dest, src))
+
+    # Is this a Linux OS?
+    else:
+
+        # Link using Linux format
+        pass
