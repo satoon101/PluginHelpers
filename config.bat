@@ -30,6 +30,4 @@ for %%i in (%STARTDIR%\plugin_helpers\hooks\*.*) do (
     )
 )
 
-git pull
-
 pause
