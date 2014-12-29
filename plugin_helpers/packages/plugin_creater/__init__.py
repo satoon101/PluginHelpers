@@ -5,22 +5,17 @@
 # =============================================================================
 # >> IMPORTS
 # =============================================================================
-# Site-Package Imports
-#   Configobj
-from configobj import ConfigObj
-from configobj import ConfigObjError
-
-# Package Imports
-from plugin_creater.paths import CONFIG_FILE
-from plugin_creater.paths import STARTDIR
+# Common Imports
+from common.constants import START_DIR
+from common.constants import config_obj
 
 
 # =============================================================================
 # >> FUNCTIONS
 # =============================================================================
 def create_plugin(
-        plugin_name=None, config=None, data=None, events=None,
-        logs=None, sound=None, translations=None):
+        plugin_name=None, config=False, data=None, events=False,
+        logs=False, sound=False, translations=None):
     """Verify the plugin name and create its base directories/files."""
     # Was no plugin name provided?
     if plugin_name is None:
@@ -36,28 +31,11 @@ def create_plugin(
         return
 
     # Get the path to create the plugin at
-    plugin_base_path = STARTDIR.joinpath(plugin_name)
+    plugin_base_path = START_DIR.joinpath(plugin_name)
 
     # Has the plugin already been created?
     if plugin_base_path.isdir():
         print('Plugin already exists.')
-        return
-
-    # Does the config file exist?
-    if not CONFIG_FILE.isfile():
-        print('config.ini file not found, please run config.bat.')
-        return
-
-    # Use try/except to get the config.ini instance
-    try:
-
-        # Get the config.ini instance
-        config_obj = ConfigObj(CONFIG_FILE)
-
-    # Was there an error in the config.ini?
-    except ConfigObjError:
-        print('config.ini has errors.')
-        print('Please delete config.ini and re-run config.bat.')
         return
 
     # Use try/except to retrieve the author name
@@ -108,7 +86,7 @@ def create_plugin(
         _write_info(open_file, plugin_name, author)
 
     # Should a cfg directory be created?
-    if config == 'True':
+    if config:
 
         # Get the cfg path
         config_path = plugin_base_path.joinpath(
@@ -142,7 +120,7 @@ def create_plugin(
             'plugins', plugin_name).makedirs()
 
     # Should a events directory be created?
-    if events == 'True':
+    if events:
 
         # Get the events path
         events_path = plugin_base_path.joinpath(
@@ -155,7 +133,7 @@ def create_plugin(
         events_path.joinpath('readme.md').touch()
 
     # Should a logs directory be created?
-    if logs == 'True':
+    if logs:
 
         # Get the logs path
         logs_path = plugin_base_path.joinpath(
@@ -168,7 +146,7 @@ def create_plugin(
         logs_path.joinpath('readme.md').touch()
 
     # Should a sound directory be created?
-    if sound == 'True':
+    if sound:
 
         # Create the sound directory
         plugin_base_path.joinpath(

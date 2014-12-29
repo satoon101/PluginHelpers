@@ -20,7 +20,7 @@ from common.constants import server_list
 # =============================================================================
 def clear_screen():
     """Clear the screen."""
-    system('cl' if PLATFORM == 'windows' else 'clear')
+    system('cls' if PLATFORM == 'windows' else 'clear')
 
 
 def get_plugin(suffix):

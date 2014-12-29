@@ -40,7 +40,7 @@ plugin_list = [
     if x != PACKAGE_DIR and x.namebase != '.git']
 
 # Store the server directory
-SERVER_DIR = config_obj['SERVERSTARTDIR']
+SERVER_DIR = Path(config_obj['SERVERSTARTDIR'])
 
 # Get a list of all servers
 server_list = [
