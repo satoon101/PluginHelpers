@@ -7,13 +7,14 @@ set STARTDIR="%CD%"
 if exist %STARTDIR%\config.ini (
 
     echo config.ini file already exists.  Please edit it to your liking.
+    echo If there is an error in the file, please delete it and re-run this script.
 
 ) else (
 
     echo Creating config.ini file.  Set values to your specifications.
 
     :: Copy the default config
-    copy plugin_helpers\windows-defaults.ini config.ini
+    copy plugin_helpers\windows\config.ini config.ini
 )
 
 echo.
