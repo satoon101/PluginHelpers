@@ -7,34 +7,11 @@
 # =============================================================================
 # Common Imports
 from common.constants import plugin_list
-from common.constants import server_list
 from common.functions import clear_screen
 from common.functions import get_plugin
-from common.functions import get_server
 
 # Package Imports
 from plugin_linker import link_plugin
-
-
-# =============================================================================
-# >> FUNCTIONS
-# =============================================================================
-def _link_server(server_name, plugin_name):
-    """Link the server with the plugin."""
-    # Was ALL selected for the plugin?
-    if plugin_name == 'ALL':
-
-        # Loop through each plugin
-        for plugin_name in plugin_list:
-
-            # Link the plugin
-            link_plugin(server_name, plugin_name)
-
-    # Otherwise
-    else:
-
-        # Link the plugin
-        link_plugin(server_name, plugin_name)
 
 
 # =============================================================================
@@ -43,34 +20,25 @@ def _link_server(server_name, plugin_name):
 if __name__ == '__main__':
 
     # Get the plugin to link
-    plugin = get_plugin('link')
+    plugin_name = get_plugin('link')
 
     # Was a valid plugin chosen?
-    if plugin is not None:
+    if plugin_name is not None:
 
         # Clear the screen
         clear_screen()
 
-        # Get the server to link
-        server = get_server()
+        # Was ALL chosen?
+        if plugin_name == 'ALL':
 
-        # Was a valid server chosen?
-        if server is not None:
+            # Loop through all plugins
+            for plugin_name in plugin_list:
 
-            # Clear the screen
-            clear_screen()
+                # Check the current plugin
+                link_plugin(plugin_name)
 
-            # Was ALL selected for the server?
-            if server == 'ALL':
+        # Was a valid plugin chosen?
+        else:
 
-                # Loop through each server
-                for server in server_list:
-
-                    # Link the server to the plugin
-                    _link_server(server, plugin)
-
-            # Otherwise
-            else:
-
-                # Link the server to the plugin
-                _link_server(server, plugin)
+            # Check the chosen plugin
+            link_plugin(plugin_name)
