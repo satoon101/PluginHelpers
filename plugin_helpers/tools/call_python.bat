@@ -12,4 +12,3 @@ if %errorlevel% == 0 (
     %PYTHONEXE% %STARTDIR%\plugin_helpers\packages\%1
     endlocal
 )
-pause

@@ -18,7 +18,13 @@ from common.functions import link_directory
 # Get the directories to link
 _sp_directories = [
     x.namebase for x in SOURCE_PYTHON_DIR.dirs()
-    if x.namebase not in ('src', '.git')]
+    if x.namebase not in ('addons', 'src', '.git')]
+
+# Get the addons directories to link
+_addons_directories = [
+    x.namebase for x in SOURCE_PYTHON_DIR.joinpath(
+        'addons', 'source-python').dirs() if x.namebase != 'bin'
+]
 
 
 # =============================================================================
@@ -60,6 +66,38 @@ def link_server(server_name):
         # Link the directory
         link_directory(
             SOURCE_PYTHON_DIR.joinpath(dir_name, 'source-python'), sp_dir)
+
+    # Get the server's addons directory
+    server_addons = server_path.joinpath('addons', 'source-python')
+
+    # Create the addons directory if it doesn't exist
+    if not server_addons.isdir():
+        server_addons.makedirs()
+
+    # Get Source.Python's addons directory
+    sp_addons = SOURCE_PYTHON_DIR.joinpath('addons', 'source-python')
+
+    # Loop through each directory to link
+    for dir_name in _addons_directories:
+
+        # Get the directory path
+        directory = server_addons.joinpath(dir_name)
+
+        # Does the directory already exist on the server?
+        if directory.isdir():
+            print('Cannot link ../addons/source-python/{0}/ directory.'.format(
+                dir_name) + '  Directory already exists.')
+            continue
+
+        # Link the directory
+        link_directory(sp_addons.joinpath(dir_name), directory)
+
+    # Get the bin directory
+    bin_dir = server_addons.joinpath('bin')
+
+    # Copy the bin directory if it doesn't exist
+    if not bin_dir.isdir():
+        sp_addons.joinpath('bin').copytree(bin_dir)
 
     # Get the .vdf's path
     vdf = server_path.joinpath('addons', 'source-python.vdf')
