@@ -1,5 +1,2 @@
-# Execute the configuration
-sh exec_config.sh || exit
-
-# Call the plugin releaser
-${PYTHONEXE} $STARTDIR/plugin_helpers/packages/plugin_releaser
+# Execute the plugin_releaser
+sh plugin_helpers/tools/call_python.sh plugin_releaser

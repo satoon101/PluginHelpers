@@ -1,5 +1,2 @@
-# Execute the configuration
-sh exec_config.sh || exit
-
-# Call the plugin checker
-${PYTHONEXE} $STARTDIR/plugin_helpers/packages/plugin_checker
+# Execute the plugin_checker
+sh plugin_helpers/tools/call_python.sh plugin_checker

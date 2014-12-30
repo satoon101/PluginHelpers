@@ -1,5 +1,2 @@
-# Execute the configuration
-sh exec_config.sh || exit
-
-# Call the plugin creater
-${PYTHONEXE} $STARTDIR/plugin_helpers/packages/plugin_creater
+# Execute the plugin_creater
+sh plugin_helpers/tools/call_python.sh plugin_creater

@@ -1,5 +1,5 @@
-# Execute the configuration
-sh exec_config.sh || exit
+# Include exec_config
+. ./plugin_helpers/tools/exec_config.sh
 
 # Create the prerequisite array
 PREREQUISITES=(
