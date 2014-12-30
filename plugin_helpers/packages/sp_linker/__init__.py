@@ -26,6 +26,9 @@ _addons_directories = [
         'addons', 'source-python').dirs() if x.namebase != 'bin'
 ]
 
+# Get Source.Python's addons directory
+_sp_addons = SOURCE_PYTHON_DIR.joinpath('addons', 'source-python')
+
 
 # =============================================================================
 # >> FUNCTIONS
@@ -41,7 +44,7 @@ def link_server(server_name):
     server_path = SERVER_DIR.joinpath(server_name, server_name)
 
     # Print a message about the linking
-    print('Linking Source.Python to {0} server.'.format(server_name))
+    print('Linking Source.Python to {0} server.\n'.format(server_name))
 
     # Loop through each directory to link
     for dir_name in _sp_directories:
@@ -60,12 +63,13 @@ def link_server(server_name):
         if sp_dir.isdir():
             print(
                 'Cannot link ../{0}/source-python/ directory.  '.format(
-                    dir_name) + 'Directory already exists.')
+                    dir_name) + 'Directory already exists.\n')
             continue
 
         # Link the directory
         link_directory(
             SOURCE_PYTHON_DIR.joinpath(dir_name, 'source-python'), sp_dir)
+        print('Successfully linked ../{0}/source-python/\n'.format(dir_name))
 
     # Get the server's addons directory
     server_addons = server_path.joinpath('addons', 'source-python')
@@ -73,9 +77,6 @@ def link_server(server_name):
     # Create the addons directory if it doesn't exist
     if not server_addons.isdir():
         server_addons.makedirs()
-
-    # Get Source.Python's addons directory
-    sp_addons = SOURCE_PYTHON_DIR.joinpath('addons', 'source-python')
 
     # Loop through each directory to link
     for dir_name in _addons_directories:
@@ -86,18 +87,20 @@ def link_server(server_name):
         # Does the directory already exist on the server?
         if directory.isdir():
             print('Cannot link ../addons/source-python/{0}/ directory.'.format(
-                dir_name) + '  Directory already exists.')
+                dir_name) + '  Directory already exists.\n')
             continue
 
         # Link the directory
-        link_directory(sp_addons.joinpath(dir_name), directory)
+        link_directory(_sp_addons.joinpath(dir_name), directory)
+        print('Successfully linked ../addons/source-python/{0}/\n'.format(
+            dir_name))
 
     # Get the bin directory
     bin_dir = server_addons.joinpath('bin')
 
     # Copy the bin directory if it doesn't exist
     if not bin_dir.isdir():
-        sp_addons.joinpath('bin').copytree(bin_dir)
+        _sp_addons.joinpath('bin').copytree(bin_dir)
 
     # Get the .vdf's path
     vdf = server_path.joinpath('addons', 'source-python.vdf')
