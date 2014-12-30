@@ -1,4 +1,4 @@
-# ../plugin_checker/__init__.py
+# ../plugin_checker.py
 
 """Checks plugins for standards issues."""
 
@@ -9,14 +9,16 @@
 #   OS
 from os import system
 
-# Common Imports
-from common.constants import START_DIR
-from common.constants import config_obj
-from common.constants import plugin_list
+# Package Imports
+from constants import START_DIR
+from constants import config_obj
+from constants import plugin_list
+from functions import clear_screen
+from functions import get_plugin
 
 
 # =============================================================================
-# >> FUNCTIONS
+# >> MAIN FUNCTION
 # =============================================================================
 def check_plugin(plugin_name):
     """Check the given plugin for standards issues."""
@@ -55,6 +57,9 @@ def check_plugin(plugin_name):
         '--msg-template="{msg_id}:{line:3d},{column:2d}: {msg} ({symbol})"')
 
 
+# =============================================================================
+# >> HELPER FUNCTIONS
+# =============================================================================
 def print_section(message, separate=False):
     """Print the section header."""
     if separate:
@@ -62,3 +67,33 @@ def print_section(message, separate=False):
     print('=' * (len(message) + 1))
     print(message + ':')
     print('=' * (len(message) + 1) + '\n')
+
+
+# =============================================================================
+# >> CALL MAIN FUNCTION
+# =============================================================================
+if __name__ == '__main__':
+
+    # Get the plugin to check
+    _plugin_name = get_plugin('check')
+
+    # Was a valid plugin chosen?
+    if _plugin_name is not None:
+
+        # Clear the screen
+        clear_screen()
+
+        # Was ALL chosen?
+        if _plugin_name == 'ALL':
+
+            # Loop through all plugins
+            for _plugin_name in plugin_list:
+
+                # Check the current plugin
+                check_plugin(_plugin_name)
+
+        # Was a valid plugin chosen?
+        else:
+
+            # Check the chosen plugin
+            check_plugin(_plugin_name)

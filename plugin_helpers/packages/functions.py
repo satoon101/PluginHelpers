@@ -1,4 +1,4 @@
-# ../common/functions.py
+# ../functions.py
 
 """Provides commonly used functions."""
 
@@ -12,9 +12,9 @@ from contextlib import suppress
 from os import system
 
 # Package Imports
-from common.constants import PLATFORM
-from common.constants import plugin_list
-from common.constants import server_list
+from constants import PLATFORM
+from constants import plugin_list
+from constants import server_list
 
 
 # =============================================================================

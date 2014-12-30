@@ -1,4 +1,4 @@
-# ../plugin_releaser/__init__.py
+# ../plugin_releaser.py
 
 """Creates a release for a plugin with its current version number."""
 
@@ -16,18 +16,51 @@ from zipfile import ZipFile
 #   Path
 from path import Path
 
-# Common Imports
-from common.constants import START_DIR
-from common.constants import config_obj
-
 # Package Imports
-from plugin_releaser.paths import allowed_filetypes
-from plugin_releaser.paths import exception_filetypes
-from plugin_releaser.paths import other_filetypes
+from constants import START_DIR
+from constants import config_obj
+from functions import clear_screen
+from functions import get_plugin
 
 
 # =============================================================================
-# >> FUNCTIONS
+# >> GLOBAL VARIABLES
+# =============================================================================
+# Store all allowed readable data file types
+_readable_data = [
+    'ini',
+    'json',
+    'vdf',
+    'xml',
+]
+
+# Store plugin specific directories with their respective allowed file types
+allowed_filetypes = {
+    'addons/source-python/plugins/': _readable_data + ['md', 'py'],
+    'addons/source-python/data/plugins/': _readable_data + ['md', 'txt'],
+    'cfg/source-python/': _readable_data + ['cfg', 'md', 'txt'],
+    'logs/source-python/': ['md', 'txt'],
+    'sound/source-python/': ['md', 'mp3', 'wav'],
+    'resource/source-python/events/': ['md', 'txt'],
+    'resource/source-python/translations/': ['md', 'ini'],
+}
+
+# Store non-plugin specific directories
+#   with their respective allowed file types
+other_filetypes = {
+    'materials/': ['vmt', 'vtf'],
+    'models/': ['mdl', 'phy', 'vtx', 'vvd'],
+}
+
+# Store directories with files that fit allowed_filetypes
+#   with names that should not be included
+exception_filetypes = {
+    'resource/source-python/translations/': ['_server.ini'],
+}
+
+
+# =============================================================================
+# >> MAIN FUNCTION
 # =============================================================================
 def create_release(plugin_name=None):
     """Verify the plugin name and create the current release."""
@@ -123,6 +156,9 @@ def create_release(plugin_name=None):
     print('\t"{0}"\n\n'.format(zip_path))
 
 
+# =============================================================================
+# >> HELPER FUNCTIONS
+# =============================================================================
 def _get_version(plugin_path):
     """Return the version for the plugin."""
     # Loop through all Python files for the plugin
@@ -212,3 +248,21 @@ def _add_file(zip_file, file, plugin_path):
 
         # Get the parent's parent
         parent = parent.parent
+
+
+# =============================================================================
+# >> CALL MAIN FUNCTION
+# =============================================================================
+if __name__ == '__main__':
+
+    # Get the plugin to check
+    _plugin_name = get_plugin('release', False)
+
+    # Was a valid plugin chosen?
+    if _plugin_name is not None:
+
+        # Clear the screen
+        clear_screen()
+
+        # Create a release for the chosen plugin
+        create_release(_plugin_name)

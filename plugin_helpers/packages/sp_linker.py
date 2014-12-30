@@ -1,15 +1,17 @@
-# ../sp_linker/__init__.py
+# ../sp_linker.py
 
 """Links Source.Python's repository to servers."""
 
 # =============================================================================
 # >> IMPORTS
 # =============================================================================
-# Common Imports
-from common.constants import SERVER_DIR
-from common.constants import SOURCE_PYTHON_DIR
-from common.constants import server_list
-from common.functions import link_directory
+# Package Imports
+from constants import SERVER_DIR
+from constants import SOURCE_PYTHON_DIR
+from constants import server_list
+from functions import clear_screen
+from functions import get_server
+from functions import link_directory
 
 
 # =============================================================================
@@ -31,7 +33,7 @@ _sp_addons = SOURCE_PYTHON_DIR.joinpath('addons', 'source-python')
 
 
 # =============================================================================
-# >> FUNCTIONS
+# >> MAIN FUNCTION
 # =============================================================================
 def link_server(server_name):
     """Link Source.Python's repository to the given server."""
@@ -108,3 +110,33 @@ def link_server(server_name):
     # Copy the .vdf if it needs copied
     if not vdf.isfile():
         SOURCE_PYTHON_DIR.joinpath('addons', 'source-python.vdf').copy(vdf)
+
+
+# =============================================================================
+# >> CALL MAIN FUNCTION
+# =============================================================================
+if __name__ == '__main__':
+
+    # Get the server to link
+    _server_name = get_server()
+
+    # Was a valid server chosen?
+    if _server_name is not None:
+
+        # Clear the screen
+        clear_screen()
+
+        # Was ALL selected?
+        if _server_name == 'ALL':
+
+            # Loop through each server
+            for _server_name in server_list:
+
+                # Link the server
+                link_server(_server_name)
+
+        # Otherwise
+        else:
+
+            # Link the server
+            link_server(_server_name)

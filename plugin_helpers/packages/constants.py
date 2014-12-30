@@ -1,4 +1,4 @@
-# ../common/constants.py
+# ../constants.py
 
 """Provides commonly used constants."""
 
@@ -23,7 +23,7 @@ from path import Path
 PLATFORM = system().lower()
 
 # Store the main directory
-START_DIR = Path(__file__).parent.parent.parent.parent
+START_DIR = Path(__file__).parent.parent.parent
 
 # Get the configuration
 config_obj = ConfigObj(START_DIR.joinpath('config.ini'))
