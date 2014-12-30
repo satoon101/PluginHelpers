@@ -1,6 +1,5 @@
 @echo off
 
-
 :: Create the prerequisite array
 set PREREQUISITEs[0]="configobj"
 set PREREQUISITEs[1]="path.py"
@@ -10,52 +9,26 @@ set PREREQUISITEs[4]="pyflakes"
 set PREREQUISITEs[5]="pylint"
 
 
-:: Set the start directory for later reference
-set STARTDIR="%CD%"
-
-
 :: Allow the use of delayed expansion
 setlocal EnableDelayedExpansion
 
+:: Execute the configuration
+call exec_config
 
-:: Has the config.ini file been created?
-if not exist %STARTDIR%\config.ini (
+:: Did the configuration encounter no errors?
+if %errorlevel% == 0 (
 
-    :: Print a message that the user needs to create the config.ini file
-    echo No config.ini file found.
-    echo Please execute the setup.bat file to create the config.ini before proceeding.
-    pause
-    exit
-)
+    :: Loop through all prerequisites
+    for /F "tokens=2 delims==" %%s in ('set PREREQUISITES[') do (
 
+        :: Print a message about the prerequisite being installed
+        echo Attempting to install/upgrade %%s.
+        echo.
 
-:: Get all configuration values
-for /f "eol=# delims=" %%a in (config.ini) do (
-    set "%%a"
-)
+        :: Install the prerequisite
+        %PYTHONEXE% -m pip install --upgrade %%s
 
-
-:: Was the PYTHONEXE variable created?
-if not defined PYTHONEXE (
-
-    :: Print a message about the config issue
-    echo Something is wrong with your config.ini file.
-    echo Please delete your config.ini file and re-execute setup.bat.
-    pause
-    exit
-)
-
-
-:: Loop through all prerequisites
-for /F "tokens=2 delims==" %%s in ('set PREREQUISITES[') do (
-
-    :: Print a message about the prerequisite being installed
-    echo Attempting to install/upgrade %%s.
-    echo.
-
-    :: Install the prerequisite
-    %PYTHONEXE% -m pip install --upgrade %%s
-
-    echo.
+        echo.
+    )
 )
 pause

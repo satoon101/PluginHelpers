@@ -1,32 +1,15 @@
 @echo off
 
-:: Store the current directory for later use
-set STARTDIR="%CD%"
+:: Execute the configuration
+call exec_config
 
-:: Does the config.ini file exist?
-if not exist %STARTDIR%\config.ini (
+:: Did the configuration encounter no errors?
+if %errorlevel% == 0 (
 
-    echo No config.ini file found.
-    echo Please execute the setup.bat file to create the config.ini before proceeding.
-    exit
+    :: Call the given package
+    setlocal
+    set PYTHONPATH=.\plugin_helpers\packages
+    %PYTHONEXE% %STARTDIR%\plugin_helpers\packages\%1
+    endlocal
 )
-
-:: Get all the configuration values
-for /f "eol=# delims=" %%a in (config.ini) do (
-
-    set "%%a"
-)
-
-:: Is PYTHONEXE defined in the config?
-if not defined PYTHONEXE (
-
-    echo Something is wrong with your config.ini file.
-    echo Please delete your config.ini file and re-execute setup.bat.
-    exit
-)
-
-:: Call the given package
-setlocal
-set PYTHONPATH=.\plugin_helpers\packages
-%PYTHONEXE% %STARTDIR%\plugin_helpers\packages\%1
-endlocal
+pause
