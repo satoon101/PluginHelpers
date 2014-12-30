@@ -74,14 +74,14 @@ tar -xjf Python-3.4.2.tgz cd Python-3.4.2
 ## Setup
 The first thing you need to do after cloning the repository is to execute the setup file (.bat for Windows or .sh for Linux).
 After you have done this, seven new files will be created in the main directory.
-Those files include the config.ini, which holds configuration values you need to set, and six files that are platform specific (.bat for Windows or .sh for Linux)
-Those six files are the following:
+Those files include the config.ini, which holds configuration values you need to set, and a .pylintrc file which can be used for different pytlint settings when running the **plugin_checker** script.
+Six other platform-specific files (.bat for Windows or .sh for Linux) are also created:
 * plugin_checker
 * plugin_creater
 * plugin_linker
 * plugin_releaser
 * prerequisites
-* sp_linker
+* server_linker
 
 <br>
 ## Configuration
@@ -93,12 +93,12 @@ The following are the settings
 * REPOTYPE
     * used by **plugin_creater** to know whether to create the .gitignore / .gitattributes or .hgignore files.
 * SERVERSTARTDIR
-    * used by **sp_linker** to know where your server's are located.
+    * used by **server_linker** to know where your server's are located.
     * Defaults:
         * Windows: **C:\Servers**
         * Linux: **/media/Servers**
 * SOURCEPYTHONDIR
-    * used by **plugin_linker** and **sp_linker** to know where the Source.Python repository is located.
+    * used by **plugin_linker** and **server_linker** to know where the Source.Python repository is located.
     * Defaults:
         * Windows: **C:\Projects\Source.Python**
         * Linux: **/media/Source.Python**
@@ -136,7 +136,7 @@ The required packages for this toolset include:
 ## Linking Source.Python
 Once you have finished installing the prerequisites, the next item on the list is to link Source.Python's repository to your servers.
 
-As long as you have correctly set your config.ini SERVERSTARTDIR, SOURCEPYTHONDIR, and PYTHONEXE values, simply execute the **sp_linker** script and select the server you wish to link (or ALL for all servers).
+As long as you have correctly set your config.ini SERVERSTARTDIR, SOURCEPYTHONDIR, and PYTHONEXE values, simply execute the **server_linker** script and select the server you wish to link (or ALL for all servers).
 
 <br>
 ## Installing plugins
