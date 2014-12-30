@@ -1,7 +1,7 @@
 @echo off
 
 :: Execute the configuration
-call exec_config
+call plugin_helpers/tools/exec_config
 
 :: Did the configuration encounter no errors?
 if %errorlevel% == 0 (
