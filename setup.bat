@@ -17,6 +17,13 @@ if exist %STARTDIR%\config.ini (
     copy plugin_helpers\windows\config.ini config.ini
 )
 
+:: Does the .pylintrc need copied?
+if not exist %STARTDIR%\.pylintrc (
+
+    :: Copy the .pylintrc file
+    copy plugin_helpers\tools\.pylintrc .pylintrc
+)
+
 echo.
 echo.
 
