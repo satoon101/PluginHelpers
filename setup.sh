@@ -25,6 +25,9 @@ for filename in $STARTDIR/plugin_helpers/hooks/*; do
         # Create the hook
         ln $filename $STARTDIR/.git/hooks/$(basename "$filename")
 
+        # Make the file executable
+        chmod +x $STARTDIR/.git/hooks/$(basename "$filename")
+
     fi
 done
 
