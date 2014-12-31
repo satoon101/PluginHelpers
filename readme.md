@@ -73,9 +73,9 @@ tar -xjf Python-3.4.2.tgz cd Python-3.4.2
 <br>
 ## Setup
 The first thing you need to do after cloning the repository is to execute the setup file (.bat for Windows or .sh for Linux).
-After you have done this, seven new files will be created in the main directory.
+After you have done this, several new files will be created in the main directory.
 Those files include the config.ini, which holds configuration values you need to set, and a .pylintrc file which can be used for different pytlint settings when running the **plugin_checker** script.
-Six other platform-specific files (.bat for Windows or .sh for Linux) are also created:
+A few platform-specific (.bat for Windows or .sh for Linux) files are also created:
 * plugin_checker
 * plugin_creater
 * plugin_linker
