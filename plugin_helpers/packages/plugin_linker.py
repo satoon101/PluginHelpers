@@ -1,6 +1,6 @@
 # ../plugin_linker.py
 
-"""Links plugins to servers."""
+"""Links plugins to Source.Python's repository."""
 
 # =============================================================================
 # >> IMPORTS

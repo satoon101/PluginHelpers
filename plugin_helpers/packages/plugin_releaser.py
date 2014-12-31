@@ -12,13 +12,10 @@ from contextlib import suppress
 from zipfile import ZIP_DEFLATED
 from zipfile import ZipFile
 
-# Site-Package Imports
-#   Path
-from path import Path
-
 # Package Imports
+from constants import RELEASE_DIR
 from constants import START_DIR
-from constants import config_obj
+from constants import plugin_list
 from functions import clear_screen
 from functions import get_plugin
 
@@ -65,20 +62,8 @@ exception_filetypes = {
 def create_release(plugin_name=None):
     """Verify the plugin name and create the current release."""
     # Was no plugin name provided?
-    if plugin_name is None:
-        print('No plugin name provided.')
-        return
-
-    # Use try/except to retrieve the release directory
-    try:
-
-        # Get the release directory
-        release_path = config_obj['RELEASEDIR']
-
-    # Was 'RELEASEDIR' not found in the config.ini?
-    except KeyError:
-        print('No release path found in config.ini.')
-        print('Please delete config.ini and re-run config.bat.')
+    if plugin_name not in plugin_list:
+        print('Invalid plugin name "{0}"'.format(plugin_name))
         return
 
     # Get the plugin's base path
@@ -98,8 +83,16 @@ def create_release(plugin_name=None):
         print('No version found.')
         return
 
+    # Get the directory to save the release in
+    save_path = RELEASE_DIR.joinpath(plugin_name)
+
+    # Create the directory if it doesn't exist
+    if not save_path.isdir():
+        save_path.makedirs()
+
     # Get the zip file location
-    zip_path = _get_zip_path(release_path, plugin_name, version)
+    zip_path = save_path.joinpath(
+        '{0} - v{1}.zip'.format(plugin_name, version))
 
     # Does the release already exist?
     if zip_path.isfile():
@@ -180,20 +173,6 @@ def _get_version(plugin_path):
 
     # If no version information was found, simply return None
     return None
-
-
-def _get_zip_path(release_path, plugin_name, version):
-    """Return the zip file location."""
-    # Get the directory to save the release in
-    save_path = Path(release_path).joinpath(plugin_name)
-
-    # Create the directory if it doesn't exist
-    if not save_path.isdir():
-        save_path.makedirs()
-
-    # Return the full path to the release zip file
-    return save_path.joinpath(
-        '{0} - v{1}.zip'.format(plugin_name, version))
 
 
 def _find_files(generator, allowed_path, allowed_dictionary):

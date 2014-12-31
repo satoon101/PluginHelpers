@@ -1,4 +1,4 @@
-# ../sp_linker.py
+# ../server_linker.py
 
 """Links Source.Python's repository to servers."""
 
