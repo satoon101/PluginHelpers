@@ -12,7 +12,6 @@ from os import system
 # Package Imports
 from constants import PYTHON_EXE
 from constants import START_DIR
-from constants import config_obj
 from constants import plugin_list
 from functions import clear_screen
 from functions import get_plugin

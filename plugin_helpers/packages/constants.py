@@ -10,7 +10,7 @@
 from platform import system
 
 # Site-Package Imports
-# Configobj
+#   Configobj
 from configobj import ConfigObj
 #   Path
 from path import Path
@@ -33,6 +33,20 @@ SERVER_DIR = Path(config_obj['SERVERSTARTDIR'])
 
 # Store the Source.Python repository directory
 SOURCE_PYTHON_DIR = Path(config_obj['SOURCEPYTHONDIR'])
+
+# Get Source.Python's addons directory
+SOURCE_PYTHON_ADDONS_DIR = SOURCE_PYTHON_DIR.joinpath(
+    'addons', 'source-python')
+
+# Get the directories to link
+source_python_directories = [
+    x.namebase for x in SOURCE_PYTHON_DIR.dirs()
+    if x.namebase not in ('addons', 'src', '.git')]
+
+# Get the addons directories to link
+source_python_addons_directories = [
+    x.namebase for x in SOURCE_PYTHON_DIR.joinpath(
+        'addons', 'source-python').dirs() if x.namebase != 'bin']
 
 # Store the Steam directory
 STEAM_DIRS = {

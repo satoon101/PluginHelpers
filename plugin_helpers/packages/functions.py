@@ -13,8 +13,13 @@ from os import system
 
 # Package Imports
 from constants import PLATFORM
+from constants import SOURCE_PYTHON_ADDONS_DIR
+from constants import SOURCE_PYTHON_DIR
+from constants import available_games
 from constants import plugin_list
 from constants import server_list
+from constants import source_python_addons_directories
+from constants import source_python_directories
 
 
 # =============================================================================
@@ -132,6 +137,59 @@ def get_server():
     return get_server()
 
 
+def get_game():
+    """Return a game to do something with."""
+    # Clear the screen
+    clear_screen()
+
+    # Are there any games?
+    if not available_games:
+        print('There are no games to link.')
+        return None
+
+    # Get the question to ask
+    message = 'Which game would you like to link?\n\n'
+
+    # Loop through each game
+    for number, game in enumerate(sorted(available_games)):
+
+        # Add the current game
+        message += '\t({0}) {1}\n'.format(number, game)
+
+    # Add ALL to the list
+    message += '\t({0}) ALL\n'.format(len(available_games) + 1)
+
+    # Ask which game to do something with
+    value = input(message + '\n').strip()
+
+    # Was a game name given?
+    if value in available_games + ['ALL']:
+
+        # Return the value
+        return value
+
+    # Was an integer given?
+    with suppress(ValueError):
+
+        # Typecast the value
+        value = int(value)
+
+        # Was the value a valid server choice?
+        if value <= len(available_games):
+
+            # Return the game by index
+            return sorted(available_games)[value - 1]
+
+        # Was ALL's choice given?
+        if value == len(available_games) + 1:
+
+            # Return ALL
+            return 'ALL'
+
+    # If no valid choice was given, try again
+    return get_game()
+
+
 def link_directory(src, dest):
     """Create a symbolic link for the given source at the given destination."""
     # Is this a Windows OS?
@@ -160,3 +218,69 @@ def link_file(src, dest):
 
         # Link using Linux format
         system('ln {0} {1}'.format(src, dest))
+
+
+def link_path(path):
+    """Link Source.Python's repository to the given path."""
+    # Loop through each directory to link
+    for dir_name in source_python_directories:
+
+        # Get the directory path
+        directory = path.joinpath(dir_name)
+
+        # Create the directory if it doesn't exist
+        if not directory.isdir():
+            directory.makedirs()
+
+        # Get the source-python path
+        sp_dir = directory.joinpath('source-python')
+
+        # Does the source-python sub-directory already exist?
+        if sp_dir.isdir():
+            print(
+                'Cannot link ../{0}/source-python/ directory.  '.format(
+                    dir_name) + 'Directory already exists.\n')
+            continue
+
+        # Link the directory
+        link_directory(
+            SOURCE_PYTHON_DIR.joinpath(dir_name, 'source-python'), sp_dir)
+        print('Successfully linked ../{0}/source-python/\n'.format(dir_name))
+
+    # Get the server's addons directory
+    server_addons = path.joinpath('addons', 'source-python')
+
+    # Create the addons directory if it doesn't exist
+    if not server_addons.isdir():
+        server_addons.makedirs()
+
+    # Loop through each directory to link
+    for dir_name in source_python_addons_directories:
+
+        # Get the directory path
+        directory = server_addons.joinpath(dir_name)
+
+        # Does the directory already exist on the server?
+        if directory.isdir():
+            print('Cannot link ../addons/source-python/{0}/ directory.'.format(
+                dir_name) + '  Directory already exists.\n')
+            continue
+
+        # Link the directory
+        link_directory(SOURCE_PYTHON_ADDONS_DIR.joinpath(dir_name), directory)
+        print('Successfully linked ../addons/source-python/{0}/\n'.format(
+            dir_name))
+
+    # Get the bin directory
+    bin_dir = server_addons.joinpath('bin')
+
+    # Copy the bin directory if it doesn't exist
+    if not bin_dir.isdir():
+        SOURCE_PYTHON_ADDONS_DIR.joinpath('bin').copytree(bin_dir)
+
+    # Get the .vdf's path
+    vdf = path.joinpath('addons', 'source-python.vdf')
+
+    # Copy the .vdf if it needs copied
+    if not vdf.isfile():
+        SOURCE_PYTHON_DIR.joinpath('addons', 'source-python.vdf').copy(vdf)
