@@ -7,5 +7,5 @@ call plugin_helpers/tools/exec_config
 if %errorlevel% == 0 (
 
     :: Call the given package
-    %PYTHONEXE% %STARTDIR%\plugin_helpers\packages\%1.py
+    %PYTHONEXE% %STARTDIR%\plugin_helpers\packages\%~n1.py
 )
