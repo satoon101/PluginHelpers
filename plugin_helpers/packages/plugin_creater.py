@@ -34,9 +34,7 @@ _directory_or_file = {
 # =============================================================================
 # >> MAIN FUNCTION
 # =============================================================================
-def create_plugin(
-        plugin_name, config=False, data=None, events=False,
-        logs=False, sound=False, translations=None):
+def create_plugin(plugin_name, **options):
     """Verify the plugin name and create its base directories/files."""
     # Was no plugin name provided?
     if plugin_name is None:
@@ -71,7 +69,7 @@ def create_plugin(
     # Was one of the keys not found in the config.ini?
     except KeyError as key:
         print('No "{0}" found in config.ini.'.format(key))
-        print('Please delete config.ini and re-run config.bat.')
+        print('Please delete config.ini and re-run setup.bat.')
         return
 
     # Get the base path for the plugin's directory
@@ -98,12 +96,15 @@ def create_plugin(
         _write_info(open_file, plugin_name, author)
 
     # Should a cfg directory be created?
-    if config:
+    if options.get('config', False):
 
         # Create the cfg directory
         _create_directory(
             plugin_base_path, 'cfg', 'source-python',
             plugin_name, filename='readme.md')
+
+    # Get the data option value
+    data = options.get('data', None)
 
     # Should a data file be created?
     if data == 'file':
@@ -122,7 +123,7 @@ def create_plugin(
             'data', 'plugins', plugin_name)
 
     # Should a events directory be created?
-    if events:
+    if options.get('events', False):
 
         # Create the events directory
         _create_directory(
@@ -130,7 +131,7 @@ def create_plugin(
             'events', plugin_name, filename='readme.md')
 
     # Should a logs directory be created?
-    if logs:
+    if options.get('logs', False):
 
         # Create the logs directory
         _create_directory(
@@ -138,11 +139,14 @@ def create_plugin(
             plugin_name, filename='readme.md')
 
     # Should a sound directory be created?
-    if sound:
+    if options.get('sound', False):
 
         # Create the sound directory
         _create_directory(
             plugin_base_path, 'sound', 'source-python', plugin_name)
+
+    # Get the translations option value
+    translations = options.get('translations', None)
 
     # Should a translations file be created?
     if translations == 'file':
@@ -375,5 +379,5 @@ if __name__ == '__main__':
 
         # Call create_plugin with the options
         create_plugin(
-            _plugin_name, _config, _data,
-            _events, _logs, _sound, _translations)
+            _plugin_name, config=_config, data=_data, events=_events,
+            logs=_logs, sound=_sound, translations=_translations)
