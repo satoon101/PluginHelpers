@@ -4,7 +4,7 @@ STARTDIR="$PWD"
 # Store the Python files to not make callers to
 PYTHON_EXCEPTIONS=("__init__" "constants" "functions")
 
-
+# A function to get whether a file name is in the Python Exceptions array
 function should_create_caller () {
 
     local n=$#
@@ -30,22 +30,16 @@ else
     EXTENSION='sh'
 fi
 
-array=('hello' 'world' 'my' 'name' 'is' 'perseus')
-word="world"
-if echo "${array[@]}" | fgrep --word-regexp "$word"; then
-    echo FOUND IT
-fi
-
 # Link the prerequisite file
-# ln ./plugin_helpers/$DIRECTORY/prerequisites.$EXTENSION $STARTDIR/prerequisites.$EXTENSION
+cp ./plugin_helpers/$DIRECTORY/prerequisites.$EXTENSION $STARTDIR/prerequisites.$EXTENSION
 
 # Loop through all Python files
 for filename in ./plugin_helpers/packages/*; do
 
-    # Create a caller for the file if necessary
+    # Link a caller for the file if necessary
     if [ ! $(should_create_caller "${PYTHON_EXCEPTIONS[@]}" "$(basename "${filename%.*}")") == "y" ]; then
         if [ ! "$(basename "${filename%.**}")" == "" ]; then
-            cp ./plugin_helpers/$DIRECTORY/caller.$EXTENSION ./"$(basename "${filename%.*}")".$EXTENSION
+            ln ./plugin_helpers/$DIRECTORY/caller.$EXTENSION ./"$(basename "${filename%.*}")".$EXTENSION
         fi
     fi
 done
