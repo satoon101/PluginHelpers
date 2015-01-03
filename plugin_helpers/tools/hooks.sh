@@ -30,8 +30,10 @@ else
     EXTENSION='sh'
 fi
 
-# Link the prerequisite file
-cp ./plugin_helpers/$DIRECTORY/prerequisites.$EXTENSION $STARTDIR/prerequisites.$EXTENSION
+# Link the prerequisite file if it doesn't exist
+if [ ! -f $STARTDIR/prerequisites.$EXTENSION ]; then
+    ln ./plugin_helpers/$DIRECTORY/prerequisites.$EXTENSION $STARTDIR/prerequisites.$EXTENSION
+fi
 
 # Loop through all Python files
 for filename in ./plugin_helpers/packages/*; do
@@ -39,7 +41,9 @@ for filename in ./plugin_helpers/packages/*; do
     # Link a caller for the file if necessary
     if [ ! $(should_create_caller "${PYTHON_EXCEPTIONS[@]}" "$(basename "${filename%.*}")") == "y" ]; then
         if [ ! "$(basename "${filename%.**}")" == "" ]; then
-            ln ./plugin_helpers/$DIRECTORY/caller.$EXTENSION ./"$(basename "${filename%.*}")".$EXTENSION
+            if [ ! -f ./"$(basename "${filename%.*}")".$EXTENSION ]; then
+                ln ./plugin_helpers/$DIRECTORY/caller.$EXTENSION ./"$(basename "${filename%.*}")".$EXTENSION
+            fi
         fi
     fi
 done
