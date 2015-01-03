@@ -151,7 +151,7 @@ def get_game():
     message = 'Which game would you like to link?\n\n'
 
     # Loop through each game
-    for number, game in enumerate(sorted(available_games)):
+    for number, game in enumerate(sorted(available_games), 1):
 
         # Add the current game
         message += '\t({0}) {1}\n'.format(number, game)
