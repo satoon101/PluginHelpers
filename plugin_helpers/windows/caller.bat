@@ -1,5 +1,5 @@
 @echo off
 
 :: Execute a module
-call plugin_helpers/tools/call_python %0
+call plugin_helpers/windows/call_python %0
 pause

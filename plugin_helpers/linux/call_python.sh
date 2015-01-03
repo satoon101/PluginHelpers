@@ -1,5 +1,5 @@
 # Include exec_config
-. ./plugin_helpers/tools/exec_config.sh
+. ./plugin_helpers/linux/exec_config.sh
 
 # Call the given package
 PYTHONPATH="$STARTDIR/plugin_helpers/packages/"
