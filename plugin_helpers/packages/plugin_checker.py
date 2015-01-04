@@ -33,21 +33,21 @@ def check_plugin(plugin_name):
 
     # Check with pep8
     print_section('Checking "{0}" for PEP8 standards'.format(plugin_name))
-    system('{0} -m pep8 --count --benchmark {1}'.format(PYTHON_EXE, plugin))
+    system('"{0}" -m pep8 --count --benchmark {1}'.format(PYTHON_EXE, plugin))
 
     # Check with pep257
     print_section(
         'Checking "{0}" for PEP257 standards'.format(plugin_name), True)
-    system('{0} -m pep257 {1}'.format(PYTHON_EXE, plugin))
+    system('"{0}" -m pep257 {1}'.format(PYTHON_EXE, plugin))
 
     # Check with pyflakes
     print_section('Checking "{0}" with PyFlakes'.format(plugin_name), True)
-    system('{0} -m pyflakes {1}'.format(PYTHON_EXE, plugin))
+    system('"{0}" -m pyflakes {1}'.format(PYTHON_EXE, plugin))
 
     # Check with pylint
     print_section('Checking "{0}" with PyLint'.format(plugin_name), True)
     system(
-        '{0} -m pylint --rcfile {1}/.pylintrc {2} '.format(
+        '"{0}" -m pylint --rcfile {1}/.pylintrc {2} '.format(
             PYTHON_EXE, START_DIR, plugin) +
         '--const-rgx="(([A-Z_][A-Z0-9_]*)|([a-z_][a-z0-9_]*)|(__.*__))$" ' +
         '--msg-template="{msg_id}:{line:3d},{column:2d}: {msg} ({symbol})"')
