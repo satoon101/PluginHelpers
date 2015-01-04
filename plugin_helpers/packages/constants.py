@@ -22,6 +22,9 @@ from path import Path
 # Store the platform
 PLATFORM = system().lower()
 
+# Store the binary extension
+BINARY_EXTENSION = 'dll' if PLATFORM == 'windows' else 'so'
+
 # Store the main directory
 START_DIR = Path(__file__).parent.parent.parent
 
@@ -37,6 +40,9 @@ SOURCE_PYTHON_DIR = Path(config_obj['SOURCEPYTHONDIR'])
 # Get Source.Python's addons directory
 SOURCE_PYTHON_ADDONS_DIR = SOURCE_PYTHON_DIR.joinpath(
     'addons', 'source-python')
+
+# Get Source.Python's build directory
+SOURCE_PYTHON_BUILDS_DIR = SOURCE_PYTHON_DIR.joinpath('src', 'Builds')
 
 # Get the directories to link
 source_python_directories = [
@@ -68,16 +74,23 @@ plugin_list = [
 server_list = [
     x.namebase for x in SERVER_DIR.dirs() if x.namebase != 'steamcmd']
 
+# Get the supported games
+supported_games = ConfigObj(
+    START_DIR.joinpath('plugin_helpers', 'tools', 'games.ini'))
+
+# Get the supported builds
+supported_builds = ConfigObj(
+    START_DIR.joinpath('plugin_helpers', 'tools', 'builds.ini'))
+
+# Get the msbuild.exe location
+MS_BUILD = Path(config_obj.get('MSBUILD', ''))
+
 
 # =============================================================================
 # >> FUNCTIONS
 # =============================================================================
 def _get_available_games():
     """Yield available games with their paths."""
-    # Get the supported games
-    supported_games = ConfigObj(
-        START_DIR.joinpath('plugin_helpers', 'tools', 'games.ini'))
-
     # Loop through each Steam directory
     for steam_dir in STEAM_DIRS:
 

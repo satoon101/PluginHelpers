@@ -12,14 +12,17 @@ from contextlib import suppress
 from os import system
 
 # Package Imports
+from constants import BINARY_EXTENSION
 from constants import PLATFORM
 from constants import SOURCE_PYTHON_ADDONS_DIR
+from constants import SOURCE_PYTHON_BUILDS_DIR
 from constants import SOURCE_PYTHON_DIR
 from constants import available_games
 from constants import plugin_list
 from constants import server_list
 from constants import source_python_addons_directories
 from constants import source_python_directories
+from constants import supported_builds
 
 
 # =============================================================================
@@ -284,3 +287,66 @@ def link_path(path):
     # Copy the .vdf if it needs copied
     if not vdf.isfile():
         SOURCE_PYTHON_DIR.joinpath('addons', 'source-python.vdf').copy(vdf)
+
+
+def get_build(name):
+    """Return the build to use for the given name."""
+    # Loop through all supported builds
+    for build in supported_builds:
+
+        # Does the current build support the given name?
+        if name in supported_builds[build]:
+
+            # Return the current build
+            return build
+
+    # If no build was found, return None
+    return None
+
+
+def remove_release(branch):
+    """Remove the Release directory from the given branch."""
+    # Was an invalid branch given?
+    if branch is None:
+        return
+
+    # Get the release directory
+    build_dir = SOURCE_PYTHON_BUILDS_DIR.joinpath(branch, 'Release')
+
+    # Remove the Release directory
+    if build_dir.isdir():
+        for file in build_dir.files():
+            file.remove()
+        build_dir.removedirs()
+
+
+def compile_build(branch):
+    """Compile the given branch."""
+    # Is this a Windows OS?
+    if PLATFORM == 'windows':
+
+        # Create a build in Windows
+        system('call plugin_helpers/windows/compile_build {0}'.format(branch))
+
+    # Is this a Linux OS?
+    else:
+
+        # Create a build in Linux
+        system('sh plugin_helpers/linux/compile_build {0}'.format(branch))
+
+
+def copy_binaries(path, branch):
+    """Create a build for the given branch and copy to the given path."""
+    # Get the build directory from the branch
+    build_dir = SOURCE_PYTHON_BUILDS_DIR.joinpath(branch, 'Release')
+
+    # If the build directory doesn't exist, create the build
+    if not build_dir.isdir():
+        compile_build(branch)
+
+    # Copy the files
+    build_dir.joinpath('source-python.{0}'.format(BINARY_EXTENSION)).copy(
+        path.joinpath('addons', 'source-python.{0}'.format(BINARY_EXTENSION)))
+    build_dir.joinpath('core.{0}'.format(BINARY_EXTENSION)).copy(
+        path.joinpath('addons', 'source-python', 'bin', 'core.{0}'.format(
+            BINARY_EXTENSION)))
