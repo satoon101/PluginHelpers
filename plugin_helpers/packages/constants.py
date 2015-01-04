@@ -78,12 +78,14 @@ server_list = [
 supported_games = ConfigObj(
     START_DIR.joinpath('plugin_helpers', 'tools', 'games.ini'))
 
+# Get the game directories
+game_directories = {}
+for _folder in supported_games:
+    game_directories.update(supported_games[_folder])
+
 # Get the supported builds
 supported_builds = ConfigObj(
     START_DIR.joinpath('plugin_helpers', 'tools', 'builds.ini'))
-
-# Get the msbuild.exe location
-MS_BUILD = Path(config_obj.get('MSBUILD', ''))
 
 
 # =============================================================================

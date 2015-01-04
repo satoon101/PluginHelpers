@@ -166,7 +166,7 @@ def get_game():
     value = input(message + '\n').strip()
 
     # Was a game name given?
-    if value in available_games + ['ALL']:
+    if value in list(available_games) + ['ALL']:
 
         # Return the value
         return value
@@ -199,13 +199,13 @@ def link_directory(src, dest):
     if PLATFORM == 'windows':
 
         # Link using Windows format
-        system('mklink /J {0} {1}'.format(dest, src))
+        system('mklink /J "{0}" "{1}"'.format(dest, src))
 
     # Is this a Linux OS?
     else:
 
         # Link using Linux format
-        system('ln -s {0} {1}'.format(src, dest))
+        system('ln -s "{0}" "{1}"'.format(src, dest))
 
 
 def link_file(src, dest):
@@ -214,13 +214,13 @@ def link_file(src, dest):
     if PLATFORM == 'windows':
 
         # Link using Windows format
-        system('mklink /H {0} {1}'.format(dest, src))
+        system('mklink /H "{0}" "{1}"'.format(dest, src))
 
     # Is this a Linux OS?
     else:
 
         # Link using Linux format
-        system('ln {0} {1}'.format(src, dest))
+        system('ln "{0}" "{1}"'.format(src, dest))
 
 
 def link_path(path):

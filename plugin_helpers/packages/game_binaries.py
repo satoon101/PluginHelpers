@@ -8,7 +8,7 @@
 # Package Imports
 from constants import SOURCE_PYTHON_BUILDS_DIR
 from constants import available_games
-from constants import supported_games
+from constants import game_directories
 from functions import copy_binaries
 from functions import clear_screen
 from functions import get_build
@@ -27,7 +27,7 @@ def copy_binaries_to_game(game_name):
         return
 
     # Get the build to use
-    build = get_build(supported_games[game_name] or game_name)
+    build = get_build(game_directories[game_name] or game_name)
 
     # Was no build found?
     if build is None:
@@ -75,7 +75,7 @@ if __name__ == '__main__':
 
             # Remove the game's branch's Release directory
             remove_release(
-                get_build(supported_games[_game_name] or _game_name))
+                get_build(game_directories[_game_name] or _game_name))
 
             # Copy the binaries to the game
             copy_binaries_to_game(_game_name)
