@@ -6,10 +6,10 @@
 # >> IMPORTS
 # =============================================================================
 # Package Imports
-from constants import available_games
-from functions import clear_screen
-from functions import get_game
-from functions import link_path
+from common.constants import available_games
+from common.functions import clear_screen
+from common.functions import get_game
+from common.functions import link_path
 
 
 # =============================================================================

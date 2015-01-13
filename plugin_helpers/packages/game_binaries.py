@@ -6,14 +6,14 @@
 # >> IMPORTS
 # =============================================================================
 # Package Imports
-from constants import SOURCE_PYTHON_BUILDS_DIR
-from constants import available_games
-from constants import game_directories
-from functions import copy_binaries
-from functions import clear_screen
-from functions import get_build
-from functions import get_game
-from functions import remove_release
+from common.constants import SOURCE_PYTHON_BUILDS_DIR
+from common.constants import available_games
+from common.constants import game_directories
+from common.functions import copy_binaries
+from common.functions import clear_screen
+from common.functions import get_build
+from common.functions import get_game
+from common.functions import remove_release
 
 
 # =============================================================================

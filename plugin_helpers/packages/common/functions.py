@@ -199,7 +199,7 @@ def link_directory(src, dest):
     if PLATFORM == 'windows':
 
         # Link using Windows format
-        system('mklink /J "{0}" "{1}"'.format(dest, src))
+        system('mklink /d "{0}" "{1}"'.format(dest, src))
 
     # Is this a Linux OS?
     else:
@@ -214,13 +214,13 @@ def link_file(src, dest):
     if PLATFORM == 'windows':
 
         # Link using Windows format
-        system('mklink /H "{0}" "{1}"'.format(dest, src))
+        system('mklink "{0}" "{1}"'.format(dest, src))
 
     # Is this a Linux OS?
     else:
 
         # Link using Linux format
-        system('ln "{0}" "{1}"'.format(src, dest))
+        system('ln -s "{0}" "{1}"'.format(src, dest))
 
 
 def link_path(path):

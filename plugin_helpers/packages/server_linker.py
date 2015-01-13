@@ -6,11 +6,11 @@
 # >> IMPORTS
 # =============================================================================
 # Package Imports
-from constants import SERVER_DIR
-from constants import server_list
-from functions import clear_screen
-from functions import get_server
-from functions import link_path
+from common.constants import SERVER_DIR
+from common.constants import server_list
+from common.functions import clear_screen
+from common.functions import get_server
+from common.functions import link_path
 
 
 # =============================================================================

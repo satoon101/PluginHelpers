@@ -6,14 +6,14 @@
 # >> IMPORTS
 # =============================================================================
 # Package Imports
-from constants import SERVER_DIR
-from constants import SOURCE_PYTHON_BUILDS_DIR
-from constants import server_list
-from functions import copy_binaries
-from functions import clear_screen
-from functions import get_build
-from functions import get_server
-from functions import remove_release
+from common.constants import SERVER_DIR
+from common.constants import SOURCE_PYTHON_BUILDS_DIR
+from common.constants import server_list
+from common.functions import copy_binaries
+from common.functions import clear_screen
+from common.functions import get_build
+from common.functions import get_server
+from common.functions import remove_release
 
 
 # =============================================================================

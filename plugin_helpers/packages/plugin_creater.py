@@ -6,10 +6,10 @@
 # >> IMPORTS
 # =============================================================================
 # Package Imports
-from constants import START_DIR
-from constants import config_obj
-from constants import plugin_list
-from functions import clear_screen
+from common.constants import START_DIR
+from common.constants import config_obj
+from common.constants import plugin_list
+from common.functions import clear_screen
 
 
 # =============================================================================
