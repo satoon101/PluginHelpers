@@ -12,17 +12,17 @@ from contextlib import suppress
 from os import system
 
 # Package Imports
-from constants import BINARY_EXTENSION
-from constants import PLATFORM
-from constants import SOURCE_PYTHON_ADDONS_DIR
-from constants import SOURCE_PYTHON_BUILDS_DIR
-from constants import SOURCE_PYTHON_DIR
-from constants import available_games
-from constants import plugin_list
-from constants import server_list
-from constants import source_python_addons_directories
-from constants import source_python_directories
-from constants import supported_builds
+from common.constants import BINARY_EXTENSION
+from common.constants import PLATFORM
+from common.constants import SOURCE_PYTHON_ADDONS_DIR
+from common.constants import SOURCE_PYTHON_BUILDS_DIR
+from common.constants import SOURCE_PYTHON_DIR
+from common.constants import available_games
+from common.constants import plugin_list
+from common.constants import server_list
+from common.constants import source_python_addons_directories
+from common.constants import source_python_directories
+from common.constants import supported_builds
 
 
 # =============================================================================

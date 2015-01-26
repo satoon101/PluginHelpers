@@ -26,7 +26,7 @@ PLATFORM = system().lower()
 BINARY_EXTENSION = 'dll' if PLATFORM == 'windows' else 'so'
 
 # Store the main directory
-START_DIR = Path(__file__).parent.parent.parent
+START_DIR = Path(__file__).parent.parent.parent.parent
 
 # Get the configuration
 config_obj = ConfigObj(START_DIR.joinpath('config.ini'))
