@@ -4,4 +4,4 @@
 # Call the given package
 PYTHONPATH="$STARTDIR/plugin_helpers/packages/"
 export PYTHONPATH
-"${PYTHONEXE}" "$STARTDIR/plugin_helpers/packages/"$(basename "${1%.**}")".py"
+"${PYTHON_EXECUTABLE}" "$STARTDIR/plugin_helpers/packages/"$(basename "${1%.**}")".py"

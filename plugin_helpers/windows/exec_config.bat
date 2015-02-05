@@ -17,8 +17,8 @@ for /f "eol=# delims=" %%a in (config.ini) do (
     set "%%a"
 )
 
-:: Is PYTHONEXE defined in the config?
-if not defined PYTHONEXE (
+:: Is PYTHON_EXECUTABLE defined in the config?
+if not defined PYTHON_EXECUTABLE (
 
     echo Something is wrong with your config.ini file.
     echo Please delete your config.ini file and re-execute setup.bat.

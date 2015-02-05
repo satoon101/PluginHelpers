@@ -13,11 +13,11 @@ from zipfile import ZIP_DEFLATED
 from zipfile import ZipFile
 
 # Package Imports
-from constants import RELEASE_DIR
-from constants import START_DIR
-from constants import plugin_list
-from functions import clear_screen
-from functions import get_plugin
+from common.constants import RELEASE_DIR
+from common.constants import START_DIR
+from common.constants import plugin_list
+from common.functions import clear_screen
+from common.functions import get_plugin
 
 
 # =============================================================================

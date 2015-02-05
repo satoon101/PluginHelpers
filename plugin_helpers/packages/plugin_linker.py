@@ -6,13 +6,13 @@
 # >> IMPORTS
 # =============================================================================
 # Package Imports
-from constants import SOURCE_PYTHON_DIR
-from constants import START_DIR
-from constants import plugin_list
-from functions import clear_screen
-from functions import get_plugin
-from functions import link_directory
-from functions import link_file
+from common.constants import SOURCE_PYTHON_DIR
+from common.constants import START_DIR
+from common.constants import plugin_list
+from common.functions import clear_screen
+from common.functions import get_plugin
+from common.functions import link_directory
+from common.functions import link_file
 
 
 # =============================================================================
