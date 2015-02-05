@@ -1,4 +1,4 @@
-# ../functions.py
+# ../common/functions.py
 
 """Provides commonly used functions."""
 
@@ -10,6 +10,8 @@
 from contextlib import suppress
 #   OS
 from os import system
+#   Warnings
+from warning import warn
 
 # Package Imports
 from common.constants import CORE_BINARY
@@ -244,7 +246,7 @@ def link_source_python(game_name):
     # If the build directory doesn't exist, create the build
     if not build_dir.isdir():
         warn('Build "{0}" does not exist.  Please create the build.'.format(
-            branch))
+            supported_games[game_name]['branch']))
         return
 
     # Link the files

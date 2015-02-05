@@ -1,4 +1,4 @@
-# ../constants.py
+# ../common/constants.py
 
 """Provides commonly used constants."""
 
