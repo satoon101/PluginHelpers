@@ -241,7 +241,11 @@ def link_source_python(game_name):
 
     # Get the build directory for the game/server's branch
     build_dir = SOURCE_PYTHON_BUILDS_DIR.joinpath(
-        supported_games[game_name]['branch'], 'Release')
+        supported_games[game_name]['branch'])
+
+    # Add 'Release' to the directory if Windows
+    if PLATFORM == 'windows':
+        build_dir = build_dir.joinpath('Release')
 
     # If the build directory doesn't exist, create the build
     if not build_dir.isdir():
