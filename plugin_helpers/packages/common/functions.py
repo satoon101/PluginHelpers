@@ -11,7 +11,7 @@ from contextlib import suppress
 #   OS
 from os import system
 #   Warnings
-from warning import warn
+from warnings import warn
 
 # Package Imports
 from common.constants import CORE_BINARY

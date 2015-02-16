@@ -2,4 +2,4 @@
 . ./plugin_helpers/linux/exec_config.sh
 
 # Install the prerequisites
-${PYTHONEXE} -m pip install --upgrade -r plugin_helpers/tools/requirements.txt
+${PYTHON_EXECUTABLE} -m pip install --upgrade -r plugin_helpers/tools/requirements.txt
