@@ -6,7 +6,8 @@ PluginHelpers is a set of tools to be used with [Source.Python](https://github.c
 These tools allow you to do the following:
 * Create a new Source.Python plugin.
 * Check your plugins for any standards issues.
-* Link Source.Python to your test servers and link your plugins to Source.Python.
+* Link Source.Python to your test servers and games.
+* Link your plugins to Source.Python (which also links them to your servers and games).
 * Create a release .zip file for your plugins.
 
 <br>
@@ -29,59 +30,37 @@ wget https://www.python.org/ftp/python/3.4.2/Python-3.4.2.tgz
 tar -xjf Python-3.4.2.tgz cd Python-3.4.2
             ```
 
-* Source-engine servers
-    * The guideline on servers is that they need to follow a simple rule.
-        * Each server must have a directory named the exact same as the [GAME_NAME](http://wiki.sourcepython.com/pages/core#GAME_NAME) value for the game.
-        * For instance, Counter-Strike: Source servers are installed in a directory called 'cstrike'.  So, the hosting directory needs to use that same name.
-        * If your servers are located in **C:\Servers\**, CS:S needs to be installed in **C:\Servers\cstrike\\**.
-        * As a reference, the SteamCMD runscript should have values similar to the following:
-
-            ```
-            login anonymous
-
-            // CS:S
-            force_install_dir ../cstrike/
-            app_update 232330 validate
-
-            // DOD:S
-            force_install_dir ../dod/
-            app_update 232290 validate
-
-            // HL2:DM
-            force_install_dir ../hl2mp/
-            app_update 232370 validate
-
-            // TF2
-            force_install_dir ../tf/
-            app_update 232250 validate
-
-            // CS:GO
-            force_install_dir ../csgo/
-            app_update 740 validate
-
-            exit
-            ```
+* Supported Source-engine servers and games
+    * Currently the following servers are supported:
+        * CS:GO server
+        * CS:S server
+        * DOD:S server
+        * HL2:DM server
+        * TF2 server
+    * Currently the following games are supported:
+        * CS:GO
+        * CS:S
+        * DOD:S
+        * HL2
+        * HL2:DM
+        * Portal
+        * TF2
 
 * Source.Python clone
     * Simply use git to clone [Source.Python](https://github.com/Source-Python-Dev-Team/Source.Python).
-    * The Source.Python clone **must** be on the same drive as this repository.
-        * If they are on 2 different drives, hard links can not be created for your plugins.
-        * symlinks (soft links) will work fine for directory linking, but hard links for files will not.
-        * Since the linking of the Source.Python repository to the servers is done with only symlinks, it is not necessary that the servers be on the same drive.
-        * None of this matters on Linux systems.
 
 <br>
 ## Setup
 The first thing you need to do after cloning the repository is to execute the setup file (.bat for Windows or .sh for Linux).
 After you have done this, several new files will be created in the main directory.
-Those files include the config.ini, which holds configuration values you need to set, and a .pylintrc file which can be used for different pytlint settings when running the **plugin_checker** script.
+Those files include the config.ini, which holds configuration values you need to set, and a .pylintrc file which can be used for different pylint settings when running the **plugin_checker** script.
 A few platform-specific (.bat for Windows or .sh for Linux) files are also created:
 * plugin_checker
 * plugin_creater
 * plugin_linker
 * plugin_releaser
 * prerequisites
-* server_linker
+* sp_linker
 
 <br>
 ## Configuration
@@ -90,24 +69,31 @@ The following are the settings
 
 * AUTHOR
     * used by **plugin_creater** to know what value to put as info.author for the plugin.
-* REPOTYPE
+* REPO_TYPE
     * used by **plugin_creater** to know whether to create the .gitignore / .gitattributes or .hgignore files.
-* SERVERSTARTDIR
-    * used by **server_linker** to know where your server's are located.
-    * Defaults:
-        * Windows: **C:\Servers**
-        * Linux: **/media/Servers**
-* SOURCEPYTHONDIR
-    * used by **plugin_linker** and **server_linker** to know where the Source.Python repository is located.
+* SOURCE_PYTHON_DIRECTORY
+    * used by **plugin_linker** and **sp_linker** to know where the Source.Python repository is located.
     * Defaults:
         * Windows: **C:\Projects\Source.Python**
         * Linux: **/media/Source.Python**
-* RELEASEDIR
+* SERVER_DIRECTORIES
+    * used by **sp_linker** to know where your servers are located.
+    * If there are servers in multiple base directories, separate each with a semi-colon (;).
+    * Defaults:
+        * Windows: **C:\Servers**
+        * Linux: **/media/Servers**
+* STEAM_DIRECTORIES
+    * used by **sp_linker** to know where your games are located.
+    * If there are multiple base directories, separate each with a semi-colon (;).
+    * Defaults:
+        * Windows: **C:\Program Files\Steam\SteamApps**
+        * Linux: **/media/Steam/SteamApps**
+* RELEASE_DIRECTORY
     * used by **plugin_releaser** to know where to copy your plugin releases to.
     * Defaults:
         * Windows: **C:\Releases**
         * Linux: **/media/Releases**
-* PYTHONEXE
+* PYTHON_EXECUTABLE
     * used by all of the executables (including prerequisites) to know where the Python executable is located.
     * This needs to be set to the executable file itself and not just its directory.
     * Defaults:
@@ -134,9 +120,9 @@ The required packages for this toolset include:
 
 <br>
 ## Linking Source.Python
-Once you have finished installing the prerequisites, the next item on the list is to link Source.Python's repository to your servers.
+Once you have finished installing the prerequisites, the next item on the list is to link Source.Python's repository to your servers and games.
 
-As long as you have correctly set your config.ini SERVERSTARTDIR, SOURCEPYTHONDIR, and PYTHONEXE values, simply execute the **server_linker** script and select the server you wish to link (or ALL for all servers).
+As long as you have correctly set your config.ini SERVER_DIRECTORIES, STEAM_DIRECTORIES, SOURCE_PYTHON_DIRECTORY, and PYTHON_EXECUTABLE values, simply execute the **sp_linker** script and select the server or game you wish to link (or ALL for all servers and games).
 
 <br>
 ## Installing plugins
@@ -156,18 +142,18 @@ Once you have answered all the necessary questions, the appropriate directories/
 3 files will always be created:
 * \__init__.py
     * mandatory for the **plugin_checker** to work.
-    * useful for verifying implementation on a server prior to loading your plugin.
+    * useful for verifying implementation on a server or game prior to loading your plugin.
 * info.py
     * holds the [PluginInfo](http://wiki.sourcepython.com/pages/plugins.info#PluginInfo) instance for your plugin.
     * If you supplied an AUTHOR value in the config.ini, that value will be used as info.author.
 * &lt;plugin_name&gt;.py
-    * mandatory file when using the **sp load** command on a server.
+    * mandatory file when using the **sp load** command on a server or game.
 
 <br>
 ## Linking plugins
 Now that you have one or more plugins inside the PluginHelpers repository directory, you will want to link them to the Source.Python repository.
 
-Linking your plugins to the Source.Python repository instead of each server individually allows you to only have to link them once and have them available on all of your test servers.
+Linking your plugins to the Source.Python repository instead of each server/game individually allows you to only have to link them once and have them available on all of your test servers and games.
 
 Execute the **plugin_linker** script and choose which plugin (or ALL plugins) to link.  If you have already linked a plugin, but have added new directories, running the linker again will link those directories.
 
