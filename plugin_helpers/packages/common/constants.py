@@ -34,8 +34,14 @@ CORE_BINARY = 'core.{0}'.format('dll' if PLATFORM == 'windows' else 'so')
 # Store the main directory
 START_DIR = Path(__file__).parent.parent.parent.parent
 
+# Store the premade files location
+PREMADE_FILES_DIR = START_DIR.joinpath('plugin_helpers', 'files')
+
 # Get the configuration
 config_obj = ConfigObj(START_DIR.joinpath('config.ini'))
+
+# Store the author value
+AUTHOR = config_obj['AUTHOR']
 
 # Store the Source.Python repository directory
 SOURCE_PYTHON_DIR = Path(config_obj['SOURCE_PYTHON_DIRECTORY'])
@@ -109,4 +115,4 @@ PYTHON_EXE = config_obj['PYTHON_EXECUTABLE']
 # Get a list of all plugins
 plugin_list = [
     x.namebase for x in START_DIR.dirs()
-    if x.namebase not in ('plugin_helpers', '.git')]
+    if x.namebase not in ('plugin_helpers', '.git', '__pycache__')]
