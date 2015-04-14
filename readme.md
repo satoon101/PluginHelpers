@@ -43,6 +43,8 @@ tar -xjf Python-3.4.2.tgz cd Python-3.4.2
         * DOD:S
         * HL2
         * HL2:DM
+        * HL2: Ep1
+        * HL2: Ep2
         * Portal
         * TF2
 

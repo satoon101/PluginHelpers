@@ -93,8 +93,13 @@ for _directory in config_obj['STEAM_DIRECTORIES'].split(';'):
     _path = Path(_directory).joinpath('SteamApps')
     for _game_type in ('common', 'sourcemods'):
         for _game in _support[_game_type]:
-            _game_dir = _path.joinpath(
-                _game_type, _game, _support['common'][_game]['folder'])
+            if 'game' in _support[_game_type][_game]:
+                _game_dir = _path.joinpath(
+                    _game_type, _support[_game_type][_game]['game'],
+                    _support[_game_type][_game]['folder'])
+            else:
+                _game_dir = _path.joinpath(
+                    _game_type, _game, _support[_game_type][_game]['folder'])
             if not _game_dir.isdir():
                 continue
             if _game in supported_games:
