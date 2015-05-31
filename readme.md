@@ -20,7 +20,7 @@ Before you get started, there are a few things you will need installed and a few
 * Python3.4 or newer
     * Python3.4 is the version being tested with when making changes.
     * I do not plan on testing earlier versions to support them.
-    * If you will be using this on a Linux system, most distros come with some version of Python2.  When you install Python3.4, make sure you do not make it the systems default, as that can and will cause you issues.
+    * If you will be using this on a Linux system, most distros come with some version of Python2.  When you install Python3.4, make sure you do not make it the system's default, as that can and will cause you issues.
     * I have found the following to be a good guide to installing Python3.4 on Linux:
         * http://www.unixmen.com/howto-install-python-3-x-in-ubuntu-debian-fedora-centos/
         * Though, the wget and tar lines should look more like:
@@ -32,12 +32,14 @@ tar -xjf Python-3.4.2.tgz cd Python-3.4.2
 
 * Supported Source-engine servers and games
     * Currently the following servers are supported:
+        * Black Mesa server
         * CS:GO server
         * CS:S server
         * DOD:S server
         * HL2:DM server
         * TF2 server
     * Currently the following games are supported:
+        * Black Mesa
         * CS:GO
         * CS:S
         * DOD:S
