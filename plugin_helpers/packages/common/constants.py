@@ -51,7 +51,8 @@ SOURCE_PYTHON_ADDONS_DIR = SOURCE_PYTHON_DIR.joinpath(
     'addons', 'source-python')
 
 # Get Source.Python's build directory
-SOURCE_PYTHON_BUILDS_DIR = SOURCE_PYTHON_DIR.joinpath('src', 'Builds')
+SOURCE_PYTHON_BUILDS_DIR = SOURCE_PYTHON_DIR.joinpath(
+    'src', 'Builds', 'Windows' if PLATFORM == 'windows' else 'Linux')
 
 # Get the directories to link
 source_python_directories = {
