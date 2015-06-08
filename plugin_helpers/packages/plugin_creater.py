@@ -142,15 +142,15 @@ def create_plugin(plugin_name, **options):
             'translations', plugin_name)
 
     # Loop through all premade files
-    for filename in PREMADE_FILES_DIR.files():
+    for file in PREMADE_FILES_DIR.files():
 
         # Skip Python files
-        if filename.ext == '.py':
+        if file.ext == '.py':
             continue
 
         # Copy the file to the plugin's base directory
-        PREMADE_FILES_DIR.joinpath(filename).copy(
-            plugin_base_path.joinpath(filename))
+        PREMADE_FILES_DIR.joinpath(file.namebase).copy(
+            plugin_base_path.joinpath(file.namebase))
 
 
 # =============================================================================
