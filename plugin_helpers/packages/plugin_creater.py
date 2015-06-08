@@ -141,8 +141,14 @@ def create_plugin(plugin_name, **options):
             plugin_base_path, 'resource', 'source-python',
             'translations', plugin_name)
 
-    for filename in ('.gitattributes', '.gitignore'):
+    # Loop through all premade files
+    for filename in PREMADE_FILES_DIR.files():
 
+        # Skip Python files
+        if filename.ext == '.py':
+            continue
+
+        # Copy the file to the plugin's base directory
         PREMADE_FILES_DIR.joinpath(filename).copy(
             plugin_base_path.joinpath(filename))
 

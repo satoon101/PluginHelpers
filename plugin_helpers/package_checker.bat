@@ -35,7 +35,7 @@ echo.
 
 setlocal
 set PYTHONPATH=.\packages
-python -m pylint %STARTDIR%\packages --const-rgx="(([A-Z_][A-Z0-9_]*)|([a-z_][a-z0-9_]*)|(__.*__))$" --msg-template="{msg_id}:{line:3d},{column:2d}: {msg} ({symbol})"
+python -m pylint %STARTDIR%\packages --rcfile %STARTDIR%\tools\.pylintrc
 endlocal
 
 echo.

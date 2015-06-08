@@ -48,9 +48,7 @@ def check_plugin(plugin_name):
     print_section('Checking "{0}" with PyLint'.format(plugin_name), True)
     system(
         '{0} -m pylint --rcfile {1}/.pylintrc {2} '.format(
-            PYTHON_EXE, START_DIR, plugin) +
-        '--const-rgx="(([A-Z_][A-Z0-9_]*)|([a-z_][a-z0-9_]*)|(__.*__))$" ' +
-        '--msg-template="{msg_id}:{line:3d},{column:2d}: {msg} ({symbol})"')
+            PYTHON_EXE, START_DIR.joinpath(plugin_name), plugin))
 
 
 # =============================================================================

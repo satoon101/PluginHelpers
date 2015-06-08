@@ -13,14 +13,6 @@ else
 
 fi
 
-# Does the .pylintrc need copied?
-if [ ! -f $STARTDIR/.pylintrc ]; then
-
-    # Copy the file
-    cp plugin_helpers/tools/.pylintrc .pylintrc
-
-fi
-
 echo ""
 echo ""
 
