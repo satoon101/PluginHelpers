@@ -99,6 +99,14 @@ def create_plugin(plugin_name, **options):
             plugin_base_path, 'addons', 'source-python',
             'data', 'plugins', plugin_name)
 
+    # Should a docs directory be created?
+    if options.get('docs', False):
+
+        # Create the docs directory
+        _create_directory(
+            plugin_base_path, 'addons', 'source-python',
+            'docs', 'plugins', plugin_name, filename='readme.md')
+
     # Should a events directory be created?
     if options.get('events', False):
 
@@ -308,6 +316,9 @@ if __name__ == '__main__':
         # Get the data value
         _data = _get_directory_or_file('data')
 
+        # Get the docs value
+        _docs = _get_directory('docs')
+
         # Get the events value
         _events = _get_directory('events')
 
@@ -322,5 +333,6 @@ if __name__ == '__main__':
 
         # Call create_plugin with the options
         create_plugin(
-            _plugin_name, config=_config, data=_data, events=_events,
-            logs=_logs, sound=_sound, translations=_translations)
+            _plugin_name, config=_config, data=_data, docs=_docs,
+            events=_events, logs=_logs, sound=_sound,
+            translations=_translations)

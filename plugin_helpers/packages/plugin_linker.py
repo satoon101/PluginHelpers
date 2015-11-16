@@ -40,6 +40,10 @@ def link_plugin(plugin_name):
     _link_file(
         plugin_path, 'addons', 'source-python', 'data', 'plugins', plugin_name)
 
+    # Link the docs directory
+    _link_directory(
+        plugin_path, 'addons', 'source-python', 'docs', 'plugins', plugin_name)
+
     # Link the cfg directory
     _link_directory(plugin_path, 'cfg', 'source-python', plugin_name)
 
