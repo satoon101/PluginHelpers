@@ -26,7 +26,7 @@ def link_plugin(plugin_name):
         return
 
     # Get the plugin's path
-    plugin_path = START_DIR.joinpath(plugin_name)
+    plugin_path = START_DIR / plugin_name
 
     # Link the main directory
     _link_directory(

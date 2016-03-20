@@ -67,7 +67,7 @@ def create_release(plugin_name=None):
         return
 
     # Get the plugin's base path
-    plugin_path = START_DIR.joinpath(plugin_name)
+    plugin_path = START_DIR / plugin_name
 
     # Does the plugin not exist?
     if not plugin_path.isdir():
@@ -75,8 +75,8 @@ def create_release(plugin_name=None):
         return
 
     # Get the plugin's current version
-    version = _get_version(plugin_path.joinpath(
-        'addons', 'source-python', 'plugins', plugin_name))
+    version = _get_version(
+        plugin_path / 'addons' / 'source-python' / 'plugins' / plugin_name)
 
     # Was no version information found?
     if version is None:
@@ -84,15 +84,14 @@ def create_release(plugin_name=None):
         return
 
     # Get the directory to save the release in
-    save_path = RELEASE_DIR.joinpath(plugin_name)
+    save_path = RELEASE_DIR / plugin_name
 
     # Create the directory if it doesn't exist
     if not save_path.isdir():
         save_path.makedirs()
 
     # Get the zip file location
-    zip_path = save_path.joinpath(
-        '{0} - v{1}.zip'.format(plugin_name, version))
+    zip_path = save_path / '{0} - v{1}.zip'.format(plugin_name, version)
 
     # Does the release already exist?
     if zip_path.isfile():

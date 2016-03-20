@@ -46,9 +46,8 @@ def check_plugin(plugin_name):
 
     # Check with pylint
     print_section('Checking "{0}" with PyLint'.format(plugin_name), True)
-    system(
-        '{0} -m pylint --rcfile {1}/.pylintrc {2} '.format(
-            PYTHON_EXE, START_DIR.joinpath(plugin_name), plugin))
+    system('{0} -m pylint --rcfile {1}/.pylintrc {2} '.format(
+        PYTHON_EXE, START_DIR / plugin_name, plugin))
 
 
 # =============================================================================

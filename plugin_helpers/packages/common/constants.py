@@ -35,10 +35,10 @@ CORE_BINARY = 'core.{0}'.format('dll' if PLATFORM == 'windows' else 'so')
 START_DIR = Path(__file__).parent.parent.parent.parent
 
 # Store the premade files location
-PREMADE_FILES_DIR = START_DIR.joinpath('plugin_helpers', 'files')
+PREMADE_FILES_DIR = START_DIR / 'plugin_helpers' / 'files'
 
 # Get the configuration
-config_obj = ConfigObj(START_DIR.joinpath('config.ini'))
+config_obj = ConfigObj(START_DIR / 'config.ini')
 
 # Store the author value
 AUTHOR = config_obj['AUTHOR']
@@ -47,8 +47,7 @@ AUTHOR = config_obj['AUTHOR']
 SOURCE_PYTHON_DIR = Path(config_obj['SOURCE_PYTHON_DIRECTORY'])
 
 # Get Source.Python's addons directory
-SOURCE_PYTHON_ADDONS_DIR = SOURCE_PYTHON_DIR.joinpath(
-    'addons', 'source-python')
+SOURCE_PYTHON_ADDONS_DIR = SOURCE_PYTHON_DIR / 'addons' / 'source-python'
 
 # Get Source.Python's build directory
 SOURCE_PYTHON_BUILDS_DIR = SOURCE_PYTHON_DIR.joinpath(
@@ -64,8 +63,7 @@ source_python_addons_directories = {
     x.namebase for x in SOURCE_PYTHON_DIR.joinpath(
         'addons', 'source-python').dirs() if x.namebase != 'bin'}
 
-_support = ConfigObj(START_DIR.joinpath(
-    'plugin_helpers', 'tools', 'support.ini'))
+_support = ConfigObj(START_DIR / 'plugin_helpers' / 'tools' / 'support.ini')
 
 supported_games = OrderedDict()
 
@@ -77,8 +75,7 @@ for _directory in config_obj['SERVER_DIRECTORIES'].split(';'):
         if not _check_directory.joinpath(_check_file).isfile():
             continue
         for _game in _support['servers']:
-            _game_dir = _check_directory.joinpath(
-                _support['servers'][_game]['folder'])
+            _game_dir = _check_directory / _support['servers'][_game]['folder']
             if not _game_dir.isdir():
                 continue
             if _game in supported_games:
@@ -91,7 +88,7 @@ for _directory in config_obj['SERVER_DIRECTORIES'].split(';'):
                 'branch': _support['servers'][_game]['branch']}
 
 for _directory in config_obj['STEAM_DIRECTORIES'].split(';'):
-    _path = Path(_directory).joinpath('SteamApps')
+    _path = Path(_directory) / 'SteamApps'
     for _game_type in ('common', 'sourcemods'):
         for _game in _support[_game_type]:
             if 'game' in _support[_game_type][_game]:

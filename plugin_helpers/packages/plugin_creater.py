@@ -52,7 +52,7 @@ def create_plugin(plugin_name, **options):
         return
 
     # Get the path to create the plugin at
-    plugin_base_path = START_DIR.joinpath(plugin_name)
+    plugin_base_path = START_DIR / plugin_name
 
     # Has the plugin already been created?
     if plugin_base_path.isdir():
@@ -66,11 +66,11 @@ def create_plugin(plugin_name, **options):
     # Create the plugin's directory
     plugin_path.makedirs()
 
-    _copy_file(plugin_path.joinpath('__init__.py'))
+    _copy_file(plugin_path / '__init__.py')
 
-    _copy_file(plugin_path.joinpath('info.py'))
+    _copy_file(plugin_path / 'info.py')
 
-    _copy_file(plugin_path.joinpath(plugin_name + '.py'))
+    _copy_file(plugin_path / plugin_name + '.py')
 
     # Should a cfg directory be created?
     if options.get('config', False):
@@ -158,7 +158,7 @@ def create_plugin(plugin_name, **options):
 
         # Copy the file to the plugin's base directory
         PREMADE_FILES_DIR.joinpath(file.namebase).copy(
-            plugin_base_path.joinpath(file.namebase))
+            plugin_base_path / file.namebase)
 
 
 # =============================================================================

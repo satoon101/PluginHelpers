@@ -180,14 +180,14 @@ def link_source_python(game_name):
     for dir_name in source_python_directories:
 
         # Get the directory path
-        directory = path.joinpath(dir_name)
+        directory = path / dir_name
 
         # Create the directory if it doesn't exist
         if not directory.isdir():
             directory.makedirs()
 
         # Get the source-python path
-        sp_dir = directory.joinpath('source-python')
+        sp_dir = directory / 'source-python'
 
         # Does the source-python sub-directory already exist?
         if sp_dir.isdir():
@@ -198,11 +198,11 @@ def link_source_python(game_name):
 
         # Link the directory
         link_directory(
-            SOURCE_PYTHON_DIR.joinpath(dir_name, 'source-python'), sp_dir)
+            SOURCE_PYTHON_DIR / dir_name / 'source-python', sp_dir)
         print('Successfully linked ../{0}/source-python/\n'.format(dir_name))
 
     # Get the server's addons directory
-    server_addons = path.joinpath('addons', 'source-python')
+    server_addons = path / 'addons' / 'source-python'
 
     # Create the addons directory if it doesn't exist
     if not server_addons.isdir():
@@ -212,7 +212,7 @@ def link_source_python(game_name):
     for dir_name in source_python_addons_directories:
 
         # Get the directory path
-        directory = server_addons.joinpath(dir_name)
+        directory = server_addons / dir_name
 
         # Does the directory already exist on the server?
         if directory.isdir():
@@ -221,31 +221,30 @@ def link_source_python(game_name):
             continue
 
         # Link the directory
-        link_directory(SOURCE_PYTHON_ADDONS_DIR.joinpath(dir_name), directory)
+        link_directory(SOURCE_PYTHON_ADDONS_DIR / dir_name, directory)
         print('Successfully linked ../addons/source-python/{0}/\n'.format(
             dir_name))
 
     # Get the bin directory
-    bin_dir = server_addons.joinpath('bin')
+    bin_dir = server_addons / 'bin'
 
     # Copy the bin directory if it doesn't exist
     if not bin_dir.isdir():
         SOURCE_PYTHON_ADDONS_DIR.joinpath('bin').copytree(bin_dir)
 
     # Get the .vdf's path
-    vdf = path.joinpath('addons', 'source-python.vdf')
+    vdf = path / 'addons' / 'source-python.vdf'
 
     # Copy the .vdf if it needs copied
     if not vdf.isfile():
         SOURCE_PYTHON_DIR.joinpath('addons', 'source-python.vdf').copy(vdf)
 
     # Get the build directory for the game/server's branch
-    build_dir = SOURCE_PYTHON_BUILDS_DIR.joinpath(
-        supported_games[game_name]['branch'])
+    build_dir = SOURCE_PYTHON_BUILDS_DIR / supported_games[game_name]['branch']
 
     # Add 'Release' to the directory if Windows
     if PLATFORM == 'windows':
-        build_dir = build_dir.joinpath('Release')
+        build_dir = build_dir / 'Release'
 
     # If the build directory doesn't exist, create the build
     if not build_dir.isdir():
@@ -254,9 +253,7 @@ def link_source_python(game_name):
         return
 
     # Link the files
+    link_file(build_dir / SOURCE_BINARY, path / 'addons' / SOURCE_BINARY)
     link_file(
-        build_dir.joinpath(SOURCE_BINARY),
-        path.joinpath('addons', SOURCE_BINARY))
-    link_file(
-        build_dir.joinpath(CORE_BINARY),
-        path.joinpath('addons', 'source-python', 'bin', CORE_BINARY))
+        build_dir / CORE_BINARY,
+        path / 'addons' / 'source-python' / 'bin' / CORE_BINARY)
