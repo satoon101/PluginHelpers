@@ -1,4 +1,27 @@
-/*
-!plugin_helpers/
+# All sub-directories
+/*/*
+
+# All __pycache__ directories
 __pycache__
+
+# Linux temp files
 *~
+
+# Batch files
+/*.bat
+
+# Shell files
+/*.sh
+
+# Base Pylint config
+/.pylintrc
+
+# Base config
+/config.ini
+
+# Allow files in plugin_helpers directory
+!plugin_helpers/
+!plugin_helpers/*
+
+# Setup files
+!setup.*
