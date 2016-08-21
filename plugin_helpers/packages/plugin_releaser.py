@@ -5,14 +5,14 @@
 # =============================================================================
 # >> IMPORTS
 # =============================================================================
-# Python Imports
-#   Contextlib
+# Python
 from contextlib import suppress
-#   Zipfile
+from os import sep
+from subprocess import PIPE, Popen
 from zipfile import ZIP_DEFLATED
 from zipfile import ZipFile
 
-# Package Imports
+# Package
 from common.constants import RELEASE_DIR
 from common.constants import START_DIR
 from common.constants import plugin_list
@@ -69,6 +69,18 @@ def create_release(plugin_name=None):
     # Get the plugin's base path
     plugin_path = START_DIR / plugin_name
 
+    plugin_path.chdir()
+    output = Popen(
+        'git ls-tree --full-tree -r HEAD'.split(),
+        stdout=PIPE,
+    ).communicate()[0]
+    repo_files = [
+        '{sep}{path}'.format(
+            sep=sep,
+            path=str(x).split('\\t')[1].replace('/', sep)[:~0],
+        ) for x in output.splitlines()
+    ]
+
     # Does the plugin not exist?
     if not plugin_path.isdir():
         print('Plugin "{0}" not found.'.format(plugin_name))
@@ -76,7 +88,8 @@ def create_release(plugin_name=None):
 
     # Get the plugin's current version
     version = _get_version(
-        plugin_path / 'addons' / 'source-python' / 'plugins' / plugin_name)
+        plugin_path / 'addons' / 'source-python' / 'plugins' / plugin_name
+    )
 
     # Was no version information found?
     if version is None:
@@ -112,18 +125,42 @@ def create_release(plugin_name=None):
                 continue
 
             # Loop through all files with the plugin's name
-            for file in _find_files(check_path.files('{0}.*'.format(
-                    plugin_name)), allowed_path, allowed_filetypes):
+            for full_file_path in _find_files(
+                check_path.files(
+                    '{plugin_name}.*'.format(
+                        plugin_name=plugin_name,
+                    )
+                ),
+                allowed_path,
+                allowed_filetypes,
+            ):
 
-                # Add the file to the zip
-                _add_file(zip_file, file, plugin_path)
+                relative_file_path = full_file_path.replace(plugin_path, '')
+                if relative_file_path in repo_files:
+
+                    # Add the file to the zip
+                    _add_file(
+                        zip_file, full_file_path, relative_file_path,
+                        plugin_path,
+                    )
 
             # Loop through all files within the plugin's directory
-            for file in _find_files(check_path.joinpath(
-                    plugin_name).walkfiles(), allowed_path, allowed_filetypes):
+            for full_file_path in _find_files(
+                check_path.joinpath(
+                    plugin_name,
+                ).walkfiles(),
+                allowed_path,
+                allowed_filetypes,
+            ):
 
-                # Add the file to the zip
-                _add_file(zip_file, file, plugin_path)
+                relative_file_path = full_file_path.replace(plugin_path, '')
+                if relative_file_path in repo_files:
+
+                    # Add the file to the zip
+                    _add_file(
+                        zip_file, full_file_path, relative_file_path,
+                        plugin_path,
+                    )
 
         # Loop through all other allowed directories
         for allowed_path in other_filetypes:
@@ -136,16 +173,23 @@ def create_release(plugin_name=None):
                 continue
 
             # Loop through all files in the directory
-            for file in _find_files(
-                    check_path.walkfiles(), allowed_path, other_filetypes):
+            for full_file_path in _find_files(
+                check_path.walkfiles(), allowed_path, other_filetypes
+            ):
 
-                # Add the file to the zip
-                _add_file(zip_file, file, plugin_path)
+                relative_file_path = full_file_path.replace(plugin_path, '')
+                if relative_file_path in repo_files:
+
+                    # Add the file to the zip
+                    _add_file(
+                        zip_file, full_file_path, relative_file_path,
+                        plugin_path,
+                    )
 
     # Print a message that everything was successful
     print('Successfully created {0} version {1} release:'.format(
         plugin_name, version))
-    print('\t"{0}"\n\n'.format(zip_path))
+    print('\t"{zip_path}"\n\n'.format(zip_path=zip_path))
 
 
 # =============================================================================
@@ -206,13 +250,13 @@ def _find_files(generator, allowed_path, allowed_dictionary):
                 yield file
 
 
-def _add_file(zip_file, file, plugin_path):
+def _add_file(zip_file, full_file_path, relative_file_path, plugin_path):
     """Add the given file and all parent directories to the zip."""
     # Write the file to the zip
-    zip_file.write(file, file.replace(plugin_path, ''))
+    zip_file.write(full_file_path, relative_file_path)
 
     # Get the file's parent directory
-    parent = file.parent
+    parent = full_file_path.parent
 
     # Get all parent directories to add to the zip
     while plugin_path != parent:
