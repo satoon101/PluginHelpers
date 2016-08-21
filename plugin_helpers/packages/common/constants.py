@@ -5,18 +5,13 @@
 # =============================================================================
 # >> IMPORTS
 # =============================================================================
-# Python Imports
-#   Collections
+# Python
 from collections import OrderedDict
-#   Platform
 from platform import system
-#   Warnings
 from warnings import warn
 
-# Site-Package Imports
-#   Configobj
+# Site-Package
 from configobj import ConfigObj
-#   Path
 from path import Path
 
 
@@ -27,9 +22,12 @@ from path import Path
 PLATFORM = system().lower()
 
 # Store the binary names
-SOURCE_BINARY = 'source-python.{0}'.format(
-    'dll' if PLATFORM == 'windows' else 'so')
-CORE_BINARY = 'core.{0}'.format('dll' if PLATFORM == 'windows' else 'so')
+SOURCE_BINARY = 'source-python.{binary}'.format(
+    binary='dll' if PLATFORM == 'windows' else 'so'
+)
+CORE_BINARY = 'core.{binary}'.format(
+    binary='dll' if PLATFORM == 'windows' else 'so'
+)
 
 # Store the main directory
 START_DIR = Path(__file__).parent.parent.parent.parent
@@ -51,17 +49,21 @@ SOURCE_PYTHON_ADDONS_DIR = SOURCE_PYTHON_DIR / 'addons' / 'source-python'
 
 # Get Source.Python's build directory
 SOURCE_PYTHON_BUILDS_DIR = SOURCE_PYTHON_DIR.joinpath(
-    'src', 'Builds', 'Windows' if PLATFORM == 'windows' else 'Linux')
+    'src', 'Builds', 'Windows' if PLATFORM == 'windows' else 'Linux'
+)
 
 # Get the directories to link
 source_python_directories = {
     x.namebase for x in SOURCE_PYTHON_DIR.dirs()
-    if x.namebase not in ('addons', 'src', '.git')}
+    if x.namebase not in ('addons', 'src', '.git')
+}
 
 # Get the addons directories to link
 source_python_addons_directories = {
     x.namebase for x in SOURCE_PYTHON_DIR.joinpath(
-        'addons', 'source-python').dirs() if x.namebase != 'bin'}
+        'addons', 'source-python',
+    ).dirs() if x.namebase != 'bin'
+}
 
 _support = ConfigObj(START_DIR / 'plugin_helpers' / 'tools' / 'support.ini')
 
@@ -80,12 +82,18 @@ for _directory in config_obj['SERVER_DIRECTORIES'].split(';'):
                 continue
             if _game in supported_games:
                 warn(
-                    '{0} already assigned to {1}.  New path found: {2}'.format(
-                        _game, supported_games[_game], _game_dir))
+                    '{game} already assigned to {old_path}.  '
+                    'New path found: {new_path}'.format(
+                        game=_game,
+                        old_path=supported_games[_game],
+                        new_path=_game_dir,
+                    )
+                )
                 continue
             supported_games[_game] = {
                 'directory': _game_dir,
-                'branch': _support['servers'][_game]['branch']}
+                'branch': _support['servers'][_game]['branch'],
+            }
 
 for _directory in config_obj['STEAM_DIRECTORIES'].split(';'):
     _path = Path(_directory) / 'SteamApps'
@@ -94,7 +102,8 @@ for _directory in config_obj['STEAM_DIRECTORIES'].split(';'):
             if 'game' in _support[_game_type][_game]:
                 _game_dir = _path.joinpath(
                     _game_type, _support[_game_type][_game]['game'],
-                    _support[_game_type][_game]['folder'])
+                    _support[_game_type][_game]['folder'],
+                )
             else:
                 _game_dir = _path.joinpath(
                     _game_type, _game, _support[_game_type][_game]['folder'])
@@ -102,12 +111,18 @@ for _directory in config_obj['STEAM_DIRECTORIES'].split(';'):
                 continue
             if _game in supported_games:
                 warn(
-                    '{0} already assigned to {1}.  New path found: {2}'.format(
-                        _game, supported_games[_game], _game_dir))
+                    '{game} already assigned to {old_path}.  '
+                    'New path found: {new_path}'.format(
+                        game=_game,
+                        old_path=supported_games[_game],
+                        new_path=_game_dir,
+                    )
+                )
                 continue
             supported_games[_game] = {
                 'directory': _game_dir,
-                'branch': _support[_game_type][_game]['branch']}
+                'branch': _support[_game_type][_game]['branch'],
+            }
 
 # Store the Release directory
 RELEASE_DIR = Path(config_obj['RELEASE_DIRECTORY'])
@@ -118,4 +133,5 @@ PYTHON_EXE = config_obj['PYTHON_EXECUTABLE']
 # Get a list of all plugins
 plugin_list = [
     x.namebase for x in START_DIR.dirs()
-    if x.namebase not in ('plugin_helpers', '.git', '__pycache__')]
+    if x.namebase not in ('plugin_helpers', '.git', '__pycache__')
+]

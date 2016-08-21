@@ -5,15 +5,12 @@
 # =============================================================================
 # >> IMPORTS
 # =============================================================================
-# Python Imports
-#   Contextlib
+# Python
 from contextlib import suppress
-#   OS
 from os import system
-#   Warnings
 from warnings import warn
 
-# Package Imports
+# Package
 from common.constants import CORE_BINARY
 from common.constants import PLATFORM
 from common.constants import SOURCE_BINARY
@@ -41,21 +38,28 @@ def get_plugin(suffix, allow_all=True):
 
     # Are there any plugins?
     if not plugin_list:
-        print('There are no plugins to {0}.'.format(suffix))
+        print('There are no plugins to {suffix}.'.format(suffix=suffix))
         return None
 
     # Get the question to ask
-    message = 'What plugin would you like to {0}?\n\n'.format(suffix)
+    message = 'What plugin would you like to {suffix}?\n\n'.format(
+        suffix=suffix,
+    )
 
     # Loop through each plugin
     for number, plugin in enumerate(plugin_list, 1):
 
         # Add the current plugin
-        message += '\t({0}) {1}\n'.format(number, plugin)
+        message += '\t({number}) {plugin}\n'.format(
+            number=number,
+            plugin=plugin,
+        )
 
     # Add ALL to the list if it needs to be
     if allow_all:
-        message += '\t({0}) ALL\n'.format(len(plugin_list) + 1)
+        message += '\t({number}) ALL\n'.format(
+            number=len(plugin_list) + 1,
+        )
 
     # Ask which plugin to do something with
     value = input(message + '\n').strip()
@@ -105,10 +109,15 @@ def get_game():
     for number, game in enumerate(supported_games, 1):
 
         # Add the current game
-        message += '\t({0}) {1}\n'.format(number, game)
+        message += '\t({number}) {game}\n'.format(
+            number=number,
+            game=game,
+        )
 
     # Add ALL to the list
-    message += '\t({0}) ALL\n'.format(len(supported_games) + 1)
+    message += '\t({number}) ALL\n'.format(
+        number=len(supported_games) + 1,
+    )
 
     # Ask which game to do something with
     value = input(message + '\n').strip()
@@ -147,13 +156,23 @@ def link_directory(src, dest):
     if PLATFORM == 'windows':
 
         # Link using Windows format
-        system('mklink /d "{0}" "{1}"'.format(dest, src))
+        system(
+            'mklink /d "{destination}" "{source}"'.format(
+                destination=dest,
+                source=src,
+            )
+        )
 
     # Is this a Linux OS?
     else:
 
         # Link using Linux format
-        system('ln -s "{0}" "{1}"'.format(src, dest))
+        system(
+            'ln -s "{source}" "{destination}"'.format(
+                source=src,
+                destination=dest,
+            )
+        )
 
 
 def link_file(src, dest):
@@ -162,13 +181,23 @@ def link_file(src, dest):
     if PLATFORM == 'windows':
 
         # Link using Windows format
-        system('mklink "{0}" "{1}"'.format(dest, src))
+        system(
+            'mklink "{destination}" "{source}"'.format(
+                destination=dest,
+                source=src,
+            )
+        )
 
     # Is this a Linux OS?
     else:
 
         # Link using Linux format
-        system('ln -s "{0}" "{1}"'.format(src, dest))
+        system(
+            'ln -s "{source}" "{destination}"'.format(
+                source=src,
+                destination=dest,
+            )
+        )
 
 
 def link_source_python(game_name):
@@ -192,14 +221,22 @@ def link_source_python(game_name):
         # Does the source-python sub-directory already exist?
         if sp_dir.isdir():
             print(
-                'Cannot link ../{0}/source-python/ directory.  '.format(
-                    dir_name) + 'Directory already exists.\n')
+                'Cannot link ../{directory_name}/source-python/ directory.'
+                '  Directory already exists.\n'.format(
+                    directory_name=dir_name,
+                )
+            )
             continue
 
         # Link the directory
         link_directory(
-            SOURCE_PYTHON_DIR / dir_name / 'source-python', sp_dir)
-        print('Successfully linked ../{0}/source-python/\n'.format(dir_name))
+            SOURCE_PYTHON_DIR / dir_name / 'source-python', sp_dir
+        )
+        print(
+            'Successfully linked ../{directory_name}/source-python/\n'.format(
+                directory_name=dir_name,
+            )
+        )
 
     # Get the server's addons directory
     server_addons = path / 'addons' / 'source-python'
@@ -216,14 +253,22 @@ def link_source_python(game_name):
 
         # Does the directory already exist on the server?
         if directory.isdir():
-            print('Cannot link ../addons/source-python/{0}/ directory.'.format(
-                dir_name) + '  Directory already exists.\n')
+            print(
+                'Cannot link ../addons/source-python/{directory_name}/ '
+                'directory.  Directory already exists.\n'.format(
+                    directory_name=dir_name,
+                )
+            )
             continue
 
         # Link the directory
         link_directory(SOURCE_PYTHON_ADDONS_DIR / dir_name, directory)
-        print('Successfully linked ../addons/source-python/{0}/\n'.format(
-            dir_name))
+        print(
+            'Successfully linked ../addons/source-python/'
+            '{directory_name}/\n'.format(
+                directory_name=dir_name,
+            )
+        )
 
     # Get the bin directory
     bin_dir = server_addons / 'bin'
@@ -248,12 +293,16 @@ def link_source_python(game_name):
 
     # If the build directory doesn't exist, create the build
     if not build_dir.isdir():
-        warn('Build "{0}" does not exist.  Please create the build.'.format(
-            supported_games[game_name]['branch']))
+        warn(
+            'Build "{build}" does not exist.  Please create the build.'.format(
+                build=supported_games[game_name]['branch'],
+            )
+        )
         return
 
     # Link the files
     link_file(build_dir / SOURCE_BINARY, path / 'addons' / SOURCE_BINARY)
     link_file(
         build_dir / CORE_BINARY,
-        path / 'addons' / 'source-python' / 'bin' / CORE_BINARY)
+        path / 'addons' / 'source-python' / 'bin' / CORE_BINARY,
+    )

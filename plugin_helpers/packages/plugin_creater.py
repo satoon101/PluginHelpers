@@ -5,11 +5,10 @@
 # =============================================================================
 # >> IMPORTS
 # =============================================================================
-# Package Imports
+# Package
 from common.constants import AUTHOR
 from common.constants import PREMADE_FILES_DIR
 from common.constants import START_DIR
-from common.constants import config_obj
 from common.constants import plugin_list
 from common.functions import clear_screen
 
@@ -219,15 +218,19 @@ def _get_plugin_name():
 
         # Try to get a new plugin name
         return _ask_retry(
-            'Invalid characters used in plugin name "{0}".\n'.format(
-                name) + 'Only alpha-numeric and underscores allowed.')
+            'Invalid characters used in plugin name "{name}".\n'
+            'Only alpha-numeric and underscores allowed.'.format(
+                name=name,
+            )
+        )
 
     # Does the plugin already exist?
     if name in plugin_list:
 
         # Try to get a new plugin name
         return _ask_retry(
-            'Plugin name "{0}" already exists.'.format(name))
+            'Plugin name "{name}" already exists.'.format(name=name)
+        )
 
     # Return the plugin name
     return name
@@ -266,8 +269,11 @@ def _get_directory(name):
 
     # Get whether the directory should be added
     value = input(
-        'Do you want to include a {0} directory?\n\n'.format(
-            name) + '\t(1) Yes\n\t(2) No\n\n').lower()
+        'Do you want to include a {name} directory?\n\n'
+        '\t(1) Yes\n\t(2) No\n\n'.format(
+            name=name,
+        )
+    ).lower()
 
     # Was the given value invalid?
     if value not in _boolean_values:
@@ -286,8 +292,11 @@ def _get_directory_or_file(name):
 
     # Get whether to add a directory, file, or neither
     value = input(
-        'Do you want to include a {0} file, directory, or neither?\n\n'.format(
-            name) + '\t(1) File\n\t(2) Directory\n\t(3) Neither\n\n')
+        'Do you want to include a {name} file, directory, or neither?\n\n'
+        '\t(1) File\n\t(2) Directory\n\t(3) Neither\n\n'.format(
+            name=name,
+        )
+    )
 
     # Was the given value invalid?
     if value not in _directory_or_file:

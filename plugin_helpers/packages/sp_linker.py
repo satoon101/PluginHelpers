@@ -5,7 +5,7 @@
 # =============================================================================
 # >> IMPORTS
 # =============================================================================
-# Package Imports
+# Package
 from common.constants import supported_games
 from common.functions import clear_screen
 from common.functions import get_game
@@ -19,11 +19,13 @@ def link_game(game_name):
     """Link Source.Python's repository to the given game/server."""
     # Was an invalid game name given?
     if game_name not in supported_games:
-        print('Invalid game name "{0}".'.format(game_name))
+        print('Invalid game name "{game_name}".'.format(game_name=game_name))
         return
 
     # Print a message about the linking
-    print('Linking Source.Python to {0}.\n'.format(game_name))
+    print(
+        'Linking Source.Python to {game_name}.\n'.format(game_name=game_name)
+    )
 
     # Link Source.Python to the game
     link_source_python(game_name)

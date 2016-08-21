@@ -5,11 +5,10 @@
 # =============================================================================
 # >> IMPORTS
 # =============================================================================
-# Python Imports
-#   OS
+# Python
 from os import system
 
-# Package Imports
+# Package
 from common.constants import PYTHON_EXE
 from common.constants import START_DIR
 from common.constants import plugin_list
@@ -24,7 +23,11 @@ def check_plugin(plugin_name):
     """Check the given plugin for standards issues."""
     # Was an invalid plugin name given?
     if plugin_name not in plugin_list:
-        print('Invalid plugin name "{0}"'.format(plugin_name))
+        print(
+            'Invalid plugin name "{plugin_name}"'.format(
+                plugin_name=plugin_name,
+            )
+        )
         return
 
     # Get the plugin's path
@@ -32,22 +35,60 @@ def check_plugin(plugin_name):
         plugin_name, 'addons', 'source-python', 'plugins', plugin_name)
 
     # Check with pep8
-    print_section('Checking "{0}" for PEP8 standards'.format(plugin_name))
-    system('{0} -m pep8 --count --benchmark {1}'.format(PYTHON_EXE, plugin))
+    print_section(
+        'Checking "{plugin_name}" for PEP8 standards'.format(
+            plugin_name=plugin_name,
+        )
+    )
+    system(
+        '{python} -m pep8 --count --benchmark {plugin}'.format(
+            python=PYTHON_EXE,
+            plugin=plugin,
+        )
+    )
 
     # Check with pep257
     print_section(
-        'Checking "{0}" for PEP257 standards'.format(plugin_name), True)
-    system('{0} -m pep257 {1}'.format(PYTHON_EXE, plugin))
+        'Checking "{plugin_name}" for PEP257 standards'.format(
+            plugin_name=plugin_name,
+        ),
+        True,
+    )
+    system(
+        '{python} -m pep257 {plugin}'.format(
+            python=PYTHON_EXE,
+            plugin=plugin,
+        )
+    )
 
     # Check with pyflakes
-    print_section('Checking "{0}" with PyFlakes'.format(plugin_name), True)
-    system('{0} -m pyflakes {1}'.format(PYTHON_EXE, plugin))
+    print_section(
+        'Checking "{plugin_name}" with PyFlakes'.format(
+            plugin_name=plugin_name,
+        ),
+        True,
+    )
+    system(
+        '{python} -m pyflakes {plugin}'.format(
+            python=PYTHON_EXE,
+            plugin=plugin,
+        )
+    )
 
     # Check with pylint
-    print_section('Checking "{0}" with PyLint'.format(plugin_name), True)
-    system('{0} -m pylint --rcfile {1}/.pylintrc {2} '.format(
-        PYTHON_EXE, START_DIR / plugin_name, plugin))
+    print_section(
+        'Checking "{plugin_name}" with PyLint'.format(
+            plugin_name=plugin_name,
+        ),
+        True,
+    )
+    system(
+        '{python} -m pylint --rcfile {rc_path}/.pylintrc {plugin} '.format(
+            python=PYTHON_EXE,
+            rc_path=START_DIR / plugin_name,
+            plugin=plugin,
+        )
+    )
 
 
 # =============================================================================

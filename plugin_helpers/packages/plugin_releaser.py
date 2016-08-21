@@ -63,7 +63,11 @@ def create_release(plugin_name=None):
     """Verify the plugin name and create the current release."""
     # Was no plugin name provided?
     if plugin_name not in plugin_list:
-        print('Invalid plugin name "{0}"'.format(plugin_name))
+        print(
+            'Invalid plugin name "{plugin_name}"'.format(
+                plugin_name=plugin_name,
+            )
+        )
         return
 
     # Get the plugin's base path
@@ -84,7 +88,9 @@ def create_release(plugin_name=None):
 
     # Does the plugin not exist?
     if not plugin_path.isdir():
-        print('Plugin "{0}" not found.'.format(plugin_name))
+        print(
+            'Plugin "{plugin_name}" not found.'.format(plugin_name=plugin_name)
+        )
         return
 
     # Get the plugin's current version
@@ -105,7 +111,10 @@ def create_release(plugin_name=None):
         save_path.makedirs()
 
     # Get the zip file location
-    zip_path = save_path / '{0} - v{1}.zip'.format(plugin_name, version)
+    zip_path = save_path / '{plugin_name} - v{version}.zip'.format(
+        plugin_name=plugin_name,
+        version=version,
+    )
 
     # Does the release already exist?
     if zip_path.isfile():
@@ -188,8 +197,12 @@ def create_release(plugin_name=None):
                     )
 
     # Print a message that everything was successful
-    print('Successfully created {0} version {1} release:'.format(
-        plugin_name, version))
+    print(
+        'Successfully created {plugin_name} version {version} release:'.format(
+            plugin_name=plugin_name,
+            version=version,
+        )
+    )
     print('\t"{zip_path}"\n\n'.format(zip_path=zip_path))
 
 
