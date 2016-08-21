@@ -74,6 +74,7 @@ def create_release(plugin_name=None):
         'git ls-tree --full-tree -r HEAD'.split(),
         stdout=PIPE,
     ).communicate()[0]
+    START_DIR.chdir()
     repo_files = [
         '{sep}{path}'.format(
             sep=sep,
