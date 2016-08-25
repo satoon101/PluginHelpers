@@ -18,8 +18,7 @@ Before you get started, there are a few things you will need installed and a few
     * On Windows, install either Git Bash or TortoiseGit (or both).
     * On Linux, use yum or apt-get to install 'git'.
 * Python3.4 or newer
-    * Python3.4 is the version being tested with when making changes.
-    * I do not plan on testing earlier versions to support them.
+    * Python3.4 is required, as [contextlib.suppress](https://docs.python.org/3.4/library/contextlib.html#contextlib.suppress) is used.
     * If you will be using this on a Linux system, most distros come with some version of Python2.  When you install Python3.4, make sure you do not make it the system's default, as that can and will cause you issues.
     * I have found the following to be a good guide to installing Python3.4 on Linux:
         * http://www.unixmen.com/howto-install-python-3-x-in-ubuntu-debian-fedora-centos/
