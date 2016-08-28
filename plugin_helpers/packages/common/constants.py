@@ -69,7 +69,7 @@ _support = ConfigObj(START_DIR / 'plugin_helpers' / 'tools' / 'support.ini')
 
 supported_games = OrderedDict()
 
-_check_files = ['srcds.exe', 'srcds_run', 'src_linux']
+_check_files = ['srcds.exe', 'srcds_run', 'srcds_linux']
 
 for _directory in config_obj['SERVER_DIRECTORIES'].split(';'):
     _path = Path(_directory)
