@@ -69,12 +69,15 @@ _support = ConfigObj(START_DIR / 'plugin_helpers' / 'tools' / 'support.ini')
 
 supported_games = OrderedDict()
 
-_check_file = 'srcds.exe' if PLATFORM == 'windows' else 'srcds_run'
+_check_files = ['srcds.exe', 'srcds_run', 'src_linux']
 
 for _directory in config_obj['SERVER_DIRECTORIES'].split(';'):
     _path = Path(_directory)
     for _check_directory in _path.dirs():
-        if not _check_directory.joinpath(_check_file).isfile():
+        if not any([
+            _check_directory.joinpath(_check_file).isfile()
+            for _check_file in _check_files
+        ]):
             continue
         for _game in _support['servers']:
             _game_dir = _check_directory / _support['servers'][_game]['folder']
