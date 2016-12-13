@@ -32,10 +32,13 @@ tar -xjf Python-3.4.2.tgz cd Python-3.4.2
 * Supported Source-engine servers and games
     * Currently the following servers are supported:
         * Black Mesa server
+        * Blade Symphony server
         * CS:GO server
         * CS:S server
         * DOD:S server
+        * Garry's Mod server
         * HL2:DM server
+        * Left4Dead 2 server
         * TF2 server
     * Currently the following games are supported:
         * Black Mesa
@@ -43,9 +46,10 @@ tar -xjf Python-3.4.2.tgz cd Python-3.4.2
         * CS:S
         * DOD:S
         * HL2
-        * HL2:DM
+        * HL2: DM
         * HL2: Ep1
         * HL2: Ep2
+        * Left4Dead 2
         * Portal
         * TF2
 
