@@ -76,8 +76,6 @@ The following are the settings
 
 * AUTHOR
     * used by **plugin_creater** to know what value to put as info.author for the plugin.
-* REPO_TYPE
-    * used by **plugin_creater** to know whether to create the .gitignore / .gitattributes or .hgignore files.
 * SOURCE_PYTHON_DIRECTORY
     * used by **plugin_linker** and **sp_linker** to know where the Source.Python repository is located.
     * Defaults:
@@ -93,8 +91,8 @@ The following are the settings
     * used by **sp_linker** to know where your games are located.
     * If there are multiple base directories, separate each with a semi-colon (;).
     * Defaults:
-        * Windows: **C:\Program Files\Steam\SteamApps**
-        * Linux: **/media/Steam/SteamApps**
+        * Windows: **C:\Program Files\Steam**
+        * Linux: **/media/Steam**
 * RELEASE_DIRECTORY
     * used by **plugin_releaser** to know where to copy your plugin releases to.
     * Defaults:
@@ -134,10 +132,10 @@ As long as you have correctly set your config.ini SERVER_DIRECTORIES, STEAM_DIRE
 <br>
 ## Installing plugins
 If you already have some plugins started, you can copy them into the PluginHelpers repository directory.  Though, they **must** adhere to some guidelines:
-* The directory name needs to be the name of the plugin (the **sp load** name).
+* The directory name needs to be the name of the plugin (the **sp plugin load** name).
 * The internal directories need to match that of Source.Python's internal directory structure.
     * There must be a directory within the main directory that is named **addons** and contains the following directory structure **../addons/source-python/plugins/&lt;plugin_name&gt;/**.
-    * Within the above directory, there must be at least a **&lt;plugin_name&gt;.py** file and an **\__init__.py** file.
+    * Within the above directory, there must be at least a **&lt;plugin_name&gt;.py** file and an **\_\_init\_\_.py** file.
 * It is recommended that you have a public or private repository to host your plugin, but that is not necessary.
 
 <br>
@@ -147,14 +145,14 @@ PluginHelpers comes with a script that helps to start the creation of new plugin
 Once you have answered all the necessary questions, the appropriate directories/files will be created.
 
 3 files will always be created:
-* \__init__.py
+* \_\_init\_\_.py
     * mandatory for the **plugin_checker** to work.
     * useful for verifying implementation on a server or game prior to loading your plugin.
 * info.py
     * holds the [PluginInfo](http://wiki.sourcepython.com/pages/plugins.info#PluginInfo) instance for your plugin.
     * If you supplied an AUTHOR value in the config.ini, that value will be used as info.author.
 * &lt;plugin_name&gt;.py
-    * mandatory file when using the **sp load** command on a server or game.
+    * mandatory file when using the **sp plugin load** command on a server or game.
 
 <br>
 ## Linking plugins
