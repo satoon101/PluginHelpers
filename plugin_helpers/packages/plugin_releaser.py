@@ -12,6 +12,9 @@ from subprocess import PIPE, Popen
 from zipfile import ZIP_DEFLATED
 from zipfile import ZipFile
 
+# Site-package
+from configobj import ConfigObj
+
 # Package
 from common.constants import RELEASE_DIR
 from common.constants import START_DIR
@@ -94,9 +97,11 @@ def create_release(plugin_name=None):
         return
 
     # Get the plugin's current version
-    version = _get_version(
-        plugin_path / 'addons' / 'source-python' / 'plugins' / plugin_name
+    info_file = plugin_path.joinpath(
+        'addons', 'source-python', 'plugins', plugin_name, 'info.ini'
     )
+    config_obj = ConfigObj(info_file)
+    version = config_obj['version']
 
     # Was no version information found?
     if version is None:
@@ -209,29 +214,6 @@ def create_release(plugin_name=None):
 # =============================================================================
 # >> HELPER FUNCTIONS
 # =============================================================================
-def _get_version(plugin_path):
-    """Return the version for the plugin."""
-    # Loop through all Python files for the plugin
-    for file in plugin_path.files('*.py'):
-
-        # Open the file
-        with file.open() as open_file:
-
-            # Get the contents of the file
-            contents = open_file.read()
-
-            # Is the version information not contained in the current file?
-            if 'info.version = ' not in contents:
-                continue
-
-            # Return the version
-            return contents.split(
-                'info.version = ', 1)[1].splitlines()[0][1:~0]
-
-    # If no version information was found, simply return None
-    return None
-
-
 def _find_files(generator, allowed_path, allowed_dictionary):
     """Yield files that should be added to the zip."""
     # Suppress FileNotFoundError in case the
