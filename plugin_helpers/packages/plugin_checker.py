@@ -41,7 +41,7 @@ def check_plugin(plugin_name):
         )
     )
     system(
-        '{python} -m pep8 --count --benchmark {plugin}'.format(
+        '{python} -m pycodestyle --count --benchmark {plugin}'.format(
             python=PYTHON_EXE,
             plugin=plugin,
         )
