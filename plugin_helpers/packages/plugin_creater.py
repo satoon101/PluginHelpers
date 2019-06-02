@@ -152,7 +152,7 @@ def create_plugin(plugin_name, **options):
     for file in PREMADE_FILES_DIR.files():
 
         # Skip Python files
-        if file.ext == '.py':
+        if file.ext in ('.py', '.ini'):
             continue
 
         # Copy the file to the plugin's base directory
