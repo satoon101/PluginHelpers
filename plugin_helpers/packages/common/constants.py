@@ -54,15 +54,15 @@ SOURCE_PYTHON_BUILDS_DIR = SOURCE_PYTHON_DIR.joinpath(
 
 # Get the directories to link
 source_python_directories = {
-    x.namebase for x in SOURCE_PYTHON_DIR.dirs()
-    if x.namebase not in ('addons', 'src', '.git')
+    x.stem for x in SOURCE_PYTHON_DIR.dirs()
+    if x.stem not in ('addons', 'src', '.git')
 }
 
 # Get the addons directories to link
 source_python_addons_directories = {
-    x.namebase for x in SOURCE_PYTHON_DIR.joinpath(
+    x.stem for x in SOURCE_PYTHON_DIR.joinpath(
         'addons', 'source-python',
-    ).dirs() if x.namebase != 'bin'
+    ).dirs() if x.stem != 'bin'
 }
 
 _support = ConfigObj(START_DIR / 'plugin_helpers' / 'tools' / 'support.ini')
@@ -135,6 +135,6 @@ PYTHON_EXE = config_obj['PYTHON_EXECUTABLE']
 
 # Get a list of all plugins
 plugin_list = [
-    x.namebase for x in START_DIR.dirs()
-    if x.namebase not in ('plugin_helpers', '.git', '__pycache__')
+    x.stem for x in START_DIR.dirs()
+    if x.stem not in ('plugin_helpers', '.git', '__pycache__')
 ]

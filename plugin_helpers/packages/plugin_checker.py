@@ -36,7 +36,7 @@ def check_plugin(plugin_name):
 
     # Check with pep8
     print_section(
-        'Checking "{plugin_name}" for PEP8 standards'.format(
+        'Checking "{plugin_name}" for coding standards'.format(
             plugin_name=plugin_name,
         )
     )
@@ -49,13 +49,13 @@ def check_plugin(plugin_name):
 
     # Check with pep257
     print_section(
-        'Checking "{plugin_name}" for PEP257 standards'.format(
+        'Checking "{plugin_name}" for docstring standards standards'.format(
             plugin_name=plugin_name,
         ),
         True,
     )
     system(
-        '{python} -m pep257 {plugin}'.format(
+        '{python} -m pydocstyle {plugin}'.format(
             python=PYTHON_EXE,
             plugin=plugin,
         )

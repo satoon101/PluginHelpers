@@ -1,6 +1,6 @@
 configobj
 path.py
-pep257
 pycodestyle
+pydocstyle
 pyflakes
 pylint
