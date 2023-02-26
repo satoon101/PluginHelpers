@@ -23,71 +23,44 @@ def check_plugin(plugin_name):
     """Check the given plugin for standards issues."""
     # Was an invalid plugin name given?
     if plugin_name not in plugin_list:
-        print(
-            'Invalid plugin name "{plugin_name}"'.format(
-                plugin_name=plugin_name,
-            )
-        )
+        print(f'Invalid plugin name "{plugin_name}"')
         return
 
     # Get the plugin's path
     plugin = START_DIR.joinpath(
-        plugin_name, 'addons', 'source-python', 'plugins', plugin_name)
+        plugin_name,
+        'addons',
+        'source-python',
+        'plugins',
+        plugin_name,
+    )
 
     # Check with pep8
-    print_section(
-        'Checking "{plugin_name}" for coding standards'.format(
-            plugin_name=plugin_name,
-        )
-    )
-    system(
-        '{python} -m pycodestyle --count --benchmark {plugin}'.format(
-            python=PYTHON_EXE,
-            plugin=plugin,
-        )
-    )
+    print_section(f'Checking "{plugin_name}" for coding standards')
+    system(f'{PYTHON_EXE} -m pycodestyle --count --benchmark {plugin}')
 
     # Check with pep257
     print_section(
-        'Checking "{plugin_name}" for docstring standards standards'.format(
-            plugin_name=plugin_name,
-        ),
+        f'Checking "{plugin_name}" for docstring standards',
         True,
     )
-    system(
-        '{python} -m pydocstyle {plugin}'.format(
-            python=PYTHON_EXE,
-            plugin=plugin,
-        )
-    )
+    system(f'{PYTHON_EXE} -m pydocstyle {plugin}')
 
     # Check with pyflakes
     print_section(
-        'Checking "{plugin_name}" with PyFlakes'.format(
-            plugin_name=plugin_name,
-        ),
+        f'Checking "{plugin_name}" with PyFlakes',
         True,
     )
-    system(
-        '{python} -m pyflakes {plugin}'.format(
-            python=PYTHON_EXE,
-            plugin=plugin,
-        )
-    )
+    system(f'{PYTHON_EXE} -m pyflakes {plugin}')
 
     # Check with pylint
     print_section(
-        'Checking "{plugin_name}" with PyLint'.format(
-            plugin_name=plugin_name,
-        ),
+        f'Checking "{plugin_name}" with PyLint',
         True,
     )
     system(
-        '{python} -m pylint --rcfile {rc_path}/.pylintrc {plugin} '.format(
-            python=PYTHON_EXE,
-            rc_path=START_DIR / plugin_name,
-            plugin=plugin,
-        )
+        f'{PYTHON_EXE} -m pylint '
+        f'--rcfile {START_DIR / plugin_name}/.pylintrc {plugin}'
     )
 
 

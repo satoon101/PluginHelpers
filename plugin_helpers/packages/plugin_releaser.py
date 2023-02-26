@@ -66,39 +66,36 @@ def create_release(plugin_name=None):
     """Verify the plugin name and create the current release."""
     # Was no plugin name provided?
     if plugin_name not in plugin_list:
-        print(
-            'Invalid plugin name "{plugin_name}"'.format(
-                plugin_name=plugin_name,
-            )
-        )
+        print(f'Invalid plugin name "{plugin_name}"')
         return
 
     # Get the plugin's base path
     plugin_path = START_DIR / plugin_name
 
     plugin_path.chdir()
-    output = Popen(
+    with Popen(
         'git ls-tree --full-tree -r HEAD'.split(),
         stdout=PIPE,
-    ).communicate()[0]
+    ) as output:
+        repo_files = [
+            sep + str(x).split("\\t")[1].replace("/", sep)[:~0]
+            for x in output.communicate()[0].splitlines()
+        ]
+
     START_DIR.chdir()
-    repo_files = [
-        '{sep}{path}'.format(
-            sep=sep,
-            path=str(x).split('\\t')[1].replace('/', sep)[:~0],
-        ) for x in output.splitlines()
-    ]
 
     # Does the plugin not exist?
     if not plugin_path.isdir():
-        print(
-            'Plugin "{plugin_name}" not found.'.format(plugin_name=plugin_name)
-        )
+        print(f'Plugin "{plugin_name}" not found.')
         return
 
     # Get the plugin's current version
     info_file = plugin_path.joinpath(
-        'addons', 'source-python', 'plugins', plugin_name, 'info.ini'
+        'addons',
+        'source-python',
+        'plugins',
+        plugin_name,
+        'info.ini',
     )
     config_obj = ConfigObj(info_file)
     version = config_obj['version']
@@ -116,10 +113,7 @@ def create_release(plugin_name=None):
         save_path.makedirs()
 
     # Get the zip file location
-    zip_path = save_path / '{plugin_name} - v{version}.zip'.format(
-        plugin_name=plugin_name,
-        version=version,
-    )
+    zip_path = save_path / f'{plugin_name} - v{version}.zip'
 
     # Does the release already exist?
     if zip_path.isfile():
@@ -141,15 +135,10 @@ def create_release(plugin_name=None):
 
             # Loop through all files with the plugin's name
             for full_file_path in _find_files(
-                check_path.files(
-                    '{plugin_name}.*'.format(
-                        plugin_name=plugin_name,
-                    )
-                ),
+                check_path.files(f'{plugin_name}.*'),
                 allowed_path,
                 allowed_filetypes,
             ):
-
                 relative_file_path = full_file_path.replace(plugin_path, '')
                 if relative_file_path in repo_files:
 
@@ -202,13 +191,8 @@ def create_release(plugin_name=None):
                     )
 
     # Print a message that everything was successful
-    print(
-        'Successfully created {plugin_name} version {version} release:'.format(
-            plugin_name=plugin_name,
-            version=version,
-        )
-    )
-    print('\t"{zip_path}"\n\n'.format(zip_path=zip_path))
+    print(f'Successfully created {plugin_name} version {version} release:')
+    print(f'\t"{zip_path}"\n\n')
 
 
 # =============================================================================

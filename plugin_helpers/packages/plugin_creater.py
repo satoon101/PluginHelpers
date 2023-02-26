@@ -46,8 +46,9 @@ def create_plugin(plugin_name, **options):
     if not plugin_name.replace('_', '').isalnum():
         print('Invalid plugin name.')
         print(
-            'Plugin name must only contain ' +
-            'alpha-numeric values and underscores.')
+            'Plugin name must only contain alpha-numeric values and '
+            'underscores.'
+        )
         return
 
     # Get the path to create the plugin at
@@ -60,7 +61,11 @@ def create_plugin(plugin_name, **options):
 
     # Get the plugin's directory
     plugin_path = plugin_base_path.joinpath(
-        'addons', 'source-python', 'plugins', plugin_name)
+        'addons',
+        'source-python',
+        'plugins',
+        plugin_name,
+    )
 
     # Create the plugin's directory
     plugin_path.makedirs()
@@ -76,8 +81,12 @@ def create_plugin(plugin_name, **options):
 
         # Create the cfg directory
         _create_directory(
-            plugin_base_path, 'cfg', 'source-python',
-            plugin_name, filename='readme.md')
+            plugin_base_path,
+            'cfg',
+            'source-python',
+            plugin_name,
+            filename='readme.md',
+        )
 
     # Get the data option value
     data = options.get('data', None)
@@ -87,47 +96,76 @@ def create_plugin(plugin_name, **options):
 
         # Create the data file
         _create_directory(
-            plugin_base_path, 'addons', 'source-python',
-            'data', 'plugins', filename=plugin_name + '.ini')
+            plugin_base_path,
+            'addons',
+            'source-python',
+            'data',
+            'plugins',
+            filename=plugin_name + '.ini',
+        )
 
     # Should a data directory be created?
     elif data == 'directory':
 
         # Create the data directory
         _create_directory(
-            plugin_base_path, 'addons', 'source-python',
-            'data', 'plugins', plugin_name)
+            plugin_base_path,
+            'addons',
+            'source-python',
+            'data',
+            'plugins',
+            plugin_name,
+        )
 
     # Should a docs directory be created?
     if options.get('docs', False):
 
         # Create the docs directory
         _create_directory(
-            plugin_base_path, 'addons', 'source-python',
-            'docs', 'plugins', plugin_name, filename='readme.md')
+            plugin_base_path,
+            'addons',
+            'source-python',
+            'docs',
+            'plugins',
+            plugin_name,
+            filename='readme.md',
+        )
 
     # Should a events directory be created?
     if options.get('events', False):
 
         # Create the events directory
         _create_directory(
-            plugin_base_path, 'resource', 'source-python',
-            'events', plugin_name, filename='readme.md')
+            plugin_base_path,
+            'resource',
+            'source-python',
+            'events',
+            plugin_name,
+            filename='readme.md',
+        )
 
     # Should a logs directory be created?
     if options.get('logs', False):
 
         # Create the logs directory
         _create_directory(
-            plugin_base_path, 'logs', 'source-python',
-            plugin_name, filename='readme.md')
+            plugin_base_path,
+            'logs',
+            'source-python',
+            plugin_name,
+            filename='readme.md',
+        )
 
     # Should a sound directory be created?
     if options.get('sound', False):
 
         # Create the sound directory
         _create_directory(
-            plugin_base_path, 'sound', 'source-python', plugin_name)
+            plugin_base_path,
+            'sound',
+            'source-python',
+            plugin_name,
+        )
 
     # Get the translations option value
     translations = options.get('translations', None)
@@ -137,16 +175,24 @@ def create_plugin(plugin_name, **options):
 
         # Create the translations file
         _create_directory(
-            plugin_base_path, 'resource', 'source-python',
-            'translations', filename=plugin_name + '.ini')
+            plugin_base_path,
+            'resource',
+            'source-python',
+            'translations',
+            filename=plugin_name + '.ini',
+        )
 
     # Should a translations directory be created?
     elif translations == 'directory':
 
         # Create the translations directory
         _create_directory(
-            plugin_base_path, 'resource', 'source-python',
-            'translations', plugin_name)
+            plugin_base_path,
+            'resource',
+            'source-python',
+            'translations',
+            plugin_name,
+        )
 
     # Loop through all premade files
     for file in PREMADE_FILES_DIR.files():
@@ -157,14 +203,15 @@ def create_plugin(plugin_name, **options):
 
         # Copy the file to the plugin's base directory
         PREMADE_FILES_DIR.joinpath(file.namebase).copy(
-            plugin_base_path / file.namebase)
+            plugin_base_path / file.namebase
+        )
 
 
 # =============================================================================
 # >> HELPER FUNCTIONS
 # =============================================================================
 def _copy_file(filepath):
-    """"""
+    """Copy default files."""
     if PREMADE_FILES_DIR.joinpath(filepath.name).isfile():
 
         PREMADE_FILES_DIR.joinpath(filepath.name).copy(filepath)
@@ -181,11 +228,18 @@ def _copy_file(filepath):
 
     plugin_title = plugin_name.replace('_', ' ').title()
 
-    file_contents = file_contents.replace('$plugin_name', plugin_name).replace(
-        '$plugin_title', plugin_title).replace('$author', AUTHOR)
+    file_contents = file_contents.replace(
+        '$plugin_name',
+        plugin_name,
+    ).replace(
+        '$plugin_title',
+        plugin_title,
+    ).replace(
+        '$author',
+        AUTHOR,
+    )
 
     with filepath.open('w') as open_file:
-
         open_file.write(file_contents)
 
 
@@ -199,7 +253,6 @@ def _create_directory(base_path, *args, filename=None):
 
     # Was a filename given?
     if filename is not None:
-
         # Create the file
         current_path.joinpath(filename).touch()
 
@@ -218,19 +271,15 @@ def _get_plugin_name():
 
         # Try to get a new plugin name
         return _ask_retry(
-            'Invalid characters used in plugin name "{name}".\n'
-            'Only alpha-numeric and underscores allowed.'.format(
-                name=name,
-            )
+            f'Invalid characters used in plugin name "{name}".\n'
+            f'Only alpha-numeric and underscores allowed.'
         )
 
     # Does the plugin already exist?
     if name in plugin_list:
 
         # Try to get a new plugin name
-        return _ask_retry(
-            'Plugin name "{name}" already exists.'.format(name=name)
-        )
+        return _ask_retry(f'Plugin name "{name}" already exists.')
 
     # Return the plugin name
     return name
@@ -238,13 +287,12 @@ def _get_plugin_name():
 
 def _ask_retry(reason):
     """Ask if another plugin name should be given."""
-    # Clear the screen
     clear_screen()
 
     # Get whether to retry or not
     value = input(
-        reason + '\n\n' + 'Do you want to try again?\n\n' +
-        '\t(1) Yes\n\t(2) No\n\n').lower()
+        f'{reason}\n\nDo you want to try again?\n\n\t(1) Yes\n\t(2) No\n\n'
+    ).lower()
 
     # Was the retry value invalid?
     if value not in _boolean_values:
@@ -269,10 +317,8 @@ def _get_directory(name):
 
     # Get whether the directory should be added
     value = input(
-        'Do you want to include a {name} directory?\n\n'
-        '\t(1) Yes\n\t(2) No\n\n'.format(
-            name=name,
-        )
+        f'Do you want to include a {name} directory?\n\n'
+        f'\t(1) Yes\n\t(2) No\n\n'
     ).lower()
 
     # Was the given value invalid?
@@ -292,10 +338,8 @@ def _get_directory_or_file(name):
 
     # Get whether to add a directory, file, or neither
     value = input(
-        'Do you want to include a {name} file, directory, or neither?\n\n'
-        '\t(1) File\n\t(2) Directory\n\t(3) Neither\n\n'.format(
-            name=name,
-        )
+        f'Do you want to include a {name} file, directory, or neither?\n\n'
+        f'\t(1) File\n\t(2) Directory\n\t(3) Neither\n\n'
     )
 
     # Was the given value invalid?

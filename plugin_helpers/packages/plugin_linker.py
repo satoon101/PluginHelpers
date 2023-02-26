@@ -22,11 +22,7 @@ def link_plugin(plugin_name):
     """Link the given plugin name to Source.Python's repository."""
     # Was an invalid plugin name given?
     if plugin_name not in plugin_list:
-        print(
-            'Invalid plugin name "{plugin_name}"'.format(
-                plugin_name=plugin_name,
-            )
-        )
+        print(f'Invalid plugin name "{plugin_name}"')
         return
 
     # Get the plugin's path
@@ -34,22 +30,41 @@ def link_plugin(plugin_name):
 
     # Link the main directory
     _link_directory(
-        plugin_path, 'addons', 'source-python', 'plugins', plugin_name
+        plugin_path,
+        'addons',
+        'source-python',
+        'plugins',
+        plugin_name,
     )
 
     # Link the data directory
     _link_directory(
-        plugin_path, 'addons', 'source-python', 'data', 'plugins', plugin_name
+        plugin_path,
+        'addons',
+        'source-python',
+        'data',
+        'plugins',
+        plugin_name,
     )
 
     # Link the data file
     _link_file(
-        plugin_path, 'addons', 'source-python', 'data', 'plugins', plugin_name
+        plugin_path,
+        'addons',
+        'source-python',
+        'data',
+        'plugins',
+        plugin_name,
     )
 
     # Link the docs directory
     _link_directory(
-        plugin_path, 'addons', 'source-python', 'docs', 'plugins', plugin_name
+        plugin_path,
+        'addons',
+        'source-python',
+        'docs',
+        'plugins',
+        plugin_name,
     )
 
     # Link the cfg directory
@@ -60,17 +75,29 @@ def link_plugin(plugin_name):
 
     # Link the events directory
     _link_directory(
-        plugin_path, 'resource', 'source-python', 'events', plugin_name
+        plugin_path,
+        'resource',
+        'source-python',
+        'events',
+        plugin_name,
     )
 
     # Link the translations directory
     _link_directory(
-        plugin_path, 'resource', 'source-python', 'translations', plugin_name
+        plugin_path,
+        'resource',
+        'source-python',
+        'translations',
+        plugin_name,
     )
 
     # Link the translations file
     _link_file(
-        plugin_path, 'resource', 'source-python', 'translations', plugin_name
+        plugin_path,
+        'resource',
+        'source-python',
+        'translations',
+        plugin_name,
     )
 
     # Link the sound directory

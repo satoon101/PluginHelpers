@@ -22,12 +22,9 @@ from path import Path
 PLATFORM = system().lower()
 
 # Store the binary names
-SOURCE_BINARY = 'source-python.{binary}'.format(
-    binary='dll' if PLATFORM == 'windows' else 'so'
-)
-CORE_BINARY = 'core.{binary}'.format(
-    binary='dll' if PLATFORM == 'windows' else 'so'
-)
+_binary = 'dll' if PLATFORM == 'windows' else 'so'
+SOURCE_BINARY = f'source-python.{_binary}'
+CORE_BINARY = f'core.{_binary}'
 
 # Store the main directory
 START_DIR = Path(__file__).parent.parent.parent.parent
@@ -49,7 +46,9 @@ SOURCE_PYTHON_ADDONS_DIR = SOURCE_PYTHON_DIR / 'addons' / 'source-python'
 
 # Get Source.Python's build directory
 SOURCE_PYTHON_BUILDS_DIR = SOURCE_PYTHON_DIR.joinpath(
-    'src', 'Builds', 'Windows' if PLATFORM == 'windows' else 'Linux'
+    'src',
+    'Builds',
+    'Windows' if PLATFORM == 'windows' else 'Linux'
 )
 
 # Get the directories to link
@@ -61,7 +60,8 @@ source_python_directories = {
 # Get the addons directories to link
 source_python_addons_directories = {
     x.stem for x in SOURCE_PYTHON_DIR.joinpath(
-        'addons', 'source-python',
+        'addons',
+        'source-python',
     ).dirs() if x.stem != 'bin'
 }
 
@@ -74,10 +74,10 @@ _check_files = ['srcds.exe', 'srcds_run', 'srcds_linux']
 for _directory in config_obj['SERVER_DIRECTORIES'].split(';'):
     _path = Path(_directory)
     for _check_directory in _path.dirs():
-        if not any([
+        if not any(
             _check_directory.joinpath(_check_file).isfile()
             for _check_file in _check_files
-        ]):
+        ):
             continue
         for _game in _support['servers']:
             _game_dir = _check_directory / _support['servers'][_game]['folder']
@@ -85,12 +85,8 @@ for _directory in config_obj['SERVER_DIRECTORIES'].split(';'):
                 continue
             if _game in supported_games:
                 warn(
-                    '{game} already assigned to {old_path}.  '
-                    'New path found: {new_path}'.format(
-                        game=_game,
-                        old_path=supported_games[_game],
-                        new_path=_game_dir,
-                    )
+                    f'{_game} already assigned to {supported_games[_game]}.  '
+                    f'New path found: {_game_dir}'
                 )
                 continue
             supported_games[_game] = {
@@ -114,12 +110,8 @@ for _directory in config_obj['STEAM_DIRECTORIES'].split(';'):
                 continue
             if _game in supported_games:
                 warn(
-                    '{game} already assigned to {old_path}.  '
-                    'New path found: {new_path}'.format(
-                        game=_game,
-                        old_path=supported_games[_game],
-                        new_path=_game_dir,
-                    )
+                    f'{_game} already assigned to {supported_games[_game]}.  '
+                    f'New path found: {_game_dir}'
                 )
                 continue
             supported_games[_game] = {

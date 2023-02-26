@@ -1,5 +1,5 @@
 configobj
-path.py
+path
 pycodestyle
 pydocstyle
 pyflakes

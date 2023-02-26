@@ -19,13 +19,11 @@ def link_game(game_name):
     """Link Source.Python's repository to the given game/server."""
     # Was an invalid game name given?
     if game_name not in supported_games:
-        print('Invalid game name "{game_name}".'.format(game_name=game_name))
+        print(f'Invalid game name "{game_name}".')
         return
 
     # Print a message about the linking
-    print(
-        'Linking Source.Python to {game_name}.\n'.format(game_name=game_name)
-    )
+    print(f'Linking Source.Python to {game_name}.\n')
 
     # Link Source.Python to the game
     link_source_python(game_name)
