@@ -127,5 +127,5 @@ PYTHON_EXE = config_obj["PYTHON_EXECUTABLE"]
 # Get a list of all plugins
 plugin_list = [
     x.stem for x in START_DIR.dirs()
-    if x.stem not in ("plugin_helpers", ".git", "__pycache__")
+    if not x.stem.startswith(('.', '_')) and x.stem != "plugin_helpers"
 ]
