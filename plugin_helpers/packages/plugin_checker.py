@@ -24,7 +24,7 @@ def check_plugin(plugin_name):
         return
 
     # Get the plugin's path
-    plugin = START_DIR.joinpath(
+    plugin_path = START_DIR.joinpath(
         plugin_name,
         "addons",
         "source-python",
@@ -32,7 +32,7 @@ def check_plugin(plugin_name):
         plugin_name,
     )
 
-    system(f"ruff check")
+    system(f"ruff check {plugin_path}")
 
 
 # =============================================================================
@@ -42,14 +42,13 @@ if __name__ == "__main__":
 
     # Get the plugin to check
     _plugin_name = get_plugin("check")
-    if _plugin_name is None:
-        return
+    if _plugin_name is not None:
 
-    clear_screen()
-    if _plugin_name == "ALL":
-        for _plugin_name in plugin_list:
-            print(f'Checking plugin "{plugin_name}"')
+        clear_screen()
+        if _plugin_name == "ALL":
+            for _plugin_name in plugin_list:
+                print(f'Checking plugin "{_plugin_name}"')
+                check_plugin(_plugin_name)
+
+        else:
             check_plugin(_plugin_name)
-
-    else:
-        check_plugin(_plugin_name)
