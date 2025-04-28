@@ -6,13 +6,8 @@
 # >> IMPORTS
 # =============================================================================
 # Package
-from common.constants import SOURCE_PYTHON_DIR
-from common.constants import START_DIR
-from common.constants import plugin_list
-from common.functions import clear_screen
-from common.functions import get_plugin
-from common.functions import link_directory
-from common.functions import link_file
+from common.constants import SOURCE_PYTHON_DIR, START_DIR, plugin_list
+from common.functions import clear_screen, get_plugin, link_directory, link_file
 
 
 # =============================================================================
@@ -31,77 +26,77 @@ def link_plugin(plugin_name):
     # Link the main directory
     _link_directory(
         plugin_path,
-        'addons',
-        'source-python',
-        'plugins',
+        "addons",
+        "source-python",
+        "plugins",
         plugin_name,
     )
 
     # Link the data directory
     _link_directory(
         plugin_path,
-        'addons',
-        'source-python',
-        'data',
-        'plugins',
+        "addons",
+        "source-python",
+        "data",
+        "plugins",
         plugin_name,
     )
 
     # Link the data file
     _link_file(
         plugin_path,
-        'addons',
-        'source-python',
-        'data',
-        'plugins',
+        "addons",
+        "source-python",
+        "data",
+        "plugins",
         plugin_name,
     )
 
     # Link the docs directory
     _link_directory(
         plugin_path,
-        'addons',
-        'source-python',
-        'docs',
-        'plugins',
+        "addons",
+        "source-python",
+        "docs",
+        "plugins",
         plugin_name,
     )
 
     # Link the cfg directory
-    _link_directory(plugin_path, 'cfg', 'source-python', plugin_name)
+    _link_directory(plugin_path, "cfg", "source-python", plugin_name)
 
     # Link the logs directory
-    _link_directory(plugin_path, 'logs', 'source-python', plugin_name)
+    _link_directory(plugin_path, "logs", "source-python", plugin_name)
 
     # Link the events directory
     _link_directory(
         plugin_path,
-        'resource',
-        'source-python',
-        'events',
+        "resource",
+        "source-python",
+        "events",
         plugin_name,
     )
 
     # Link the translations directory
     _link_directory(
         plugin_path,
-        'resource',
-        'source-python',
-        'translations',
+        "resource",
+        "source-python",
+        "translations",
         plugin_name,
     )
 
     # Link the translations file
     _link_file(
         plugin_path,
-        'resource',
-        'source-python',
-        'translations',
+        "resource",
+        "source-python",
+        "translations",
         plugin_name,
     )
 
     # Link the sound directory
-    _link_directory(plugin_path, 'sound', 'source-python', plugin_name)
+    _link_directory(plugin_path, "sound", "source-python", plugin_name)
 
 
 # =============================================================================
@@ -113,14 +108,14 @@ def _link_directory(plugin_path, *args):
     src = plugin_path.joinpath(*args)
 
     # Does the path not exist?
-    if not src.isdir():
+    if not src.is_dir():
         return
 
     # Get the path within the Source.Python repository
     dest = SOURCE_PYTHON_DIR.joinpath(*args)
 
     # Does the destination not exist?
-    if not dest.isdir():
+    if not dest.is_dir():
 
         # Link the directory
         link_directory(src, dest)
@@ -130,20 +125,20 @@ def _link_file(plugin_path, *args):
     """Link the file using the given arguments."""
     # Append .ini to the last argument
     args = list(args)
-    args[~0] += '.ini'
+    args[~0] += ".ini"
 
     # Get the path within the plugin
     src = plugin_path.joinpath(*args)
 
     # Does the path not exist?
-    if not src.isfile():
+    if not src.is_file():
         return
 
     # Get the path within the Source.Python repository
     dest = SOURCE_PYTHON_DIR.joinpath(*args)
 
     # Does the destination not exist?
-    if not dest.isfile():
+    if not dest.is_file():
 
         # Link the file
         link_file(src, dest)
@@ -152,10 +147,10 @@ def _link_file(plugin_path, *args):
 # =============================================================================
 # >> CALL MAIN FUNCTION
 # =============================================================================
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     # Get the plugin to link
-    _plugin_name = get_plugin('link')
+    _plugin_name = get_plugin("link")
 
     # Was a valid plugin chosen?
     if _plugin_name is not None:
@@ -164,7 +159,7 @@ if __name__ == '__main__':
         clear_screen()
 
         # Was ALL chosen?
-        if _plugin_name == 'ALL':
+        if _plugin_name == "ALL":
 
             # Loop through all plugins
             for _plugin_name in plugin_list:

@@ -13,9 +13,6 @@ __pycache__
 # Shell files
 /*.sh
 
-# Base Pylint config
-/.pylintrc
-
 # Base config
 /config.ini
 

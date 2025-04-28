@@ -7,9 +7,7 @@
 # =============================================================================
 # Package
 from common.constants import supported_games
-from common.functions import clear_screen
-from common.functions import get_game
-from common.functions import link_source_python
+from common.functions import clear_screen, get_game, link_source_python
 
 
 # =============================================================================
@@ -23,7 +21,7 @@ def link_game(game_name):
         return
 
     # Print a message about the linking
-    print(f'Linking Source.Python to {game_name}.\n')
+    print(f"Linking Source.Python to {game_name}.\n")
 
     # Link Source.Python to the game
     link_source_python(game_name)
@@ -32,7 +30,7 @@ def link_game(game_name):
 # =============================================================================
 # >> CALL MAIN FUNCTION
 # =============================================================================
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     # Get the game to link
     _game_name = get_game()
@@ -44,7 +42,7 @@ if __name__ == '__main__':
         clear_screen()
 
         # Was ALL selected?
-        if _game_name == 'ALL':
+        if _game_name == "ALL":
 
             # Loop through each game
             for _game_name in supported_games:
