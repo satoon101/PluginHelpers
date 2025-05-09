@@ -13,7 +13,9 @@ target-version = "py313"
 select = ["ALL"]
 
 # Ignore specific rules or entire rule sets
-ignore = []
+ignore = [
+    "I001",
+]
 
 # Allow fix for all enabled rules (when `--fix`) is provided.
 fixable = ["ALL"]
