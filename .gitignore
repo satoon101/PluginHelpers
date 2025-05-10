@@ -1,8 +1,8 @@
-# All sub-directories
-/*/
-
 # All __pycache__ directories
 __pycache__
+
+.idea
+.ruff_cache
 
 # Linux temp files
 *~
@@ -15,10 +15,6 @@ __pycache__
 
 # Base config
 /config.ini
-
-# Allow files in plugin_helpers directory
-!.plugin_helpers/
-!.plugin_helpers/*
 
 # Setup files
 !setup.*
