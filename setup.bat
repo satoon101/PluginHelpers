@@ -11,30 +11,28 @@ if exist %STARTDIR%\config.ini (
 
 ) else (
 
-    echo Creating config.ini file.  Set values to your specifications.
-
     :: Copy the default config
-    copy .plugin_helpers\windows\config.ini config.ini
+    type .files\config.ini .plugin_helpers\files\config.ini > config.ini
+    cls
+    echo Creating config.ini file.  Set values to your specifications then re-execute setup.bat.
+    echo You MUST have PYTHON_EXECUTABLE defined before going further.
 )
 
-echo.
-echo.
+:: Link the prerequisite and exec config scrips
+if not exist %STARTDIR%\exec_config.bat (
+    mklink /H %STARTDIR%\exec_config.bat %STARTDIR%\.plugin_helpers\files\exec_config.bat
+)
+if not exist %STARTDIR%\prerequisites.bat (
+    mklink /H %STARTDIR%\prerequisites.bat %STARTDIR%\.plugin_helpers\files\prerequisites.bat
+)
 
-:: Loop through all hooks
-for %%i in (.\.plugin_helpers\hooks\*.*) do (
-
-    :: Does the hook's link exist?
-    if not exist %STARTDIR%\.git\hooks\%%~ni (
-
-        :: Create the hook
-        mklink /H %STARTDIR%\.git\hooks\%%~ni %%i
+:: Link all of the helper batch scripts
+for %%F in (".plugin_helpers\packages\*.py") do (
+    if not "%%~nxF"=="__init__.py" (
+        if not exist %STARTDIR%\%%~nF.bat (
+            mklink /H %STARTDIR%\%%~nF.bat %STARTDIR%\.plugin_helpers\files\caller.bat
+        )
     )
 )
-
-:: Get the current git branch
-for /f %%a in ('git rev-parse --abbrev-ref HEAD') do set CURRENT_BRANCH=%%a
-
-:: Force a checkout to execute the checkout hook
-git checkout %CURRENT_BRANCH%
 
 pause
