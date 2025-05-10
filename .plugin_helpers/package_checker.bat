@@ -1,3 +1,0 @@
-ruff check packages
-
-pause
