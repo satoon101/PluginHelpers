@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+sh "$PWD"/.plugin_helpers/tools/hooks.sh

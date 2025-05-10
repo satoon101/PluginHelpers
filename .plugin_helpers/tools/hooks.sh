@@ -14,11 +14,11 @@ fi
 
 # Link the prerequisite file if it doesn't exist
 if [ ! -f $STARTDIR/prerequisites.$EXTENSION ]; then
-    ln ./plugin_helpers/$DIRECTORY/prerequisites.$EXTENSION $STARTDIR/prerequisites.$EXTENSION
+    ln ./.plugin_helpers/$DIRECTORY/prerequisites.$EXTENSION $STARTDIR/prerequisites.$EXTENSION
 fi
 
 # Loop through all Python files
-for filename in ./plugin_helpers/packages/*.py; do
+for filename in ./.plugin_helpers/packages/*.py; do
 
     # Skip the __init__ file
     if [ "$(basename "${filename%.**}")" == "__init__" ]; then
@@ -29,6 +29,6 @@ for filename in ./plugin_helpers/packages/*.py; do
     if [ ! -f ./"$(basename "${filename%.*}")".$EXTENSION ]; then
 
         # Link a caller for the file
-        ln ./plugin_helpers/$DIRECTORY/caller.$EXTENSION ./"$(basename "${filename%.*}")".$EXTENSION
+        ln ./.plugin_helpers/$DIRECTORY/caller.$EXTENSION ./"$(basename "${filename%.*}")".$EXTENSION
     fi
 done

@@ -29,7 +29,7 @@ CORE_BINARY = f"core.{_binary}"
 START_DIR = Path(__file__).parent.parent.parent.parent
 
 # Store the premade files location
-PREMADE_FILES_DIR = START_DIR / "plugin_helpers" / "files"
+PREMADE_FILES_DIR = START_DIR / ".plugin_helpers" / "files"
 
 # Get the configuration
 config_obj = ConfigObj(START_DIR / "config.ini")
@@ -64,7 +64,7 @@ source_python_addons_directories = {
     ).dirs() if x.stem != "bin"
 }
 
-_support = ConfigObj(START_DIR / "plugin_helpers" / "tools" / "support.ini")
+_support = ConfigObj(START_DIR / ".plugin_helpers" / "tools" / "support.ini")
 
 supported_games = OrderedDict()
 
@@ -127,5 +127,5 @@ PYTHON_EXE = config_obj["PYTHON_EXECUTABLE"]
 # Get a list of all plugins
 plugin_list = [
     x.stem for x in START_DIR.dirs()
-    if not x.stem.startswith(('.', '_')) and x.stem != "plugin_helpers"
+    if not x.stem.startswith((".", "_"))
 ]

@@ -14,14 +14,14 @@ if exist %STARTDIR%\config.ini (
     echo Creating config.ini file.  Set values to your specifications.
 
     :: Copy the default config
-    copy plugin_helpers\windows\config.ini config.ini
+    copy .plugin_helpers\windows\config.ini config.ini
 )
 
 echo.
 echo.
 
 :: Loop through all hooks
-for %%i in (.\plugin_helpers\hooks\*.*) do (
+for %%i in (.\.plugin_helpers\hooks\*.*) do (
 
     :: Does the hook's link exist?
     if not exist %STARTDIR%\.git\hooks\%%~ni (

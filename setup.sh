@@ -9,7 +9,7 @@ if [ -f $STARTDIR/config.ini ]; then
 else
 
     echo Creating config.ini file.  Set values to your specifications.
-    cp plugin_helpers/linux/config.ini config.ini
+    cp .plugin_helpers/linux/config.ini config.ini
 
 fi
 
@@ -17,7 +17,7 @@ echo ""
 echo ""
 
 # Loop through all hooks
-for filename in $STARTDIR/plugin_helpers/hooks/*; do
+for filename in $STARTDIR/.plugin_helpers/hooks/*; do
 
     # Does the hook's link exist?
     if [ ! -f $STARTDIR/.git/hooks/$(basename "$filename") ]; then

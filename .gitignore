@@ -17,8 +17,8 @@ __pycache__
 /config.ini
 
 # Allow files in plugin_helpers directory
-!plugin_helpers/
-!plugin_helpers/*
+!.plugin_helpers/
+!.plugin_helpers/*
 
 # Setup files
 !setup.*
