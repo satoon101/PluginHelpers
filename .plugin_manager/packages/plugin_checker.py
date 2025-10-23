@@ -7,6 +7,7 @@
 # =============================================================================
 # Python
 import sys
+import tkinter as tk
 
 # Package
 from common.constants import PLUGIN_LIST, START_DIR, config
@@ -40,4 +41,10 @@ class Interface(BaseInterface):
             console=console,
             commands=[f"ruff check {plugin_path}"],
         )
+        refresh_button = tk.Button(
+            self.window,
+            text="Refresh",
+            command=lambda o=option: self.on_click(o),
+        )
+        refresh_button.place(x=445, y=730)
         self.add_back_button(self.run)
